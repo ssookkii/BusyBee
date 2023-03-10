@@ -15,11 +15,7 @@
 <!-- 원하는 글꼴 추가 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&display=swap"
-	rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <!-- Font Awesome 아이콘 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -30,6 +26,7 @@ a{
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 font-size:15px;
 
 }
@@ -38,6 +35,7 @@ h{
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 font-size: 20px;
 
 
