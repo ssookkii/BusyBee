@@ -85,6 +85,9 @@ notice
   <div class="card-header" >게시판 영역</div>
   <div class="card-body">
     <p class="card-text">임시</p>
+    
+    <a href="bbslist.do">게시판</a>
+  <!-- <button type="button" onclick="bbsBtn()">게시판임시버튼</button> -->
   </div>
 </div>
 
@@ -103,6 +106,15 @@ notice
 </div>
 
 </div>
+
+
+
+
+<script type="text/javascript">
+/* function bbsBtn() {
+	location.href = "bbslist.do";
+} */
+</script>
 
 </body>
 </html>

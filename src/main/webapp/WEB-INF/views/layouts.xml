@@ -23,6 +23,21 @@
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 </definition>
 
+<!-- bbslist 이동 -->
+<definition name="bbslist" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbslist.jsp"/>
+</definition>
+
+<!-- bbswrite 이동 -->
+<definition name="bbswrite" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbswrite.jsp"/>
+</definition>
+
+<!-- message 이동 -->
+<definition name="message" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/message.jsp"/>
+</definition>
+
 </tiles-definitions>
 
 

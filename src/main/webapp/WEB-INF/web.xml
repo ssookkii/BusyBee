@@ -19,7 +19,8 @@
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
   		<param-value>
-  			/WEB-INF/spring/servlet-context.xml  			
+  			/WEB-INF/spring/servlet-context.xml
+  			/WEB-INF/spring/file-context.xml
   		</param-value>
   	</init-param>
   	
@@ -31,6 +32,16 @@
   	<url-pattern>*.do</url-pattern>
   </servlet-mapping>
   
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>
+  		/WEB-INF/spring/applicationContext.xml
+  	</param-value>
+  </context-param>
+  
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
   
   
   <!-- 한글설정 :  -->

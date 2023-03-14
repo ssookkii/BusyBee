@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="Bbs">
+
+
+<select id="bbslist" parameterType="mul.cam.a.dto.BbsParam"
+	resultType="mul.cam.a.dto.BbsDto">
+
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfname, category, del
+	from
+		(select row_number()over(order by ref desc, step asc) as rnum,
+			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfname, category, del
+		 from busybee_bbs
+		 where 1=1
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		and title like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		and content like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'writer'">
+		 		and id=#{search} and del=0
+		 	</if>
+		 </if>
+		 
+		 order by ref desc, step asc) a
+	where rnum between ${start} and ${end}
+</select>
+
+<!-- 글의 총수 -->
+<select id="getAllBbs" parameterType="mul.cam.a.dto.BbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from busybee_bbs
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		where title like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		where content like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'writer'">
+	 		where id=#{search}
+	 	</if>
+	 </if>
+</select>
+
+
+<insert id="writeBbs" parameterType="mul.cam.a.dto.BbsDto">
+INSERT INTO busybee_bbs(`ref`, step, `depth`, id, title, content, wdate, readcount, org, filename, newfname, category, del)
+VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title}, #{content}, now(), 0, #{org}, #{filename}, #{newfilename}, #{category}, 0)
+
+</insert>
+
+
+</mapper>
+
+
+
+
+
+
