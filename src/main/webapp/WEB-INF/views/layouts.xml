@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+
+<!-- 첫 화면 -->
+<definition name="login" template="/WEB-INF/views/layout-tiles.jsp">
+	<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+	<put-attribute name="menu" value="/WEB-INF/views/login/menu.jsp"/>
+	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
+	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+</definition>
+
+<!-- 일정관리 이동 -->
+<definition name="calendar" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/calendar/calendar.jsp"/>
+</definition>
+
+<!-- 메인메뉴 이동 -->
+<definition name="main" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
+</definition>
+
+</tiles-definitions>
+
+
+
