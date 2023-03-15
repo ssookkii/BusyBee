@@ -2,11 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- CREATE TABLE Schedule (
+    `scheduleId`   INT              NOT NULL    AUTO_INCREMENT COMMENT '일정 고유 번호', 
+    `id`           VARCHAR(45)      NULL        COMMENT '사용자 id', 
+    `title`        VARCHAR(200)     NULL        COMMENT '일정 제목', 
+    `description`  VARCHAR(3000)    NOT NULL    COMMENT '일정 상세',
+    `startDate`   DATETIME         NULL        COMMENT '일정 시작 날짜', 
+    `endDate`     DATETIME         NULL        COMMENT '일정 종료 날짜', 
+    `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
+    `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
+    `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
+     PRIMARY KEY (shedule_id)
+); -->
+
+
 <mapper namespace="Event">
 
 	<!-- 모든 일정 정보를 조회하는 SQL문 -->
 	<select id="getScheduleList" resultType="mul.cam.a.dto.EventDto">
-		SELECT * FROM schedule
+	    SELECT * FROM schedule WHERE id = #{id}
 	</select>
 
 	<!-- 일정 번호를 기준으로 특정 일정 정보를 조회하는 SQL문 -->

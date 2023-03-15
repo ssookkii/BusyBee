@@ -42,6 +42,10 @@
 <definition name="main" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 </definition>
+<!-- 임시 -->
+<definition name="index" template="/webapp/index.jsp">
+    <put-attribute name="noTemplate" value=""/>
+</definition>
 
 </tiles-definitions>
 

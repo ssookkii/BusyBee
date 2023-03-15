@@ -32,10 +32,3 @@ public class MenuController {
 		return "loginMain";
 	}
 }
-
-
-
-
-
-
-

@@ -1,3 +1,5 @@
+<%@page import="mul.cam.a.service.EventService"%>
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.DateFormat"%>
@@ -5,6 +7,7 @@
 <%@page import="mul.cam.a.dto.EventDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 
 <!DOCTYPE html>
 <html>
@@ -15,6 +18,9 @@
 
 <%
 EventDto dto = (EventDto) request.getAttribute("scheduleList");
+UserDto login = (UserDto)session.getAttribute("login");
+String id = login.getId();
+
 %>
 
 <!-- jQuery -->
@@ -73,7 +79,7 @@ EventDto dto = (EventDto) request.getAttribute("scheduleList");
 	        // 일정 데이터
 	        events: function(start, end, timezone, callback) {
 	            $.ajax({
-	                url: 'eventlist.do', // 일정 목록을 가져올 요청 경로
+	            	url: 'eventlist.do?id=' + '<%=id%>',
 	                dataType: 'json',
 	                success: function(response) {
 	                    console.log(response); // 일정 데이터 확인
@@ -211,13 +217,27 @@ EventDto dto = (EventDto) request.getAttribute("scheduleList");
   </script>
 
 	<div style="margin-left: auto; margin-right: auto;">
+	<label for="event-description" style = "font-size: 14px;">그룹별 캘린더</label>
+			<div style="text-align: right;">
+		 	<select id="group-selector" class="form-control" style="width: 200px; font-size:14px" >
+		    <option value="all">전체</option>
+		    <option value="A">내 캘린더</option>
+		    <option value="group1">그룹1</option>
+		    <option value="group2">그룹2</option>
+		    <option value="group3">그룹3</option>
+		  </select>
+		</div>
 		<table style="width: 100%;">
+		
 			<tr>
 				<td style="width: 60%;">
 					<div id='calendar'></div>
+					
 				</td>
 				<td>
+				
 					<div style="text-align: right;">
+					
 						<div id="event-list">
 							<div style="margin-right: 20px;">
 								<button id="add-event-btn" class="btn btn-warning">일정
@@ -451,7 +471,10 @@ EventDto dto = (EventDto) request.getAttribute("scheduleList");
 						        <input type="text" class="form-control datetimepicker-input" id="event-end-date" data-target="#event-start-date" placeholder="종료일" style = "font-size: 14px;">
 						        <input type="text" class="form-control datetimepicker-input" id="event-end-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;">
 						        <div class="input-group-append" data-target="#event-start-date">
-						        
+						        <div class="input-group-text">
+						        <input type="checkbox" id="all-day" aria-label="all-day" style="margin-top: 1px;">
+						        <label for="all-day" style="margin-bottom: 0; font-size: 14px; margin-left: 5px;">종일</label>
+						      </div>
 						            
 						        </div>
 						        
@@ -460,12 +483,15 @@ EventDto dto = (EventDto) request.getAttribute("scheduleList");
 						    
 						    
 						</div>
-
+						<label for="event-start-date" style = "font-size: 14px;">공유 그룹</label>
 						 <div class="input-group-append">
-					      <div class="input-group-text">
-					        <input type="checkbox" id="all-day" aria-label="all-day" style="margin-top: 1px;">
-					        <label for="all-day" style="margin-bottom: 0; font-size: 14px; margin-left: 5px;">종일</label>
-					      </div>
+						 
+						 <select id="group-selector" class="form-control" style = "font-size: 14px;">
+					        <option value="A">내 캘린더에만 등록</option>
+					        <option value="group1">그룹1</option> // 임시 그룹. 나중에 그룹 받아오기.
+					        <option value="group2">그룹2</option>
+					        <option value="group3">그룹3</option>
+					    </select>
 					    </div>
 						    <div class="form-group">
 						      <label for="event-description" style = "font-size: 14px;">일정 내용</label>
@@ -528,8 +554,8 @@ $(document).ready(function() {
 				    }
 			
 			    var description = $('#event-description').val();
-			    var groupCode = "A"; // 임시 데이터
-			    var id = "ssookkii"; // 임시 데이터
+			    var groupCode = $('#group-selector').val(); // 임시 데이터
+			    var id = '<%=id%>'; 
 			     
 			    var eventData = {
 			      "id": id,

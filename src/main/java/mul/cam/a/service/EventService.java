@@ -6,7 +6,7 @@ import mul.cam.a.dto.EventDto;
 
 public interface EventService {
 
-	List<EventDto> getScheduleList();
+	List<EventDto> getScheduleList(String id);
 	EventDto selectSchedule(int scheduleId);
 	
 	boolean insertSchedule(EventDto dto);

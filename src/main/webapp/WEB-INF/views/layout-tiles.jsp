@@ -1,3 +1,5 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
+<%@page import="mul.cam.a.dto.EventDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 

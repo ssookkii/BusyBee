@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import mul.cam.a.dto.EventDto;
+import mul.cam.a.dto.UserDto;
 import mul.cam.a.service.EventService;
 
 @Controller
@@ -21,21 +24,18 @@ public class EventController {
 
     @Autowired
     EventService eventService;
-/*
-    @GetMapping(value = "calendar.do")
-    public String calendar(Model model, CalendarParam calendarParam) {
-        List<EventDto> list = eventService.getScheduleList();
-        model.addAttribute("scheduleList", list);
-        return "calendar";
-    }
-    */
  
     @GetMapping(value = "eventlist.do", produces = "application/json")
     @ResponseBody
-    public List<EventDto> eventList() {
-        List<EventDto> list = eventService.getScheduleList();
+    public List<EventDto> eventList(HttpSession session) {
+
+        UserDto login = (UserDto) session.getAttribute("login");
+        String id = login.getId();
+        List<EventDto> list = eventService.getScheduleList(id);
         return list;
     }
+
+
 
     @GetMapping(value = "eventwrite.do")
     public String eventWrite() {

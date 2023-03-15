@@ -17,8 +17,8 @@ public class EventDaoImpl implements EventDao {
 	String ns = "Event.";
 	
 	@Override
-	public List<EventDto> getScheduleList() {
-		return sqlSession.selectList(ns + "getScheduleList");
+	public List<EventDto> getScheduleList(String id) {
+	    return sqlSession.selectList(ns + "getScheduleList", id);
 	}
 
 	@Override
