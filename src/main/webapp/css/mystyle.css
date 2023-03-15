@@ -65,3 +65,8 @@ font-size: 18px;
   word-wrap: break-word;
   word-break: break-all;
 }
+
+.dropdown-wrapper {
+  position: relative;
+  z-index: 2000;
+}

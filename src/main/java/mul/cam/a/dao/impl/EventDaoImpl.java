@@ -24,14 +24,7 @@ public class EventDaoImpl implements EventDao {
 	@Override
 	public boolean insertSchedule(EventDto dto) {
 	    int count = sqlSession.insert(ns + "insertSchedule", dto);
-	    
-	    if (count > 0) {
-	        System.out.println("Inserting event: " + dto.getTitle() + " / " + dto.getStartDate() + " - " + dto.getEndDate());
-	        return true;
-	    } else {
-	        System.out.println("Failed to insert event: " + dto.getTitle() + " / " + dto.getStartDate() + " - " + dto.getEndDate());
-	        return false;
-	    }
+	    return count > 0 ? true : false;
 	}
 
 

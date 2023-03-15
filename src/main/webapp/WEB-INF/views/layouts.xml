@@ -4,6 +4,26 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
        
 <tiles-definitions>
+<!-- No tiles -->
+<!-- 로그인 -->
+<definition name="loginMain" template="/WEB-INF/views/noTiles/loginMain.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 회원가입(1/2) -->
+<definition name="regi1" template="/WEB-INF/views/noTiles/regi1.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 회원가입(2/2) -->
+<definition name="regi2" template="/WEB-INF/views/noTiles/regi2.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 메세지 -->
+<definition name="message" template="/WEB-INF/views/message.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
 
 <!-- 첫 화면 -->
 <definition name="login" template="/WEB-INF/views/layout-tiles.jsp">

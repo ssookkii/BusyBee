@@ -22,7 +22,7 @@
 
 	<!-- 기존 일정 정보를 수정하는 SQL문 -->
 	<update id="updateSchedule" parameterType="mul.cam.a.dto.EventDto">
-		UPDATE schedule SET title = #{title}, description = #{description}, startDate = #{startDate}, endDate = #{endDate}, groupCode = #{groupCode}, isPublic = #{isPublic}, isAllDay = #{isAllDay}
+		UPDATE schedule SET title = #{title}, description = #{description}, startDate = #{startDate}, endDate = #{endDate}, isAllDay = #{isAllDay}
 		WHERE scheduleId = #{scheduleId}
 	</update>
 

@@ -3,5 +3,5 @@
 
     
 <%
-	response.sendRedirect("loginMain.do");
+	response.sendRedirect("login.do");
 %>

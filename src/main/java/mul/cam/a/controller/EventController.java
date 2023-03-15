@@ -60,15 +60,18 @@ public class EventController {
     }
 
     @PostMapping(value = "eventupdate.do")
-    public String eventUpdate(EventDto eventDto) {
+    @ResponseBody
+    public String eventUpdate(@RequestBody EventDto eventDto) {
         eventService.updateSchedule(eventDto);
-        return "redirect:/eventlist.do";
+        return "eventlist";
     }
 
-    @GetMapping(value = "eventdelete.do")
-    public String eventDelete(@RequestParam int seq) {
-        eventService.deleteSchedule(seq);
-        return "redirect:/eventlist.do";
+    @PostMapping(value = "eventdelete.do")
+    @ResponseBody
+    public String eventDelete(@RequestParam int scheduleId) {
+        eventService.deleteSchedule(scheduleId);
+        return "success";
     }
+
 
 }
