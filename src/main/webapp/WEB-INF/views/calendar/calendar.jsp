@@ -1,3 +1,7 @@
+<%@page import="mul.cam.a.dao.GroupDao"%>
+<%@page import="mul.cam.a.service.impl.GroupServiceImpl"%>
+<%@page import="mul.cam.a.service.GroupService"%>
+<%@page import="mul.cam.a.dto.GroupDto"%>
 <%@page import="mul.cam.a.service.EventService"%>
 <%@page import="mul.cam.a.dto.UserDto"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -16,33 +20,19 @@
 <title>일정 관리</title>
 <link rel="stylesheet" href="css/mystyle.css">
 
-<%
-EventDto dto = (EventDto) request.getAttribute("scheduleList");
-UserDto login = (UserDto)session.getAttribute("login");
-String id = login.getId();
-
-%>
-
 <!-- jQuery -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://bootswatch.com/5/minty/bootstrap.min.css">
+
 
 <!-- Moment.js -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js'></script>
-
-<!-- jQuery UI CSS -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<!-- FullCalendar CSS -->
-<link rel='stylesheet'
-	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' />
-
 
 <!-- Bootstrap Datepicker -->
 <link rel="stylesheet"
@@ -58,55 +48,59 @@ String id = login.getId();
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 
-<!-- Bootstrap -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://bootswatch.com/5/minty/bootstrap.min.css">
+
+<%
+EventDto dto = (EventDto) request.getAttribute("scheduleList");
+UserDto login = (UserDto)session.getAttribute("login");
+String id = login.getId();
+String myGroup = request.getParameter("groupCode");
+%>
+
 
 </head>
 <body>
 
 	<script>
+
 	$(document).ready(function() {
 
 		// 캘린더 영역 생성
+		
 	    $('#calendar').fullCalendar({
 	        // 일정 데이터
 	        events: function(start, end, timezone, callback) {
-	            $.ajax({
-	            	url: 'eventlist.do?id=' + '<%=id%>',
-	                dataType: 'json',
-	                success: function(response) {
-	                    console.log(response); // 일정 데이터 확인
-	                    var events = [];
-	                    // 서버에서 가져온 일정 목록을 이벤트 객체로 변환합니다.
-	                    for (var i = 0; i < response.length; i++) {
-	                        events.push({
-	                            id: response[i].id,
-	                            scheduleId:response[i].scheduleId,
-	                            title: response[i].title,
-	                            start: moment(response[i].startDate), // moment.js 객체로 변환
-	                            end: moment(response[i].endDate), // moment.js 객체로 변환
-	                            description: response[i].description
-	                        });
-	                    }
-	                    // 이벤트 객체 목록을 캘린더에 할당합니다.
-	                    callback(events);
-	                }
-	            })
+	        	  $.ajax({
+	        		  // 임시 그룹 코드. 
+	        		  url: 'groupeventlist.do?id=' + '<%=id%>&groupCode=<%=myGroup%>',
+		                dataType: 'json',
+		                success: function(response) {
+		                    var events = [];
+		                    // 서버에서 가져온 일정 목록을 이벤트 객체로 변환합니다.
+		                    
+		                    for (var i = 0; i < response.length; i++) {
+		                        events.push({
+		                            id: response[i].id,
+		                            groupCode: response[i].groupCode,
+		                            scheduleId:response[i].scheduleId,
+		                            title: response[i].title,
+		                            start: moment(response[i].startDate), // moment.js 객체로 변환
+		                            end: moment(response[i].endDate), // moment.js 객체로 변환
+		                            description: response[i].description
+		                        });
+		                    }
+		                    // 이벤트 객체 목록을 캘린더에 할당합니다.
+		                    callback(events);
+		                }
+		            })
 	        },
-
+	    
 	        // 일정 추가/수정/삭제 기능
 	        editable: true,
 	        eventStartEditable: true,
 	        eventDurationEditable: true,
 	        displayEventTime: false,
-	        
+
 
 	        eventClick: function(event, jsEvent, view) {
 	          
@@ -120,14 +114,11 @@ String id = login.getId();
 	                var days = [];
 	                var day = moment(event.start);
 	                var endDay = moment(event.end);
-	                console.log('day: '+day);
-	                console.log('endDay: '+endDay);
 	                while (day <= endDay ) {
 	                    days.push(day.format('YYYY-MM-DD'));
 	                    day.add(1, 'days');
 	                }
 	                
-	                console.log(days);
 	                return days.indexOf(date.format('YYYY-MM-DD')) >= 0;
 	            });
 
@@ -149,6 +140,9 @@ String id = login.getId();
 
 	        });
 		
+		
+
+		
 	 // 삭제 버튼 클릭 시 다중삭제 모달 열기
 	    $('#delete-event-btn').click(function() {
 	        var events = $('#calendar').fullCalendar('clientEvents', function(event) {
@@ -164,7 +158,7 @@ String id = login.getId();
 	            return days.indexOf(selectedDate) >= 0;
 	        });
 
-	        if (events.length === 0) {
+	        if (events.length === 0 ) {
 	            // 해당 날짜에 일정이 없는 경우
 	            $('#messageConfirmModal .modal-title').html(selectedDate + '');
 	            $('#messageConfirmModal .modal-body').html('삭제할 일정이 없습니다');
@@ -210,23 +204,14 @@ String id = login.getId();
 			});
 
 	    });
+	
+		
 
 
-
-    
+	
   </script>
 
-	<div style="margin-left: auto; margin-right: auto;">
-	<label for="event-description" style = "font-size: 14px;">그룹별 캘린더</label>
-			<div style="text-align: right;">
-		 	<select id="group-selector" class="form-control" style="width: 200px; font-size:14px" >
-		    <option value="all">전체</option>
-		    <option value="A">내 캘린더</option>
-		    <option value="group1">그룹1</option>
-		    <option value="group2">그룹2</option>
-		    <option value="group3">그룹3</option>
-		  </select>
-		</div>
+	
 		<table style="width: 100%;">
 		
 			<tr>
@@ -419,7 +404,25 @@ String id = login.getId();
     </div>
   </div>
 </div>
+<!-- 알림 모달 -->
+<div class="modal" id="today-event-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" >
+      <div class="modal-header bg-warning text-white" style="font-size:17px">
+      </div>
+      <div class="modal-body" style="height: 100px; display: flex; align-items: center; justify-content: center;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="alarmCancel">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<script>
+	
+	// 일정 추가에 그룹 추가 
+
+		
 			// 일정 추가 버튼 클릭 시 일정 추가 화면으로 전환
 		$('#event-list').on('click', '#add-event-btn', function(){
 			
@@ -441,7 +444,56 @@ String id = login.getId();
 				    }
 				  });
 				});
+			$(document).ready(function(){
 
+				  var group1;
+				  var group2;
+				  
+				  // 일단 groupSelector를 먼저 정의한다.
+				  var groupSelector = $("#add-group-selector");
+
+				  // Leader
+				  $.ajax({
+				    url:'selectGroup1.do?id=' + '<%=id%>',
+				    type:"get",
+				    success:function(data) {
+				      if(data!=null && data!="") {
+				        var group = '';
+				        $.each(data, function(i, item){
+					          group += '<option value=' + data[i].group_code + '>' + data[i].group_name + '</option>';
+				        });
+				        $("#add-group-selector").append(group);
+				        group1 = true;
+				      } else if (data==null || data=="") {
+				        group1 = false;
+				      }
+				    }, 
+				    error:function(){
+				      alert('error');
+				    }
+				  });
+
+				  // Member
+				  $.ajax({
+				    url:'selectGroup2.do?id=' + '<%=id%>',
+				    type:"get",
+				    success:function(data) {
+				      if(data!=null && data!="") {
+				        var group = '';
+				        $.each(data, function(i){
+				          group += '<option value=' + data[i].group_code + '>' + data[i].group_name + '</option>';
+				        });
+				        $("#add-group-selector").append(group);
+				        group2 = true;
+				      } else if (data==null || data=="") {
+				        group2 = false;
+				      }
+				    },
+				    error:function(){
+				      alert('error');
+				    }
+				  });
+				});
 			// 이전 HTML 코드 저장
 		        previousHTML = $('#event-list').html();
 			
@@ -486,11 +538,8 @@ String id = login.getId();
 						<label for="event-start-date" style = "font-size: 14px;">공유 그룹</label>
 						 <div class="input-group-append">
 						 
-						 <select id="group-selector" class="form-control" style = "font-size: 14px;">
-					        <option value="A">내 캘린더에만 등록</option>
-					        <option value="group1">그룹1</option> // 임시 그룹. 나중에 그룹 받아오기.
-					        <option value="group2">그룹2</option>
-					        <option value="group3">그룹3</option>
+						 <select class="form-control" id="add-group-selector"  style = "font-size: 14px;">
+						 <option value="group1">임시</option>
 					    </select>
 					    </div>
 						    <div class="form-group">
@@ -526,11 +575,12 @@ $(document).ready(function() {
   $('#event-start-time, #event-end-time').timepicker({
 	    timeFormat: 'HH:mm',
 	    interval: 30,
-	    minTime: '00:00',
-	    maxTime: '23:00',
+	    defaultTime: '9',
+	    minTime: '0',
+	    maxTime: '23',
+	    startTime:'0',
 	    dynamic: false,
 	    dropdown: true,
-	    appendTo:'body',
 	    scrollbar: true
 });
   
@@ -554,7 +604,7 @@ $(document).ready(function() {
 				    }
 			
 			    var description = $('#event-description').val();
-			    var groupCode = $('#group-selector').val(); // 임시 데이터
+			    var groupCode = $('#add-group-selector').val();
 			    var id = '<%=id%>'; 
 			     
 			    var eventData = {
@@ -618,8 +668,8 @@ $(document).ready(function() {
 				  $('#eventDate').text(moment(event.start).format('YYYY-MM-DD HH:mm') + ' - ' + moment(event.end).format('YYYY-MM-DD HH:mm'));
 				  $('.event-description').text(event.description);
 				  $('#update-event-btn').data('scheduleId', scheduleId); 
+				  $('#share-event-btn').data('scheduleId', scheduleId); 
 				  $('#one-delete-event-btn').data('scheduleId', scheduleId);// 일정 수정, 삭제 버튼에 scheduleId 전달
-				  console.log(eventId, scheduleId);
 				  $('#eventModal').modal('show');
 			
 				});
@@ -654,7 +704,6 @@ $(document).ready(function() {
 
 					  var eventId = $(this).data('scheduleId');
 					  var scheduleId = $(this).data('scheduleId'); // 모달창에 전달할 scheduleId
-					  console.log(eventId, scheduleId);
 					  
 					  var events = $('#calendar').fullCalendar('clientEvents');
 					  var event = events.filter(function(event) {
@@ -671,10 +720,12 @@ $(document).ready(function() {
 						    '<div class="input-group date">' +
 						    '<div class="input-group-text"><i class="fa fa-calendar"></i></div>' +
 						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-date" value="' + event.start.format('YYYY-MM-DD') + '" style="font-size: 14px;">' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-date" value="' + event.end.format('YYYY-MM-DD') + '" style="font-size: 14px;"> ' +
-						    '<div class="input-group-text"><i class="fa fa-calendar"></i></div>' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-time" value="' + event.end.format('HH:mm') + '" style="font-size: 14px;">' +
 						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-time" value="' + event.start.format('HH:mm') + '" style="font-size: 14px;">' +
+						    
+						    '<div class="input-group-text"><i class="fa fa-calendar"></i></div>' +
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-date" value="' + event.end.format('YYYY-MM-DD') + '" style="font-size: 14px;"> ' +
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-time" value="' + event.end.format('HH:mm') + '" style="font-size: 14px;">' +
+						
 						    '<div class="input-group-append" data-target="#edit-start-date">' +
 						    
 						    '</div>' +
@@ -697,7 +748,7 @@ $(document).ready(function() {
 					    var startDate = $('#edit-start-date').val() + 'T' + $('#edit-start-time').val();
 					    var endDate = $('#edit-end-date').val() + 'T' + $('#edit-end-time').val();
 					    var description = $('#edit-description').val();
-					    var groupCode = "A"; // 임시 데이터
+					    var groupCode = '<%=myGroup%>'; 
 
 					    var eventData = {
 					     "scheduleId" : eventId,
@@ -727,7 +778,7 @@ $(document).ready(function() {
 				// 단일 일정 삭제 버튼 클릭 이벤트 처리
 					$('#one-delete-event-btn').click(function() {
 					  var eventId = $('#one-delete-event-btn').data('scheduleId');
-					
+
 					  // 확인창 띄우기
 					  $('#customConfirmModal').modal('show');
 					
@@ -753,15 +804,200 @@ $(document).ready(function() {
 					});
 
 // cancel 동작
-$('#cancel').click(function() {
-	$('#customConfirmModal').modal('hide');
+$('#customConfirmModal, #deleteConfirmModal, #messageConfirmModal, #today-event-modal').on('click', '[id$="Cancel"]', function() {
+  $(this).closest('.modal').modal('hide');
+});
+
+
+// 알림 
+
+$(document).ready(function() {
+  var today = new Date(); // 현재 날짜 객체 생성
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  today = yyyy + '-' + mm + '-' + dd; // yyyy-mm-dd 형식으로 변환
+
+  // 일정 목록을 불러와서 현재 날짜와 비교
+  $.ajax({
+	url: 'eventlist.do?id=' + '<%=id%>',
+    type: 'get',
+    dataType: 'json',
+    success: function(data) {
+      if (data != null && data.length > 0) {
+        var todayEventList = [];
+        for (var i = 0; i < data.length; i++) {
+          var eventStart = data[i].startDate.split(" ")[0];
+          var eventEnd = data[i].endDate.split(" ")[0];
+          if (eventStart <= today && today <= eventEnd) {
+            todayEventList.push(data[i]);
+          }
+        }
+        if (todayEventList.length > 0) {
+          // 일정이 있을 경우 모달 띄우기
+          var alreadyShown = sessionStorage.getItem('todayEventShown');
+          if (alreadyShown !== 'true') {
+            $('#today-event-modal').modal('show');
+            // 일정 목록을 모달에 출력
+            var todayEventHtml = '';
+            for (var j = 0; j < todayEventList.length; j++) {
+              todayEventHtml += todayEventList[j].title + '</br>';
+            }
+            $('#today-event-modal .modal-header').html('오늘 일정을 확인하세요.');
+            $('#today-event-modal .modal-body').html(todayEventHtml);
+            // 확인 버튼을 누르면 해당 일정을 더 이상 보지 않도록 설정
+            $('#today-event-modal .modal-footer button').click(function() {
+              sessionStorage.setItem('todayEventShown', 'true');
+            });
+          }
+        }
+      }
+    },
+  });
+});
+
+// 일정 공유
+$('#share-event-btn').click(function() {
+	  var scheduleId = $(this).data('scheduleId');
+  
+  // AJAX를 이용하여 서버에 일정 정보를 전송
+  $.ajax({
+    url: 'userId.do?group_code=' + '<%=myGroup%>',
+    type: 'get',
+    success: function(data) {
+        for (var i = 0; i < data.length; i++) {
+            
+            var shareid = data[i];
+            console.log(shareid);
+            // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
+            if (data[i] === '<%= id %>') {
+                continue;
+            }
+          
+          	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
+          	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
+          	     
+          	      var title = event.title;
+				  var start = event.startDate;
+				  var end = event.endDate;
+				  var description = event.description;
+				  var groupCode = '<%=myGroup%>';
+
+				  
+				  
+	          	  var eventData ={
+	          	    id : shareid,
+	          	    title : title,
+	          	    startDate : start,
+	          	    endDate : end,
+	          	    description : description,
+	          	    groupCode : groupCode
+	          	    };
+          	    console.log(eventData);
+          	    
+          	 $.ajax({
+			      url: 'eventwriteAf.do' ,
+			      type: 'POST',
+			      data: JSON.stringify(eventData),
+			      contentType: 'application/json',
+			      success: function(response) {
+			        // 일정을 추가한 후 FullCalendar를 갱신합니다.
+			        $('#calendar').fullCalendar('refetchEvents');
+			        // 일정 리스트로 변경합니다.
+			        
+			        $('#today-event-modal .modal-header').html('알림');
+			        $('#today-event-modal .modal-body').html('일정을 공유하였습니다.');
+			        $('#today-event-modal').modal('show');
+			      },
+			      error: function() {
+			        alert('일정을 추가하는데 실패하였습니다.');
+			      }
+			    });
+          	    
+
+          	    // 캘린더에 일정 추가하는 로직 작성
+          	  },"json");
+          	
+			   
+            
+        }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        // 처리 중 오류가 발생했을 때 수행할 코드
+    }
+});
+  
+  $.ajax({
+	    url: 'getGroupInfo.do?group_code=' + '<%=myGroup%>',
+	    type: 'get',
+	    success: function(data) {
+	            
+	            var shareid = data.leader;
+	            console.log(shareid);
+	            // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
+	            if (data !== '<%= id %>') {
+	            
+	          
+	          	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
+	          	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
+	          	     
+	          	      var title = event.title;
+					  var start = event.startDate;
+					  var end = event.endDate;
+					  var description = event.description;
+					  var groupCode = '<%=myGroup%>';
+
+
+		          	  var eventData ={
+		          	    id : shareid,
+		          	    title : title,
+		          	    startDate : start,
+		          	    endDate : end,
+		          	    description : description,
+		          	    groupCode : groupCode
+		          	    };
+	          	    console.log(eventData);
+	          	    
+	          	 $.ajax({
+				      url: 'eventwriteAf.do' ,
+				      type: 'POST',
+				      data: JSON.stringify(eventData),
+				      contentType: 'application/json',
+				      success: function(response) {
+				        // 일정을 추가한 후 FullCalendar를 갱신합니다.
+				        $('#calendar').fullCalendar('refetchEvents');
+				        // 일정 리스트로 변경합니다.
+				        
+				        $('#today-event-modal .modal-header').html('알림');
+				        $('#today-event-modal .modal-body').html('일정을 공유하였습니다.');
+				        $('#today-event-modal').modal('show');
+				      },
+				      error: function() {
+				        alert('일정을 추가하는데 실패하였습니다.');
+				      }
+				    });
+	          	    
+
+	          	    // 캘린더에 일정 추가하는 로직 작성
+	          	  },"json");
+	          	
+				   
+	            
+	        
+	            }},
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        // 처리 중 오류가 발생했을 때 수행할 코드
+	    }
 	});
-$('#deletecancel').click(function() {
-	$('#deleteConfirmModal').modal('hide');
-	});
-$('#messageCancel').click(function() {
-	$('#messageConfirmModal').modal('hide');
-	});
+  
+});
+
 
 		</script>
 

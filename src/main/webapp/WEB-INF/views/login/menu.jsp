@@ -52,6 +52,8 @@ font-size: 20px;
 
 	<a href="main.do">메인</a>
 	<br>
-	<a href="calendar.do">일정관리</a>
+	<!-- 그룹 정보가 담겨있다고 가정 -->
+	<a href="calendar.do?groupCode=1f98b86b">일정관리</a>
+
 </body>
 </html>

@@ -42,9 +42,24 @@
 <definition name="main" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 </definition>
-<!-- 임시 -->
-<definition name="index" template="/webapp/index.jsp">
-    <put-attribute name="noTemplate" value=""/>
+<!-- 그룹 생성 이동 -->
+<definition name="goAddgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/addgroup.jsp"/>
+</definition>
+
+<!-- 나의 그룹 이동 -->
+<definition name="goMygroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/mygroup.jsp"/>
+</definition>
+
+<!-- 그룹 검색 이동 -->
+<definition name="goSearchgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/searchgroup.jsp"/>
+</definition>
+
+<!-- 그룹 알림 이동 -->
+<definition name="goNoti" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/noti.jsp"/>
 </definition>
 
 </tiles-definitions>

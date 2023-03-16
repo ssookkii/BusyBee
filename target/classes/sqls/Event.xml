@@ -12,15 +12,20 @@
     `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
     `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
     `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
-     PRIMARY KEY (shedule_id)
+     PRIMARY KEY (sheduleId)
 ); -->
 
+<!-- 외래키 설정
+ALTER TABLE schedule
+ADD FOREIGN KEY (id) references user (id);
+  -->
 
 <mapper namespace="Event">
 
-	<!-- 모든 일정 정보를 조회하는 SQL문 -->
-	<select id="getScheduleList" resultType="mul.cam.a.dto.EventDto">
-	    SELECT * FROM schedule WHERE id = #{id}
+	
+	<!-- 그룹의 일정 정보를 조회하는 SQL문 -->
+	<select id="groupScheduleList" resultType="mul.cam.a.dto.EventDto">
+	    SELECT * FROM schedule WHERE id = #{id} AND groupCode = #{groupCode}
 	</select>
 
 	<!-- 일정 번호를 기준으로 특정 일정 정보를 조회하는 SQL문 -->
@@ -45,7 +50,10 @@
 		DELETE FROM schedule WHERE scheduleId = #{scheduleId}
 	</delete>
 
-
+	<!-- 모든 일정 정보를 조회하는 SQL문 -->
+	<select id="getScheduleList" resultType="mul.cam.a.dto.EventDto">
+	    SELECT * FROM schedule WHERE id = #{id}
+	</select>
 
 </mapper>
 

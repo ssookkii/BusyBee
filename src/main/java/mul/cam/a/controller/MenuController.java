@@ -31,4 +31,27 @@ public class MenuController {
 		
 		return "loginMain";
 	}
+	@GetMapping(value = "goAddgroup.do")
+	public String addgroup() {
+		
+		return "goAddgroup";
+	}
+	
+	@GetMapping(value = "goMygroup.do")
+	public String goMygroup() {
+		
+		return "goMygroup";
+	}
+	
+	@GetMapping(value = "goSearchgroup.do")
+	public String goSearchgroup() {
+		
+		return "goSearchgroup";
+	}
+	
+	@GetMapping(value = "goNoti.do")
+	public String goNoti() {
+		return "goNoti";
+	}
+	
 }

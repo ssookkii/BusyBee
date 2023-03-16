@@ -15,10 +15,6 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	EventDao dao;
 
-	@Override
-	public List<EventDto> getScheduleList(String id) {
-		return dao.getScheduleList(id);
-	}
 
 	@Override
 	public boolean insertSchedule(EventDto dto) {
@@ -39,5 +35,16 @@ public class EventServiceImpl implements EventService {
 	public boolean deleteSchedule(int scheduleId) {
 		return dao.deleteSchedule(scheduleId);
 	}
+
+	@Override
+	public List<EventDto> groupScheduleList(String id, String groupCode) {
+	    return dao.groupScheduleList(id, groupCode);
+	}
+	@Override
+	public List<EventDto> getScheduleList(String id) {
+		return dao.getScheduleList(id);
+	}
+	
+	
 
 }

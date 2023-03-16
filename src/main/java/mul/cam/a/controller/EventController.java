@@ -25,16 +25,13 @@ public class EventController {
     @Autowired
     EventService eventService;
  
-    @GetMapping(value = "eventlist.do", produces = "application/json")
-    @ResponseBody
-    public List<EventDto> eventList(HttpSession session) {
 
-        UserDto login = (UserDto) session.getAttribute("login");
-        String id = login.getId();
-        List<EventDto> list = eventService.getScheduleList(id);
+    @GetMapping(value = "groupeventlist.do", produces = "application/json")
+    @ResponseBody
+    public List<EventDto> groupeventList(@RequestParam String id, @RequestParam String groupCode) {
+        List<EventDto> list = eventService.groupScheduleList(id, groupCode);
         return list;
     }
-
 
 
     @GetMapping(value = "eventwrite.do")
@@ -53,10 +50,10 @@ public class EventController {
 
 
     @GetMapping(value = "eventdetail.do")
-    public String eventDetail(Model model, @RequestParam int seq) {
-        EventDto eventDto = eventService.selectSchedule(seq);
-        model.addAttribute("eventDto", eventDto);
-        return "eventdetail";
+    @ResponseBody
+    public EventDto eventDetail(@RequestParam int scheduleId) {
+        EventDto eventDto = eventService.selectSchedule(scheduleId);
+        return eventDto;
     }
 
     @PostMapping(value = "eventupdate.do")
@@ -72,6 +69,17 @@ public class EventController {
         eventService.deleteSchedule(scheduleId);
         return "success";
     }
+    
+    @GetMapping(value = "eventlist.do", produces = "application/json")
+    @ResponseBody
+    public List<EventDto> eventList(HttpSession session) {
 
+        UserDto login = (UserDto) session.getAttribute("login");
+        String id = login.getId();
+        List<EventDto> list = eventService.getScheduleList(id);
+        return list;
+    }
+
+    
 
 }
