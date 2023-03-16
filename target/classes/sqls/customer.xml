@@ -60,7 +60,8 @@
 
 <delete id="customerDelete" parameterType="mul.cam.a.dto.CustomerDto">
 
-	delete from customer where seq=#{seq}
+	delete from customer
+	where ref=#{ref}
 </delete>
 
 <update id="customerUpdate" parameterType="mul.cam.a.dto.CustomerDto">
@@ -78,15 +79,18 @@
 	set step=step+1
 	where ref=(select ref from (select ref from customer a where seq=#{seq}) A)
 		and step>(select step from (select step from customer b where seq=#{seq}) B)
+
 </update>
 
 <insert id="customerAnswer" parameterType="mul.cam.a.dto.CustomerDto">
-	insert into customer(id, ref, step, depth, title, content, wdate, filename, newfilename )
+	insert into customer(id, ref, step, depth, title, content, wdate, filename, newfilename, secret)
 	values(#{id}, (select ref from customer a where seq=#{seq}),
 				  (select step from customer b where seq=#{seq})+1,
 				  (select depth from customer c where seq=#{seq})+1,
-			#{title}, #{content}, now(),#{filename},#{newfilename}  )
+			#{title}, #{content}, now(),#{filename},#{newfilename}, #{secret}
+			)
 </insert>
+
 
 
 </mapper>

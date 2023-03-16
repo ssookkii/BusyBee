@@ -1,3 +1,4 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@page import="mul.cam.a.util.Utility"%>
 <%@page import="mul.cam.a.dto.CustomerDto"%>
 <%@page import="java.util.List"%>
@@ -87,6 +88,7 @@ font-size: 15px;
 
 <body>
 <%
+UserDto login = (UserDto)session.getAttribute("login");
 
 List<CustomerDto> list = (List<CustomerDto>)request.getAttribute("customer");
 int pageBbs = (Integer)request.getAttribute("pageBbs");
@@ -129,19 +131,37 @@ if(list == null || list.size() == 0){
 			<th><%=i + 1 + (pageNumber * 10) %></th>
 			
 			<td style="text-align: left;">
-<%if(dto.isSecret()){
-	%>
+			
+
+<%if(dto.isSecret()){				// 비밀글 여부
+	//
+	if(dto.getId().equals(login.getId()) || login.getAuth()==3){		// 비밀글일때 본인, 관리자인지 여부
+		%>
 						<%=Utility.arrow(dto.getDepth()) %>
-					<a href="customerDetail.do?seq=<%=dto.getSeq() %>">
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
 						<%=dto.getTitle() %>
 					</a>		
 					<%=Utility.lock(dto.isSecret()) %>
+		
+		<% 
+	}else{
+		%>
+						<%=Utility.arrow(dto.getDepth()) %>
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
+						<%=dto.getTitle() %>
+					</a>		
+					<%=Utility.lock(dto.isSecret()) %>	
+					
+		<% 
+	}
+	%>
+	
 					
 	<% 
 } else{
 	%>
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="customerDetail.do?seq=<%=dto.getSeq() %>">
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
 						<%=dto.getTitle() %>
 					</a>		
 	

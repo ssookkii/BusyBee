@@ -1,9 +1,13 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
+<%@page import="mul.cam.a.dto.MemberDto"%>
 <%@page import="mul.cam.a.dto.CustomerDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
+UserDto login = (UserDto)session.getAttribute("login");
 CustomerDto dto = (CustomerDto) request.getAttribute("dto");
+
 %>
 
 <!DOCTYPE html>
@@ -93,6 +97,13 @@ body {
 				<col style="width: 150px" />
 				<col style="width: 500px" />
 			</colgroup>
+			
+
+			<%if(dto.isSecret()){
+			
+			if(dto.getId().equals(login.getId()) || login.getAuth()==3){
+				%>
+				
 
 			<tr>
 				<th>작성자</th>
@@ -134,14 +145,27 @@ body {
 			onclick="location.href='customer.do'">글목록</button>
 
 
+		<%if(dto.getId().equals(login.getId()) || login.getAuth() == 3 ){
+			
+			%>		
 		<button type="button" class="btn btn-primary"
-			onclick="customerUpdate(<%=dto.getSeq()%>)">수정</button>
+		onclick="customerUpdate(<%=dto.getSeq()%>)">수정</button>
 
 		<button type="button" class="btn btn-primary"
-			onclick="customerDelete(<%=dto.getSeq()%>)">삭제</button>
+			onclick="customerDelete(<%=dto.getRef()%>)">삭제</button>
+			<%
+		}
+		
+		%>
 
+		<%if(login.getAuth()==3){
+			
+		%>
 		<button type="button" class="btn btn-primary"
 			onclick="customerAnswer(<%=dto.getSeq()%>)">답변</button>
+		<%
+		}
+		%>
 
 	</div>
 
@@ -149,14 +173,111 @@ body {
 		<input type="hidden" name="newfilename"> <input type="hidden"
 			name="filename"> <input type="hidden" name="seq">
 	</form>
+	
+					<% 
+			}else{
+				%>
+				<p style="font-size: 30px; align-content: center;">권한이 없습니다.</p>
+				<% 
+			}
+			
+		}else{
+		%>
+			<h1>문의글</h1>
+
+	<hr>
+
+	<div id="app" class="container">
+
+		<table class="table table-striped table-sm">
+			<colgroup>
+				<col style="width: 150px" />
+				<col style="width: 500px" />
+			</colgroup>
+			
+		<tr>
+				<th>작성자</th>
+				<td><%=dto.getId()%></td>
+			</tr>
+
+			<tr>
+				<th>작성일</th>
+				<td><%=dto.getWdate()%></td>
+			</tr>
+			<tr>
+				<th>첨부파일</th>
+				<%
+				if (!dto.getFilename().equals("") && dto.getFilename() != null) {
+				%>
+				<td><input type="button" value="다운로드"
+					onclick="filedown(<%=dto.getSeq()%>, '<%=dto.getNewfilename()%>', '<%=dto.getFilename()%>')">
+				</td>
+
+				<%
+				}
+				%>
+			</tr>
+
+			<tr>
+				<td colspan="2" style="font-size: 22px; font-weight: bold;"><%=dto.getTitle()%></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="background-color: white;"><pre
+						style="font-size: 20px; font-family: 고딕, arial; background-color: white"><%=dto.getContent()%></pre>
+				</td>
+			</tr>
+		</table>
+
+
+		<br>
+
+		<button type="button" class="btn btn-primary"
+			onclick="location.href='customer.do'">글목록</button>
+			
+
+		<%if(dto.getId().equals(login.getId()) || login.getAuth() == 3 ){
+			
+			%>		
+		<button type="button" class="btn btn-primary"
+		onclick="customerUpdate(<%=dto.getSeq()%>)">수정</button>
+
+		<button type="button" class="btn btn-primary"
+			onclick="customerDelete(<%=dto.getRef()%>)">삭제</button>
+			<%
+		}
+		
+		%>
+
+
+		<%if(login.getAuth()==3){
+			
+		%>
+		<button type="button" class="btn btn-primary"
+			onclick="customerAnswer(<%=dto.getSeq()%>)">답변</button>
+		<%
+		}
+		%>
+
+	</div>
+
+	<form name="file_down" action="filedownLoad.do" method="post">
+		<input type="hidden" name="newfilename"> <input type="hidden"
+			name="filename"> <input type="hidden" name="seq">
+	</form>	
+		<% 
+		}
+		
+
+		%>
+			
 
 	<script type="text/javascript">
 function customerUpdate(seq) {
 	location.href="customerUpdate.do?seq="+seq;
 }
 
-function customerDelete(seq) {
-	location.href="customerDelete.do?seq="+seq;
+function customerDelete(ref) {
+	location.href="customerDelete.do?ref="+ref;
 }
 
 function customerAnswer(seq) {

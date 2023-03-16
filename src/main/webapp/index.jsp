@@ -9,7 +9,7 @@
 <body>
 
 <%
-response.sendRedirect("login.do");
+response.sendRedirect("loginMain.do");
 %>
 
 </body>

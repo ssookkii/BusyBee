@@ -86,7 +86,7 @@ padding: 200px 100px;
 <div class="flex-item card border-light mb-3" >
   <div class="card-header" ></div>
     <div class="card-body">
-    <button class="card-button" onclick="memberList()">회원 관리</button>
+    <button class="card-button" onclick="userList()">회원 관리</button>
   </div>
 </div>
 
@@ -108,8 +108,8 @@ padding: 200px 100px;
 
 <script type="text/javascript">
 
-function memberList() {
-	location.href="memberList.do";
+function userList() {
+	location.href="userList.do";
 }
 
 function boardList() {

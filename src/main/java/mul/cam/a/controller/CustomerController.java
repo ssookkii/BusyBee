@@ -227,7 +227,39 @@ String originalFileName = fileload.getOriginalFilename();
 	}
 	
 	@PostMapping(value = "customerAnswerAf.do")
-	public String customerAnswerAf(Model model, CustomerDto dto) {
+	public String customerAnswerAf(Model model, CustomerDto dto,
+								@RequestParam(value = "fileload", required = false)
+								MultipartFile fileload,
+								HttpServletRequest req) {
+		
+		// filename 취득
+				String filename = fileload.getOriginalFilename();	// 원본의 파일명
+				
+				dto.setFilename(filename);	// 원본 파일명(DB)
+				
+				// upload의 경로 설정
+				// server
+				String fupload = req.getServletContext().getRealPath("/upload");
+				
+				// 폴더
+			//	String fupload = "c:\\temp";
+				
+				System.out.println("fupload:" + fupload);
+				
+				// 파일명을 충돌되지 않는 명칭(Date)으로 변경
+				String newfilename = PdsUtil.getNewFileName(filename);
+				
+				dto.setNewfilename(newfilename);	// 변경된 파일명
+				
+				File file = new File(fupload + "/" + newfilename);
+						 
+				try {
+					// 실제로 파일 생성 + 기입 = 업로드
+					FileUtils.writeByteArrayToFile(file, fileload.getBytes());
+					
+				} catch (IOException e) {			
+					e.printStackTrace();
+				}
 		
 		boolean isS = service.customerAnswer(dto);
 		String customerAnswer = "";		

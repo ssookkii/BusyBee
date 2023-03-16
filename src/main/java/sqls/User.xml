@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  
+create table user(
+    id varchar(45) not null primary key,
+    password varchar(20) not null,
+    name varchar(20) not null,
+    birth date,
+    email varchar(30) not null,
+    phone varchar(20) not null,
+    phone_public varchar(5),
+    auth int,
+    profMsg varchar(45),
+    profPic_Origin varchar(20),
+    profPic_Server varchar(20),
+    regidate timestamp
+);
+-->
+
+<mapper namespace="User">
+
+<!-- User 추가 -->
+<insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
+	insert into user(id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count)
+	values(#{id}, #{password}, #{name}, #{birth}, #{email}, #{phone}, #{phone_public}, 3, #{profMsg}, #{profPic_Origin}, #{profPic_Server}, now(), 0)
+</insert>
+	
+	<!-- 유저 리스트 -->
+	<select id="userList" parameterType="mul.cam.a.dto.BbsParam"
+	resultType="mul.cam.a.dto.UserDto">
+	select id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+	from
+			(select row_number()over(order by report_count desc) as rnum,
+			id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+	from user
+	where 1=1 
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'id'">
+	 		and id like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'report_count'">
+	 		and report_count>4
+	 	</if>
+	 	<if test="choice == 'auth'">
+	 		and auth=#{search}
+	 	</if>
+		 </if>		 
+		 order by report_count desc) a
+	where rnum between ${start} and ${end}
+	</select>
+
+<!-- 회원의 총 수 -->
+<select id="getAllUser" parameterType="mul.cam.a.dto.BbsParam" resultType="Integer">
+		select ifnull(count(*), 0)
+	from user
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'id'">
+	 		where id like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'report_count'">
+	 		where report_count>4
+	 	</if>
+	 	<if test="choice == 'auth'">
+	 		where auth=#{search}
+	 	</if>
+	 </if>
+</select>
+
+<!-- ID 중복체크 -->
+<select id="idCheck" parameterType="String" resultType="Integer">
+	select count(*)
+	from user
+	where id=#{id}
+</select>
+
+<!-- Login 확인 -->
+<select id="login" parameterType="mul.cam.a.dto.UserDto" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id} and password=#{password}
+</select>
+
+<update id="userBan" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set auth=2
+	where id=#{id}
+</update>
+
+<update id="userIn" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set auth=1
+	where id=#{id}
+</update>
+
+
+</mapper>

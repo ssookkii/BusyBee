@@ -1,5 +1,10 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+UserDto login = (UserDto)session.getAttribute("login");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +94,7 @@ font-size: 15px;
 <tr>
 	<th>아이디</th>
 	<td>		
-		<input type="hidden" name="id" value="">
+		<input type="hidden" name="id" value="<%=login.getId()%>">
 	</td>
 </tr>
 <tr>

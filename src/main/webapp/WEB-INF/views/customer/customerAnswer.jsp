@@ -129,7 +129,8 @@ body {
 
 		<br> <br> <br> <br> <br>
 
-		<form action="customerAnswerAf.do" id="frm" method="post">
+		<form action="customerAnswerAf.do" id="frm" method="post"
+			enctype="multipart/form-data">
 			<input type="hidden" name="seq" value="<%=dto.getSeq()%>">
 
 
@@ -144,7 +145,7 @@ body {
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td><input type="file" name="fileload"></td>
+					<td><input type="file" name="fileload" value=""></td>
 				</tr>
 				<tr>
 					<th class="align-middle">제목</th>
@@ -156,6 +157,13 @@ body {
 							name="content" class="form-control" placeholder="내용기입"></textarea>
 					</td>
 				</tr>
+				<tr>
+					<th>비밀글</th>
+					<td class="form-inline"><input type="checkbox" name="secret"
+						id="secret" checked="checked"></td>
+
+				</tr>
+
 				<tr>
 
 

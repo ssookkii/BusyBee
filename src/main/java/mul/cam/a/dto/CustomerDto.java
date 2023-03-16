@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class CustomerDto implements Serializable {
 
 	private int seq;		// sequence 글번호
+	private int parent_seq;
 	private String id;		// 작성자
 	
 	private int ref;		// 답글용	 	그룹번호(글번호)	
@@ -19,22 +20,41 @@ public class CustomerDto implements Serializable {
 	private String content;
 	private String wdate;
 	private boolean secret;
-	
- CustomerDto(int seq, String id, int ref, int step, int depth, String filename, String newfilename,
-			String title, String content, String wdate, boolean secret) {
-		super();
-		this.seq = seq;
-		this.id = id;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
-		this.filename = filename;
-		this.newfilename = newfilename;
-		this.title = title;
-		this.content = content;
-		this.wdate = wdate;
-		this.secret = secret;
-	}
+
+
+
+	public CustomerDto(int seq, int parent_seq, String id, int ref, int step, int depth, String filename,
+		String newfilename, String title, String content, String wdate, boolean secret) {
+	super();
+	this.seq = seq;
+	this.parent_seq = parent_seq;
+	this.id = id;
+	this.ref = ref;
+	this.step = step;
+	this.depth = depth;
+	this.filename = filename;
+	this.newfilename = newfilename;
+	this.title = title;
+	this.content = content;
+	this.wdate = wdate;
+	this.secret = secret;
+}
+
+
+
+
+
+	public int getParent_seq() {
+	return parent_seq;
+}
+
+
+
+
+
+public void setParent_seq(int parent_seq) {
+	this.parent_seq = parent_seq;
+}
 
 
 
