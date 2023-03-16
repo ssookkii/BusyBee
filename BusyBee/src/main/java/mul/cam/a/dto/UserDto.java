@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class UserDto implements Serializable {
 
-	String id;
-	String password;
-	String name;
-	String birth;
-	String email;
-	String phone;
-	String phone_public;
-	int auth;
-	String profMsg;
-	String profPic_Origin;
-	String profPic_Server;
-	String regidate;
+	private String id;
+	private String password;
+	private String name;
+	private String birth;
+	private String email;
+	private String phone;
+	private String phone_public;
+	private int auth;
+	private String profMsg;
+	private String profPic_Origin;
+	private String profPic_Server;
+	private String regidate;
 	
 	public UserDto() {
 	}

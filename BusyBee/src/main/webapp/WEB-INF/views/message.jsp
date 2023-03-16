@@ -40,6 +40,63 @@
 			<%
 		}
 	}
+	
+	String addGroup_Msg = (String) request.getAttribute("addGroup_Msg");
+	if(addGroup_Msg!=null && addGroup_Msg!="") {
+		if(addGroup_Msg=="addGroup_SUCCESS") {
+			%>
+			<script>
+			alert('그룹을 생성하였습니다.');
+			location.href="goMygroup.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('그룹 생성에 실패했습니다. 다시 생성해주세요.');
+			location.href="goAddgroup.do";
+			</script>
+			<%
+		}
+	}
+	
+	String addGroupMem_Msg = (String) request.getAttribute("addGroupMem_Msg");
+	if(addGroupMem_Msg!=null && addGroupMem_Msg!="") {
+		if(addGroupMem_Msg=="addGroupMem_SUCCESS") {
+			%>
+			<script>
+			alert('그룹에 가입되었습니다.');
+			location.href="goMygroup.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('그룹 가입에 실패했습니다.');
+			location.href="goSearchgroup.do";
+			</script>
+			<%
+		}
+	}
+	
+	String addNoti_Msg = (String) request.getAttribute("addNoti_Msg");
+	if(addNoti_Msg!=null && addNoti_Msg!="") {
+		if(addNoti_Msg=="addNoti_SUCCESS") {
+			%>
+			<script>
+			alert('그룹 리더에게 가입 신청을 보냈습니다.');
+			location.href="goMygroup.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('가입 신청에 실패했습니다. 다시 시도해주세요.');
+			location.href="goMygroup.do";
+			</script>
+			<%
+		}
+	}
 %>
 
 
