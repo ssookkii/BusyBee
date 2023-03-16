@@ -12,4 +12,6 @@ public interface UserDao {
 	
 	// Login
 	UserDto login(UserDto dto);
+	
+	UserDto selectUser(String id);
 }

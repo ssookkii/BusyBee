@@ -40,4 +40,12 @@ create table user(
 	from user
 	where id=#{id} and password=#{password}
 </select>
+
+<!-- User 검색 -->
+<select id="selectUser" parameterType="String" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id};
+</select>
+
 </mapper>

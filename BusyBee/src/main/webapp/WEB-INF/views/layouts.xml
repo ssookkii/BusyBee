@@ -64,6 +64,10 @@
 	<put-attribute name="content" value="/WEB-INF/views/group/noti.jsp"/>
 </definition>
 
+<!-- 그룹 알림 이동 -->
+<definition name="goManagegroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/managegroup.jsp"/>
+</definition>
 </tiles-definitions>
 
 

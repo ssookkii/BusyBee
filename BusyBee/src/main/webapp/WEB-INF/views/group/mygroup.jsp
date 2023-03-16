@@ -5,32 +5,12 @@
 <%
 	UserDto login = (UserDto) session.getAttribute("login");
 	String id = login.getId();
-	String name = login.getName();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<!-- jQuery -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- jQuery UI CSS -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!-- Bootstrap -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet"
-	href="https://bootswatch.com/5/minty/bootstrap.min.css">
 
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -42,6 +22,7 @@
 <table border="1">
 	<thead>
 	<tr>
+		<th>번호</th>
 		<th>그룹코드</th>
 		<th>그룹명</th>
 		<th>그룹소개</th>
@@ -69,24 +50,32 @@ $(document).ready(function(){
 	
 	var group1;
 	var group2;
+	var count = 1;
 	
 	// Leader
 	$.ajax({
 		url:"http://localhost:8090/BusyBee/selectGroup1.do",
 		type:"get",
 		data:{"id":$("#id").val()},
+		async:false,
 		success:function(data) {
 			if(data!=null && data!="") {
 				var tableTd = '';
 				$.each(data, function(i){
 					tableTd += '<tr>'
+								+ '<td>' + count + '</td>'
 								+ '<td>' + data[i].group_code + '</td>'
 								+ '<td>' + data[i].group_name + '</td>'
 								+ '<td>' + data[i].group_info + '</td>'
 								+ '<td>' + data[i].leader_name + '(' + data[i].leader_id + ')' + '</td>'
 								+ '<td>' + data[i].regidate.substr(0,10) + '</td>'
-								+ '<td>' + '리더' + '</td>'
+								+ '<td>' + "<img src='./images/mark.png' width='15px' height='15px' >" + ' 리더' + '</td>'
+								+ "<td><button type='button' onclick="+ "location.href='goManagegroup.do?group_code="
+									+ data[i].group_code + "'>"
+									+ "그룹 관리</button>"
+								+ "</td>"
 							 + '</tr>';
+					count++;
 				});
 				$("#tableBody").append(tableTd);
 				group1 = true;
@@ -100,7 +89,6 @@ $(document).ready(function(){
 			alert('error');
 		}
 	});
-	
 	// Member
 	$.ajax({
 		url:"http://localhost:8090/BusyBee/selectGroup2.do",
@@ -110,13 +98,20 @@ $(document).ready(function(){
 			if(data!=null && data!="") {
 				var tableTd = '';
 				$.each(data, function(i){
+					var group_code = data[i].group_code;
 					tableTd += '<tr>'
+								+ '<td>' + count + '</td>'
 								+ '<td>' + data[i].group_code + '</td>'
 								+ '<td>' + data[i].group_name + '</td>'
 								+ '<td>' + data[i].group_info + '</td>'
 								+ '<td>' + data[i].leader_name + '(' + data[i].leader_id + ')' + '</td>'
 								+ '<td>' + data[i].regidate.substr(0,10) + '</td>'
+								+ "<td><button type='button' onclick="+ "location.href='delGroupMem.do?id="
+										+ '<%=id %>' +"&group_code=" + data[i].group_code + "'>"
+										+ "그룹탈퇴</button>"
+								+ "</td>"
 							 + '</tr>';
+					count++;
 				});
 				$("#tableBody").append(tableTd);
 				group2 = true;
@@ -148,8 +143,6 @@ $(document).ready(function(){
 	}
 	
 });
-
-
 
 </script>
 </body>

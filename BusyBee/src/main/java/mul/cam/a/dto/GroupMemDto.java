@@ -9,6 +9,13 @@ public class GroupMemDto implements Serializable {
 	private String group_code;
 	private String regidate;
 	
+	// Params for allGroupMem.do
+	private String name;
+	private String email;
+	private String phone;
+	private String phone_public;
+
+	
 	public GroupMemDto() {
 	}
 
@@ -18,6 +25,50 @@ public class GroupMemDto implements Serializable {
 		this.id = id;
 		this.group_code = group_code;
 		this.regidate = regidate;
+	}
+	
+	
+
+	public GroupMemDto(String name, String email, String phone, String phone_public) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.phone_public = phone_public;
+	}
+	
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPhone_public() {
+		return phone_public;
+	}
+
+	public void setPhone_public(String phone_public) {
+		this.phone_public = phone_public;
 	}
 
 	public int getSeq() {
