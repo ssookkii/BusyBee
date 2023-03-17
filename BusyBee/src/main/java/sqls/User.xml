@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  
+create table user(
+    id varchar(45) not null primary key,
+    password varchar(20) not null,
+    name varchar(20) not null,
+    birth date,
+    email varchar(30) not null,
+    phone varchar(20) not null,
+    phone_public varchar(5),
+    auth int,
+    profMsg varchar(45),
+    profPic_Origin varchar(20),
+    profPic_Server varchar(20),
+    regidate timestamp
+);
+-->
+
+<mapper namespace="User">
+
+<!-- User 추가 -->
+<insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
+	insert into user(id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate)
+	values(#{id}, #{password}, #{name}, #{birth}, #{email}, #{phone}, #{phone_public}, 3, #{profMsg}, #{profPic_Origin}, #{profPic_Server}, now())
+</insert>
+
+<!-- ID 중복체크 -->
+<select id="idCheck" parameterType="String" resultType="Integer">
+	select count(*)
+	from user
+	where id=#{id}
+</select>
+
+<!-- Login 확인 -->
+<select id="login" parameterType="mul.cam.a.dto.UserDto" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id} and password=#{password}
+</select>
+
+<!-- User 검색 -->
+<select id="selectUser" parameterType="String" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id};
+</select>
+
+</mapper>
