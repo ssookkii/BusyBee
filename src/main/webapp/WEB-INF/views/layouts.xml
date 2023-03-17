@@ -5,6 +5,28 @@
        
 <tiles-definitions>
 
+<!-- No tiles -->
+<!-- 로그인 -->
+<definition name="loginMain" template="/WEB-INF/views/noTiles/loginMain.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 회원가입(1/2) -->
+<definition name="regi1" template="/WEB-INF/views/noTiles/regi1.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 회원가입(2/2) -->
+<definition name="regi2" template="/WEB-INF/views/noTiles/regi2.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 메세지 -->
+<definition name="message" template="/WEB-INF/views/message.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+
 <!-- 첫 화면 -->
 <definition name="login" template="/WEB-INF/views/layout-tiles.jsp">
 	<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
@@ -36,6 +58,16 @@
 <!-- message 이동 -->
 <definition name="message" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/message.jsp"/>
+</definition>
+
+<!-- bbsdetail 이동 -->
+<definition name="bbsdetail" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbsdetail.jsp"/>
+</definition>
+
+<!-- bbsupdate 이동 -->
+<definition name="bbsupdate" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbsupdate.jsp"/>
 </definition>
 
 </tiles-definitions>

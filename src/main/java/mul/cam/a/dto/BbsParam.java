@@ -6,6 +6,7 @@ public class BbsParam implements Serializable{
 
 	private String choice;	// 제목/내용/작성자
 	private String search;	// 검색어
+	private String category;	// 분류
 	private int pageNumber; // [1][2][3]
 	
 	private int start;
@@ -14,10 +15,11 @@ public class BbsParam implements Serializable{
 	public BbsParam() {
 	}
 
-	public BbsParam(String choice, String search, int pageNumber, int start, int end) {
+	public BbsParam(String choice, String search, String category, int pageNumber, int start, int end) {
 		super();
 		this.choice = choice;
 		this.search = search;
+		this.category = category;
 		this.pageNumber = pageNumber;
 		this.start = start;
 		this.end = end;
@@ -37,6 +39,14 @@ public class BbsParam implements Serializable{
 
 	public void setSearch(String search) {
 		this.search = search;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public int getPageNumber() {
@@ -65,8 +75,10 @@ public class BbsParam implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BbsParam [choice=" + choice + ", search=" + search + ", pageNumber=" + pageNumber + ", start=" + start
-				+ ", end=" + end + "]";
+		return "BbsParam [choice=" + choice + ", search=" + search + ", category=" + category + ", pageNumber="
+				+ pageNumber + ", start=" + start + ", end=" + end + "]";
 	}
+
+	
 	
 }

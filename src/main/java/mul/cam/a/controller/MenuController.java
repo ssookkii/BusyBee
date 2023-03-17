@@ -29,7 +29,11 @@ public class MenuController {
 		return "main";
 	}
 	
-	
+	@GetMapping(value = "loginMain.do")
+	public String loginMain() {
+		
+		return "loginMain";
+	}
 	
 }
 

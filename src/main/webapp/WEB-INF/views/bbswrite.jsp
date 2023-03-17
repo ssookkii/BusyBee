@@ -1,5 +1,14 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+        
+<%
+	UserDto login = (UserDto)session.getAttribute("login");
+	
+%>      
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +37,7 @@
 <tr>
 	<th>아이디</th>
 	<td>
-		<input type="text" id="id" name="id" class="form-control form-control-lg">
+		<input type="text" id="id" name="id" class="form-control form-control-lg" value="<%=login.getId() %>" readonly="readonly">
 	</td>
 </tr>
 <tr>
@@ -46,7 +55,7 @@
 <tr>
 	<th>카테고리</th>
 	<td>
-		<select id="category" name="category" class="form-control form-control-lg" name="category">
+		<select id="category" name="category" class="form-control form-control-lg">
 			<option>아래에서 선택</option>
 			<option value="공지사항">공지사항</option>
 			<option value="일반게시글">일반게시글</option>

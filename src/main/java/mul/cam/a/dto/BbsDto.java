@@ -2,6 +2,72 @@ package mul.cam.a.dto;
 
 import java.io.Serializable;
 
+/*
+-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- busybee_bbs Table Create SQL
+-- 테이블 생성 SQL - busybee_bbs
+CREATE TABLE busybee_bbs
+(
+    `seq`        INT              NOT NULL    AUTO_INCREMENT COMMENT '글번호. 글번호', 
+    `ref`        DECIMAL(8)       NOT NULL    COMMENT '그룹번호. 그룹번호', 
+    `step`       DECIMAL(8)       NOT NULL    COMMENT '행번호. 행번호', 
+    `depth`      DECIMAL(8)       NOT NULL    COMMENT '깊이번호. 깊이번호', 
+    `id`         VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
+    `title`      VARCHAR(200)     NOT NULL    COMMENT '제목. 제목', 
+    `content`    VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
+    `wdate`      TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
+    `readcount`  DECIMAL(8)       NOT NULL    COMMENT '조회수. 조회수', 
+    `org`        VARCHAR(50)      NOT NULL    COMMENT '조직명. 조직명', 
+    `filename`   VARCHAR(50)      NOT NULL    COMMENT '파일명. 파일명', 
+    `newfname`   VARCHAR(50)      NOT NULL    COMMENT '시스템파일명. 시스템파일명', 
+    `category`   VARCHAR(50)      NOT NULL    COMMENT '카테고리', 
+    `del`        INT              NOT NULL    COMMENT '삭제', 
+     PRIMARY KEY (seq)
+);
+
+
+-- busybee_bbscomment Table Create SQL
+-- 테이블 생성 SQL - busybee_bbscomment
+CREATE TABLE busybee_bbscomment
+(
+    `seq`      INT              NOT NULL    COMMENT '글번호. 부모글번호', 
+    `anseq`    INT              NOT NULL    AUTO_INCREMENT COMMENT '댓글번호. 댓글번호', 
+    `id`       VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
+    `content`  VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
+    `wdate`    TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
+     PRIMARY KEY (anseq)
+);
+
+-- Foreign Key 설정 SQL - busybee_bbscomment(seq) -> busybee_bbs(seq)
+ALTER TABLE busybee_bbscomment
+    ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
+        REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - busybee_bbscomment(seq)
+-- ALTER TABLE busybee_bbscomment
+-- DROP FOREIGN KEY FK_busybee_bbscomment_seq_busybee_bbs_seq;
+
+
+-- busybee_star Table Create SQL
+-- 테이블 생성 SQL - busybee_star
+CREATE TABLE busybee_star
+(
+    `id`   VARCHAR(50)    NOT NULL    COMMENT '작성자', 
+    `seq`  INT            NOT NULL    COMMENT '글번호'
+);
+
+-- Foreign Key 설정 SQL - busybee_star(id, seq) -> busybee_bbs(id, seq)
+ALTER TABLE busybee_star
+    ADD CONSTRAINT FK_busybee_star_id_busybee_bbs_id FOREIGN KEY (id, seq)
+        REFERENCES busybee_bbs (id, seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - busybee_star(id, seq)
+-- ALTER TABLE busybee_star
+-- DROP FOREIGN KEY FK_busybee_star_id_busybee_bbs_id;
+
+*/
+
 // BBS  Bulletin Board System
 public class BbsDto implements Serializable {
 

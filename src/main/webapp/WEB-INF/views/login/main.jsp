@@ -1,3 +1,4 @@
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -72,6 +73,10 @@ font-size: 15px;
 
 </head>
 <body>
+<%
+UserDto login = (UserDto)session.getAttribute("login");
+String id = login.getId();
+%>
 <div id="notice" class="card border-light mb-3" style="max-width: 125rem;">
   <div class="card-header">공지사항</div>
   <div class="notice-card-body">
@@ -111,9 +116,6 @@ notice
 
 
 <script type="text/javascript">
-/* function bbsBtn() {
-	location.href = "bbslist.do";
-} */
 </script>
 
 </body>
