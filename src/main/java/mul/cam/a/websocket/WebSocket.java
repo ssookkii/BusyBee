@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -15,6 +17,7 @@ public class WebSocket extends TextWebSocketHandler {
 	// userMap 은 클라이언트 정보를 저장하기 위함. (session id 가 key값, session 전체가 value 값이다)
 	// ConcurrentHashMap 은 HashMap 에서 thread-safe 한 자료형.
 	private Map<String, WebSocketSession> userMap = new ConcurrentHashMap<String, WebSocketSession>();
+	private Map<String, String> userIdMap = new ConcurrentHashMap<String, String>();
 	
 	public WebSocket() {
 		System.out.println("EchoHandler 생성됨 " + new Date());
@@ -27,6 +30,7 @@ public class WebSocket extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결됨 " + session.getId() + " " + new Date());
 		userMap.put(session.getId(), session);
+		
 	}
 
 	// 클라이언트와 접속이 끊겼을 때
@@ -54,7 +58,6 @@ public class WebSocket extends TextWebSocketHandler {
 	// 예외 발생
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		
 		System.out.println(session.getId() + " 예외발생 " + new Date());
 	}
 	

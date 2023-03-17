@@ -45,7 +45,11 @@ String User = (String)session.getAttribute("login");
 	margin: 5px 5px;
 	background-color: rgba(255,255,255, 0.5);
 }
-
+.whisper {
+	background-color: purple;
+	color: white;
+	font-weight: bold;
+}
 #chatHeader {
 	text-align: center;
 }
@@ -94,13 +98,22 @@ String User = (String)session.getAttribute("login");
 	</div>
 </div>
 <div class="item-center margin">
+	<div>
+		<select id="chatOption" onchange="toChatWho()">
+			<option value="toAll">--전체--</option>
+			<option value="toOne">--귓속말--</option>
+		</select>
+		<input type="text" id="sendToWho" disabled placeholder="send to" value="to All"/>
+	</div>
 	<input type="text" id="message" size="50" required />
 	<input type="button" id="sendBtn" value="전송" onclick="send()" />
 </div>
 <input type="button" id="enterBtn" value="입장" onclick="connect()" />
 <input type="button" id="exitBtn" value="나가기" onclick="disconnect()" />
 <script>
+
 var wsocket;
+
 // 접속
 function connect() {
 	
@@ -153,46 +166,83 @@ function onClose(evt) {
 
 // 메시지 송신
 function send() {
-	let id = "<%=User%>";
-	let msg = document.getElementById("message");
-	console.log(msg);
+	const id = "<%=User%>";
+	const msg = document.getElementById("message");
+	const sendToWho = document.getElementById("sendToWho").value; // 모두에게 보낼때 "to All" 귓속말일때 "user name"
+	
 	if (msg.value == "" || msg.value==null) {
 		msg.focus()
+		return;
 	} 
-	wsocket.send("msg:" + id + ":" + msg.value);	// msg:aaa:안녕하세요
-	$("#message").val("");
+	wsocket.send("msg:" + id + ":" + msg.value + ":" + sendToWho);	// msg:aaa:안녕하세요
+	msg.value = "";
 }
 
 // 추가 문자열을 기입
 function appendMessage( msg ) { // msg >> "user이름:message내용"
 	
-	
-	// 메시지를 추가 하고 개행
 	const messageList = msg.split(":");
 	const userId = messageList[0]; 
 	const message = messageList[1];
-	const plusElementMyChat = "<div>" +
-								"<p class='chat-me'>" +
-								 "나 | " + message +
-							    "</p>" +
-							  "</div";
-						
-	const plusElementOtherChat ="<div>" +
-								   "<p class='chat-me'>" +
-									 + userId + " | " + message +
-								   "</p>" +
-								"</div";
+	const sendToWho = messageList[2];
 	
-	if (message === undefined || message == "") return; // 연결메세지이거나 메세지가 비어있으면 아무동작 안함.
+	const chatBox = document.querySelector(".chat-contents");
+	const chatContent = document.createElement("div");
 	
-	// 보낸사람이 자신과 같으면 왼쪽 정렬
-	// 그렇지 않으면 오른쪽 정렬
-	if (userId == "<%=User%>") $(".chat-contents").append(plusElementMyChat);
-	else $(".chat-contents").append(plusElementOtherChat);
-	// 스크롤을 위로 이동 시킨다
-	const chatBox = document.querySelector(".chat-contents")
+
+
+	if (message === undefined || message == "") return; // 만약에라도 메세지가 비어있으면 아무동작 안함.
+	
+	// 자신이 보낸 메세지일경우
+	if (userId == "<%=User%>" && sendToWho == "to All") { 
+		const plusElementMyChat = "<p class='chat-me'>" +
+										 "나 | " + message +
+							      "</p>";
+		
+		chatContent.innerHTML = plusElementMyChat;
+		chatBox.appendChild(chatContent);
+	
+	}
+	// 다른사람이 보낸 전체메세지 일경우
+	else if (userId != "<%=User%>" && sendToWho != "to All") {
+		const plusElementOtherChat = "<p class='chat-other'>" +
+										 + message + " | " + userId +
+									  "</p>";
+		chatContent.innerHTML = plusElemenOtherChat;
+		chatBox.appendChild(chatContent);
+	}
+	
+	// 다른사람이 보낸 귓속말 일경우
+	else if(userId != "<%=User%>" && sendToWho == "<%=User%>"){ 
+		const plusElementOtherChat = "<p class='chat-other whisper'>" +
+										 + message + " | " + userId + ": 귓속말" +
+								     "</p>";
+		chatContent.innerHTML = plusElemenOtherChat;
+		chatBox.appendChild(chatContent);
+	}
+		// 스크롤을 위로 이동 시킨다
 	chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+
+function toChatWho() {
+	//select option 의 value 추출
+	const chatOption = document.getElementById("chatOption");
+	const optionValue = chatOption.options[chatOption.selectedIndex].value;
+	const sendToWho = document.getElementById("sendToWho");
+	// 전체채팅으로 보내면 input 비활성화
+	if (optionValue === "toAll") {
+		sendToWho.setAttribute("disabled", true);
+		sendToWho.value = "to All"
+	}
+	
+	// 귓속말일 경우 input 활성화
+	else if (optionValue === "toOne"){
+		sendToWho.removeAttribute("disabled"); // setAttribute("disable", false) 불가 => 바뀌긴하지만 비활성화가 안풀림
+		sendToWho.value = "";
+	}
+}
+
 </script>
 
 
