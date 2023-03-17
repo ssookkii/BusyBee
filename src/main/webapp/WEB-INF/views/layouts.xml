@@ -23,6 +23,16 @@
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 </definition>
 
+<!-- 채팅 이동 -->
+<definition name="chatHome" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/chat/chatHome.jsp"/>
+</definition>
+
+<!-- 전체채팅 이동 -->
+<definition name="chating" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/chat/chating.jsp"/>
+</definition>
+
 </tiles-definitions>
 
 
