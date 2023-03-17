@@ -25,6 +25,12 @@ public class MenuController {
 		return "main";
 	}
 	
+	@GetMapping(value = "goUserinfo.do")
+	public String goUserinfo() {
+
+		return "goUserinfo";
+	}
+	
 	@GetMapping(value = "loginMain.do")
 	public String loginMain() {
 		
@@ -32,7 +38,7 @@ public class MenuController {
 	}
 	
 	@GetMapping(value = "goAddgroup.do")
-	public String addgroup() {
+	public String goAddgroup() {
 		
 		return "goAddgroup";
 	}

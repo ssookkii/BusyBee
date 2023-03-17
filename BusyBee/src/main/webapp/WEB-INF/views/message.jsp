@@ -41,6 +41,85 @@
 		}
 	}
 	
+	// 프로필사진이 바뀌지 않는 정보수정
+	String updUser_n_Msg = (String) request.getAttribute("updUser_n_Msg");
+	if(updUser_n_Msg!=null && updUser_n_Msg!="") {
+		if(updUser_n_Msg=="updUser_n_SUCCESS") {
+			%>
+			<script>
+			alert('회원정보가 수정되었습니다.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('회원정보 수정에 실패했습니다. 다시 시도해주세요.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		}
+	}
+	
+	// 프로필사진이 바뀌는 정보수정
+	String updUser_y_Msg = (String) request.getAttribute("updUser_y_Msg");
+	if(updUser_y_Msg!=null && updUser_y_Msg!="") {
+		if(updUser_y_Msg=="updUser_y_SUCCESS") {
+			%>
+			<script>
+			alert('회원정보가 수정되었습니다.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('회원정보 수정에 실패했습니다. 다시 시도해주세요.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		}
+	}
+	
+	// 프로필사진이 바뀌는 정보수정(기본 프로필사진)
+	String updUser_b_Msg = (String) request.getAttribute("updUser_b_Msg");
+	if(updUser_b_Msg!=null && updUser_b_Msg!="") {
+		if(updUser_b_Msg=="updUser_b_SUCCESS") {
+			%>
+			<script>
+			alert('회원정보가 수정되었습니다.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('회원정보 수정에 실패했습니다. 다시 시도해주세요.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		}
+	}
+	
+	String delUser_Msg = (String) request.getAttribute("delUser_Msg");
+	if(delUser_Msg!=null && delUser_Msg!="") {
+		if(delUser_Msg=="delUser_SUCCESS") {
+			%>
+			<script>
+			alert('그동안 BusyBee를 사용해주셔서 감사합니다.');
+			location.href="loginMain.do";
+			</script>
+			<%
+		} else {
+			%>
+			<script>
+			alert('계정 삭제에 실패했습니다. 다시 시도해주세요.');
+			location.href="goUserinfo.do";
+			</script>
+			<%
+		}
+	}
+	
 	String addGroup_Msg = (String) request.getAttribute("addGroup_Msg");
 	if(addGroup_Msg!=null && addGroup_Msg!="") {
 		if(addGroup_Msg=="addGroup_SUCCESS") {

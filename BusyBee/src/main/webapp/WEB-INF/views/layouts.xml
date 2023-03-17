@@ -34,6 +34,10 @@
 	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
 </definition>
 
+<definition name="goUserinfo" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/login/userinfo.jsp"/>
+</definition>
+
 <!-- 일정관리 이동 -->
 <definition name="calendar" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/calendar/calendar.jsp"/>

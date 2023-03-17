@@ -5,7 +5,7 @@
 <!--
 (1) 그룹 테이블 만들기
 create table busybGroup(
-    group_code varchar(8) not null primary key,
+    group_code varchar(15) not null primary key,
     group_name varchar(20) not null,
     group_info varchar(30) not null,
     leader_name varchar(20),
@@ -18,7 +18,7 @@ create table busybGroup(
 create table busybGroupMem(
     seq int auto_increment primary key,
     id varchar(20) not null,
-    group_code varchar(8) not null,
+    group_code varchar(15) not null,
     regidate timestamp
 );
 
@@ -31,7 +31,7 @@ create table noti(
     seq int auto_increment primary key,
     to_id varchar(20) not null,
     from_id varchar(20) not null,
-    group_code varchar(8) not null,
+    group_code varchar(15) not null,
     regimsg varchar(30),
     regidate timestamp
 );

@@ -22,6 +22,7 @@
   			/WEB-INF/spring/servlet-context.xml
   			/WEB-INF/spring/aop-context.xml
   			/WEB-INF/spring/file-context.xml
+  			/WEB-INF/spring/emailCerti-context.xml
   		</param-value>
   	</init-param>
   	
