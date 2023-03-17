@@ -4,7 +4,13 @@
 
 	<mapper namespace="Report">
 	
-<!-- 	create table report(
+<!-- 	report_id 신고번호
+	reporter_id 신고자 아이디
+	reported_id 피신고자 아이디
+	report_seq 해당 신고글 -->
+	
+<!--
+ 	create table report(
 
 	report_id int not null primary key,
 	reporter_id varchar(45) not null,

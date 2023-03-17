@@ -15,6 +15,8 @@
 	
 	title varchar(200) not null,
 	content varchar(4000) not null,
+	filename varchar(50) not null,
+	newfilename varchar(50) not null,
 	wdate timestamp not null,
 	secret tinyint(1) not null
 	
