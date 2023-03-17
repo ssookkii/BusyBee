@@ -3,23 +3,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--  
+(1) User table 생성
 create table user(
-    id varchar(45) not null primary key,
-    password varchar(20) not null,
+    id varchar(20) not null primary key,
+    password varchar(70) not null,
     name varchar(20) not null,
     birth date,
     email varchar(30) not null,
     phone varchar(20) not null,
     phone_public varchar(5),
     auth int,
-    profMsg varchar(45),
+    profMsg varchar(30),
     profPic_Origin varchar(20),
     profPic_Server varchar(20),
     regidate timestamp
 );
+
+(2) Email 인증 table 생성
+create table emailCerti(
+    seq int auto_increment primary key,
+    cert_email varchar(20) not null,
+    authkey varchar(8) not null,
+    senddate timestamp
+);
 -->
 
 <mapper namespace="User">
+
+<!-- 이메일 및 인증번호 추가 -->
+<insert id="addCert" parameterType="mul.cam.a.dto.EmailCertiDto">
+	insert into emailCerti(cert_email, authkey, senddate)
+	values(#{cert_email}, #{authkey}, now())
+</insert>
+
+<!-- 인증 확인 -->
+<select id="selectCert" parameterType="mul.cam.a.dto.EmailCertiDto" resultType="Integer">
+	select count(*)
+	from emailCerti
+	where cert_email=#{cert_email} and authkey=#{authkey}
+</select>
+
+<!-- 일일 3회  -->
+<select id="select3" parameterType="String" resultType="Integer">
+	select count(*)
+	from emailCerti
+	where cert_email=#{cert_email}
+</select>
 
 <!-- User 추가 -->
 <insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
@@ -40,4 +69,41 @@ create table user(
 	from user
 	where id=#{id} and password=#{password}
 </select>
+
+<!-- User 검색 -->
+<select id="selectUser" parameterType="String" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id}
+</select>
+
+<!-- User 정보 수정(프로필사진 변경 없을 때) -->
+<update id="updUser_n" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg}
+	where id=#{id}
+</update>
+
+<!-- User 정보 수정(프로필사진 변경 있을 때 : 다른 사진) -->
+<update id="updUser_y" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	profPic_Origin=#{profPic_Origin}, profPic_Server=#{profPic_Server}
+	where id=#{id}
+</update>
+
+<!-- User 정보 수정(프로필사진 변경 있을 때 : 기본 프로필) -->
+<update id="updUser_b" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	profPic_Origin='기본프로필', profPic_Server='basic.png'
+	where id=#{id}
+</update>
+
+<!-- 계정삭제 (서비스 탈퇴) -->
+<delete id="delUser" parameterType="String">
+	delete from user
+	where id=#{id}
+</delete>
+
 </mapper>

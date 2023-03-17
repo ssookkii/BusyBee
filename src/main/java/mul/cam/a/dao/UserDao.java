@@ -1,15 +1,29 @@
 package mul.cam.a.dao;
 
+import mul.cam.a.dto.EmailCertiDto;
 import mul.cam.a.dto.UserDto;
 
 public interface UserDao {
 
+	int addCert(EmailCertiDto dto);
+	int selectCert(EmailCertiDto dto);
+	int select3(String id);
+	
 	// User 추가
-	public int addUser(UserDto dto);
+	int addUser(UserDto dto);
 	
 	// ID 중복체크
-	public int idCheck(String id);
+	int idCheck(String id);
 	
 	// Login
-	public UserDto login(UserDto dto);
+	UserDto login(UserDto dto);
+	
+	UserDto selectUser(String id);
+	
+	int updUser_n(UserDto dto);
+	int updUser_y(UserDto dto);
+	int updUser_b(UserDto dto);
+	
+	int delUser(String id);
+
 }

@@ -13,8 +13,21 @@
 <body>
 
 <form action="regi2.do" id="frm" method="post">
-이메일 : <input type="email" name="email"> <button type="button">인증</button>
-인증번호 : <input type="text"> <button type="button">확인</button>
+이메일 : <input type="text" id="email1">@
+<select id="email2" onchange="ifdirect()">
+	<option>naver.com</option>
+	<option>daum.net</option>
+	<option>gmail.com</option>
+	<option>hanmail.com</option>
+	<option>yahoo.co.kr</option>
+	<option value="direct">직접 입력</option>
+</select>
+<div id="directEmail">
+<input type="hidden" id="isDirect" value="no">
+</div>
+<button type="button" id="emailCert" onclick="doCert()">인증메일 발송</button>
+인증번호 : <input type="text" id="certNum" disabled="disabled" maxlength="6"> <button type="button" id="check" onclick="checkCert()">인증번호 확인</button>
+<input type="hidden" id="cert_OK">
 
 아이디 : <input type="text" id="id" name="id">
 <h3 id="idCheck"></h3>
@@ -33,9 +46,98 @@
 </form>
 
 <script>
+
+var userEmail;
+var authkey;
+
 var id_OK = document.getElementById("id_OK").value;
 var pwd1_OK = document.getElementById("pwd1_OK").value;
 var pwd2_OK = document.getElementById("pwd2_OK").value;
+var cert_OK = document.getElementById("cert_OK").value;
+cert_OK = false;
+
+// EMAIL 인증
+function ifdirect(){
+	
+	if ($("#email2").val()=='direct'){
+		var directE = "<input type='text' id='email3'>"
+		$("#directEmail").append(directE);
+		$("#isDirect").val('yes');
+	} else {
+		$("#email3").remove();
+		$("#isDirect").val('no');
+	}
+}
+
+function doCert() {
+	
+	if ($("#isDirect").val()=='no') {
+		userEmail = $("#email1").val() + '@' + $("#email2").val();
+	} else {
+		userEmail = $("#email1").val() + '@' + $("#email3").val();
+	}
+	var checkCert = $("#certNum").val();
+	
+	$.ajax({
+		url : "select3.do",
+		async:false,
+		type : 'get',
+		data : {"cert_email" : userEmail},
+		success : function(msg) {
+			if(msg=="cert3_FAIL"){
+				alert('일일 최대 인증횟수 3회를 초과했습니다. 다음에 다시 시도해주세요.');
+				$("#certNum").attr('disabled', true);
+				$("#emailCert").attr('disabled', true);
+				$("#check").attr('disabled', true);
+				location.href='loginMain.do';
+			}
+		},
+		error : function(){
+			alert('error');
+		}
+	})
+	
+	$.ajax({
+			url : "mailCheck.do",
+			type : 'get',
+			data : {"email" : userEmail},
+			success : function(data) {
+				$("#certNum").attr('disabled',false);
+				alert('인증번호가 전송되었습니다. 인증은 일일 3회까지 가능합니다.');
+				authkey = data;
+			},
+			error : function(){
+				alert('error');
+			}
+		});
+}
+
+function checkCert(){
+	
+	$.ajax({
+		type : 'get',
+		url : "selectCert.do",
+		data : {"cert_email" : userEmail, "authkey" : $("#certNum").val()},
+		success : function(msg) {
+			if(msg!=null && msg!=""){
+				if(msg=="cert_SUCCESS") {
+					alert("인증되었습니다.");
+					$("#certNum").attr('disabled', true);
+					$("#emailCert").attr('disabled', true);
+					$("#check").attr('disabled', true);
+					cert_OK = true;
+				} else {
+					alert("잘못된 인증번호입니다. 다시 확인해주세요");
+					cert_OK = false;
+				}
+			}
+		},
+		error : function() {
+			alert('error');
+		}
+	});
+	
+}
 
 // ID
 $("#id").keyup(function(e){
@@ -60,7 +162,7 @@ $("#id").keyup(function(e){
 	}
 	
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/idCheck.do",
+		url:"idCheck.do",
 		type:"post",
 		data:{"id":$("#id").val()},
 		success:function(idCheck_Msg) {
@@ -155,8 +257,10 @@ $("#pwd2").keyup(function(){
 });
 
 function go_regi2() {
-	
-	if(!id_OK) {
+
+	if (!cert_OK) {
+		alert('이메일 인증을 진행해주세요.');
+	} else if(!id_OK) {
 		alert('아이디 중복 여부를 확인해주세요.');
 		$("#id").focus();
 	} else if((!pwd1_OK)) {

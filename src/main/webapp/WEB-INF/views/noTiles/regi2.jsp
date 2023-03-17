@@ -18,6 +18,9 @@
 <!-- 파일유효성 검사를 위한 JQuery 버전 -->
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 
+<!-- 비밀번호 암호화(SHA256) -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 </head>
 <body>
 
@@ -31,7 +34,7 @@
 상태메세지 : <input type="text" name="profMsg">
 
 <input type="hidden" name="id" value='<%=id %>'>
-<input type="hidden" name="password" value='<%=password %>'>
+<input type="hidden" id="password" name="password" value='<%=password %>'>
 <input type="hidden" name="email" value='<%=email %>'>
 
 <input type="hidden" id="name_OK">
@@ -41,6 +44,9 @@
 </form>
 
 <script type="text/javascript">
+
+var saltpw = '<%=password%>'.substr(0,2) + '<%=password%>' + '<%=password%>'.substr('<%=password%>'.length-2, '<%=password%>'.length);
+
 
 function knowprof(){
 	alert($("#profPic").val());
@@ -121,6 +127,7 @@ function go_regiAf() {
 		alert('핸드폰 번호를 확인해주세요.');
 		$("#phone").focus();
 	} else {
+		$("#password").val(sha256(saltpw));
 		$("#frm").submit();
 	}
 }

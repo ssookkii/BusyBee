@@ -1,6 +1,7 @@
 package mul.cam.a.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -17,13 +18,17 @@ public class MenuController {
 		
 		return "calendar";
 	}
-
 	 
 	@GetMapping(value = "main.do")
 	public String main() {
 
-		
 		return "main";
+	}
+	
+	@GetMapping(value = "goUserinfo.do")
+	public String goUserinfo() {
+
+		return "goUserinfo";
 	}
 	
 	@GetMapping(value = "loginMain.do")
@@ -31,8 +36,9 @@ public class MenuController {
 		
 		return "loginMain";
 	}
+	
 	@GetMapping(value = "goAddgroup.do")
-	public String addgroup() {
+	public String goAddgroup() {
 		
 		return "goAddgroup";
 	}
@@ -54,4 +60,18 @@ public class MenuController {
 		return "goNoti";
 	}
 	
+	@GetMapping(value = "goManagegroup.do")
+	public String goManagegroup(Model model, String group_code) {
+		
+		model.addAttribute("group_code", group_code);
+		return "goManagegroup";
+	}
+	
 }
+
+
+
+
+
+
+

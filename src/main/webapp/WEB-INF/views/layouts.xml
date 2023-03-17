@@ -4,6 +4,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
        
 <tiles-definitions>
+
 <!-- No tiles -->
 <!-- 로그인 -->
 <definition name="loginMain" template="/WEB-INF/views/noTiles/loginMain.jsp">
@@ -33,6 +34,10 @@
 	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
 </definition>
 
+<definition name="goUserinfo" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/login/userinfo.jsp"/>
+</definition>
+
 <!-- 일정관리 이동 -->
 <definition name="calendar" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/calendar/calendar.jsp"/>
@@ -42,6 +47,7 @@
 <definition name="main" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 </definition>
+
 <!-- 그룹 생성 이동 -->
 <definition name="goAddgroup" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/group/addgroup.jsp"/>
@@ -62,6 +68,10 @@
 	<put-attribute name="content" value="/WEB-INF/views/group/noti.jsp"/>
 </definition>
 
+<!-- 그룹 알림 이동 -->
+<definition name="goManagegroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/managegroup.jsp"/>
+</definition>
 </tiles-definitions>
 
 
