@@ -177,7 +177,7 @@ td {
 			<!-- menu 영역 -->
 			<tr>
 				<td align="left" valign="top"
-					style="background-color: #fffaea; padding: 15px;" height="730px"
+					style="background-color: #fffaea; padding: 15px;" height="765px"
 					width="10%">
 					<tiles:insertAttribute name="menu" /></td>
 

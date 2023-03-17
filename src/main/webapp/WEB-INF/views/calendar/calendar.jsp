@@ -55,23 +55,94 @@ EventDto dto = (EventDto) request.getAttribute("scheduleList");
 UserDto login = (UserDto)session.getAttribute("login");
 String id = login.getId();
 String myGroup = request.getParameter("groupCode");
+String myGroupName = "";
 %>
 
 
 </head>
 <body>
+<script>	
 
-	<script>
-
+function initTimepicker() {
+	  $('#edit-start-time, #edit-end-time').timepicker({
+	    timeFormat: 'HH:mm',
+	    interval: 30,
+	    defaultTime: '9',
+	    minTime: '0',
+	    maxTime: '23',
+	    startTime:'0',
+	    dynamic: false,
+	    dropdown: true,
+	    scrollbar: true
+	  });
+	}	
+		// 캘린더 영역 생성
 	$(document).ready(function() {
 
-		// 캘린더 영역 생성
-		
+		$(document).ready(function(){
+
+		  var group1;
+		  var group2;
+
+		  // Leader
+		  $.ajax({
+		    url:'selectGroup1.do?id=' + '<%=id%>',
+		    type:"get",
+		    success:function(data) {
+		      if(data!=null && data!="") {
+		        var group = '';
+		        $.each(data, function(i){
+		        	if( data[i].group_code === '<%=myGroup%>') { 
+		        		myGroupName = data[i].group_name ;
+			        console.log(myGroupName);
+		        	} });
+		    
+		        group1 = true;
+		      } else if (data==null || data=="") {
+		        group1 = false;
+		      }
+		    }, 
+		    error:function(){
+		      alert('error');
+		    }
+		  });
+
+		  // Member
+		  $.ajax({
+		    url:'selectGroup2.do?id=' + '<%=id%>',
+		    type:"get",
+		    success:function(data) {
+		      if(data!=null && data!="") {
+		        var group = '';
+		        $.each(data, function(i){
+		        	if( data[i].group_code === '<%=myGroup%>') { 
+		        		myGroupName = data[i].group_name ;
+			        	console.log(myGroupName);
+		        	}   });
+		   
+		        group2 = true;
+		      } else if (data==null || data=="") {
+		        group2 = false;
+		      }
+		    },
+		    error:function(){
+		      alert('error');
+		    }
+		  });
+		});
+
+		 setTimeout(function() {
+		      if (myGroupName !== undefined) {
+		        var groupNameElem = $('<div style="text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px;">현재 내 그룹: ' + myGroupName + '</div>');
+		        $('#calendar').before(groupNameElem);
+		      }
+		    }, 100);
+		 
 	    $('#calendar').fullCalendar({
 	        // 일정 데이터
 	        events: function(start, end, timezone, callback) {
 	        	  $.ajax({
-	        		  // 임시 그룹 코드. 
+
 	        		  url: 'groupeventlist.do?id=' + '<%=id%>&groupCode=<%=myGroup%>',
 		                dataType: 'json',
 		                success: function(response) {
@@ -216,7 +287,8 @@ String myGroup = request.getParameter("groupCode");
 		
 			<tr>
 				<td style="width: 60%;">
-					<div id='calendar'></div>
+
+			<div id='calendar'></div>
 					
 				</td>
 				<td>
@@ -396,10 +468,10 @@ String myGroup = request.getParameter("groupCode");
     <div class="modal-content" >
       <div class="modal-header bg-warning text-white">
       </div>
-      <div class="modal-body" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+      <div class="modal-body" style="height: 150px; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="messageCancel">취소</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="messageCancel">확인</button>
       </div>
     </div>
   </div>
@@ -448,7 +520,7 @@ String myGroup = request.getParameter("groupCode");
 
 				  var group1;
 				  var group2;
-				  
+				  var myGroupname='';
 				  // 일단 groupSelector를 먼저 정의한다.
 				  var groupSelector = $("#add-group-selector");
 
@@ -459,9 +531,11 @@ String myGroup = request.getParameter("groupCode");
 				    success:function(data) {
 				      if(data!=null && data!="") {
 				        var group = '';
-				        $.each(data, function(i, item){
+				        $.each(data, function(i){
+				        	if( data[i].group_code === '<%=myGroup%>') { 
+				        	myGroupname = data[i].group_name ;
 					          group += '<option value=' + data[i].group_code + '>' + data[i].group_name + '</option>';
-				        });
+				        	} });
 				        $("#add-group-selector").append(group);
 				        group1 = true;
 				      } else if (data==null || data=="") {
@@ -481,8 +555,10 @@ String myGroup = request.getParameter("groupCode");
 				      if(data!=null && data!="") {
 				        var group = '';
 				        $.each(data, function(i){
+				        	if( data[i].group_code === '<%=myGroup%>') { 
+					        	myGroupname = data[i].group_name ;
 				          group += '<option value=' + data[i].group_code + '>' + data[i].group_name + '</option>';
-				        });
+				        	}   });
 				        $("#add-group-selector").append(group);
 				        group2 = true;
 				      } else if (data==null || data=="") {
@@ -494,6 +570,8 @@ String myGroup = request.getParameter("groupCode");
 				    }
 				  });
 				});
+			
+			
 			// 이전 HTML 코드 저장
 		        previousHTML = $('#event-list').html();
 			
@@ -507,7 +585,7 @@ String myGroup = request.getParameter("groupCode");
 						<div class="card-header"
 							style="height: 40px; font-size: 16px; display: flex; justify-content: center; align-items: center;">일정
 							추가</div>
-							<div class="card-body" style="height: 660px">
+							<div class="card-body" style="height: 600px">
 							 <div class="form-group">
 						      <label for="event-title" style = "font-size: 14px;">일정 제목</label>
 						      <input type="text" class="form-control" id="event-title" placeholder="일정 제목을 입력하세요" style = "font-size: 14px;">
@@ -535,11 +613,10 @@ String myGroup = request.getParameter("groupCode");
 						    
 						    
 						</div>
-						<label for="event-start-date" style = "font-size: 14px;">공유 그룹</label>
+						<label for="event-start-date" style = "font-size: 14px;">현재 내 그룹</label>
 						 <div class="input-group-append">
 						 
-						 <select class="form-control" id="add-group-selector"  style = "font-size: 14px;">
-						 <option value="group1">임시</option>
+						 <select class="form-control" id="add-group-selector"  style = "font-size: 14px; " disabled>
 					    </select>
 					    </div>
 						    <div class="form-group">
@@ -575,10 +652,9 @@ $(document).ready(function() {
   $('#event-start-time, #event-end-time').timepicker({
 	    timeFormat: 'HH:mm',
 	    interval: 30,
-	    defaultTime: '9',
 	    minTime: '0',
 	    maxTime: '23',
-	    startTime:'0',
+	    startTime:'9',
 	    dynamic: false,
 	    dropdown: true,
 	    scrollbar: true
@@ -595,6 +671,26 @@ $(document).ready(function() {
 			    var startDate = $('#event-start-date').val() + 'T' + $('#event-start-time').val();
 			    var endDate = $('#event-end-date').val() + 'T' + $('#event-end-time').val();
 			    
+			    if (!$('#event-start-date').val() || $('#event-start-date').val() === '') {
+			    	  $('#messageConfirmModal .modal-body').html('시작일을 선택해주세요.');
+			    	  $('#messageConfirmModal').modal('show');
+			    	  return;
+			    	}
+			    if (!$('#event-start-time').val() || $('#event-start-time').val() === '') {
+			    	  $('#messageConfirmModal .modal-body').html('시작일 시간을 선택해주세요.');
+			    	  $('#messageConfirmModal').modal('show');
+			    	  return;
+			    	}
+			    if (!$('#event-end-date').val() || $('#event-end-date').val() === '') {
+			    	  $('#messageConfirmModal .modal-body').html('종료일을 선택해주세요.');
+			    	  $('#messageConfirmModal').modal('show');
+			    	  return;
+			    	}
+			    if (!$('#event-end-time').val() || $('#event-end-time').val() === '') {
+			    	  $('#messageConfirmModal .modal-body').html('종료일 시간을 선택해주세요.');
+			    	  $('#messageConfirmModal').modal('show');
+			    	  return;
+			    	}
 			    if ($('#all-day').prop('checked')) {
 				      // 시작일정의 시간을 '00:00'으로 변경
 				      startDate = $('#event-start-date').val() + 'T00:00';
@@ -615,10 +711,15 @@ $(document).ready(function() {
 				 "endDate": endDate,
 				  "description": description
 			    };
-			    
+			    if (!title) {
+		            $('#messageConfirmModal .modal-body').html('제목을 입력해주세요');
+		            $('#messageConfirmModal').modal('show');
+			        return;
+			    }
 			    // 종료 일정 유효성 검사
 			    if (moment(endDate).isSameOrBefore(startDate)) {
-			        alert('종료일은 시작일보다 이후여야 합니다.');
+		            $('#messageConfirmModal .modal-body').html('종료일은 시작일보다 이후여야 합니다.');
+		            $('#messageConfirmModal').modal('show');
 			        return;
 			      }
 				 // 체크박스가 선택된 경우
@@ -676,6 +777,7 @@ $(document).ready(function() {
 				
 				// 일정 수정
 				$('#update-event-btn').off('click').on('click', function() {
+					
 					// datepicker 초기화
 					$(document).ready(function() {												
 					  $('#edit-start-date, #edit-end-date').datepicker({
@@ -691,12 +793,11 @@ $(document).ready(function() {
 					  $('#edit-start-time, #edit-end-time').timepicker({
 						    timeFormat: 'HH:mm',
 						    interval: 30,
-						    minTime: '00:00',
-						    maxTime: '23:00',
+						    minTime: '0',
+						    maxTime: '23',
 						    dynamic: false,
 						    dropdown: true,
-						    appendTo:'body',
-						    scrollbar: true // 확인 버튼 대신 Close 버튼 표시
+						    scrollbar: true
 					});
 					  
 					});
@@ -826,7 +927,7 @@ $(document).ready(function() {
 
   // 일정 목록을 불러와서 현재 날짜와 비교
   $.ajax({
-	url: 'eventlist.do?id=' + '<%=id%>',
+	url: 'groupeventlist.do?id=' + '<%=id%>&groupCode=<%=myGroup%>',
     type: 'get',
     dataType: 'json',
     success: function(data) {
