@@ -86,6 +86,37 @@
 <put-attribute name="content" value="/WEB-INF/views/admin/userList.jsp" />
 </definition>
 
+<!-- 그룹 생성 이동 -->
+<definition name="goAddgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/addgroup.jsp"/>
+</definition>
+
+<!-- 나의 그룹 이동 -->
+<definition name="goMygroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/mygroup.jsp"/>
+</definition>
+
+<!-- 그룹 검색 이동 -->
+<definition name="goSearchgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/searchgroup.jsp"/>
+</definition>
+
+<!-- 그룹 알림 이동 -->
+<definition name="goNoti" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/noti.jsp"/>
+</definition>
+
+<!-- 그룹 알림 이동 -->
+<definition name="goManagegroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/managegroup.jsp"/>
+</definition>
+
+<!-- 그룹 메인 페이지 이동 -->
+<!-- 그룹 알림 이동 -->
+<definition name="groupMainPage" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/main/groupMainPage.jsp"/>
+</definition>
+
 
 </tiles-definitions>
 

@@ -159,6 +159,10 @@ td {
 					<li class="nav-item"><a class="nav-link" href="#">임시 일정관리</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">임시 채팅</a></li>
+					<li class="nav-item"><a class="nav-link" href="goAddgroup.do">그룹 생성</a></li>
+					<li class="nav-item"><a class="nav-link" href="goMygroup.do">내 그룹</a></li>
+					<li class="nav-item"><a class="nav-link" href="goSearchgroup.do">그룹 검색</a></li>
+					<li class="nav-item"><a class="nav-link" href="goNoti.do">그룹 알림</a></li>
 
 				</ul>
 			</div>

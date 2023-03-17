@@ -27,5 +27,9 @@ public interface UserService {
 	
 	// 정지 해제
 	boolean userIn(UserDto dto);
+	
+	UserDto selectUser(String id);
+
+
 
 }

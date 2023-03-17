@@ -28,4 +28,7 @@ public interface UserDao {
 	
 	// 정지 해제
 	int userIn(UserDto dto);
+	
+	UserDto selectUser(String id);
+
 }

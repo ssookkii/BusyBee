@@ -112,4 +112,11 @@ public class UserController {
 		model.addAttribute("loginCheck_Msg", loginCheck_Msg);
 		return "message";
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "selectUser.do")
+	public UserDto selectUser(String id) {
+		
+		return service.selectUser(id);
+	}
 }

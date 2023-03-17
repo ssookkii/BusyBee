@@ -18,6 +18,17 @@ String search = (String)request.getAttribute("search");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
+
 </head>
 <body>
 
@@ -112,8 +123,13 @@ if(list == null || list.size() == 0){
 
 
 <br><br>
+<div class="container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination" style="justify-content:center"></ul>
+    </nav>
+</div>
 
-
+<br><br>
 
 <table style="margin-left: auto; margin-right: auto; margin-top: 3px; margin-bottom: 3px">
 	<tr>

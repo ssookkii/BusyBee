@@ -94,5 +94,12 @@ create table user(
 	where id=#{id}
 </update>
 
+<!-- User 검색 -->
+<select id="selectUser" parameterType="String" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id};
+</select>
+
 
 </mapper>

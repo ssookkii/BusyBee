@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+(1) 그룹 테이블 만들기
+create table busybGroup(
+    group_code varchar(8) not null primary key,
+    group_name varchar(20) not null,
+    group_info varchar(30) not null,
+    leader_name varchar(20),
+    leader_id varchar(20),
+    regidate timestamp
+);
+
+
+(2) 그룹멤버 테이블 만들기
+create table busybGroupMem(
+    seq int auto_increment primary key,
+    id varchar(20) not null,
+    group_code varchar(8) not null,
+    regidate timestamp
+);
+
+(3) 외래키 설정  
+alter table busybGroupMem
+ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+
+(4) 알림 테이블 만들기
+create table noti(
+    seq int auto_increment primary key,
+    to_id varchar(20) not null,
+    from_id varchar(20) not null,
+    group_code varchar(8) not null,
+    regimsg varchar(30),
+    regidate timestamp
+);
+
+(5) 외래키 설정
+alter table noti
+ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+-->
+
+<mapper namespace="Group">
+
+<!-- Group 추가 -->
+<insert id="addGroup" parameterType="mul.cam.a.dto.GroupDto">
+	insert into busybGroup(group_code, group_name, group_info, leader_name, leader_id, regidate)
+	values (left(md5(rand()), 8), #{group_name}, #{group_info}, #{leader_name}, #{leader_id}, now())
+</insert>
+
+<!-- Group에 Member 추가 -->
+<insert id="addGroupMem" parameterType="mul.cam.a.dto.GroupDto">
+	insert into busybGroupMem(id, group_code, regidate)
+	values (#{id}, #{group_code}, now())
+</insert>
+
+<!-- Group에 Member 삭제(탈퇴) -->
+<delete id="delGroupMem" parameterType="mul.cam.a.dto.GroupMemDto">
+	delete from busybGroupMem
+	where id=#{id} and group_code=#{group_code}
+</delete>
+
+<!-- 단일 Group 검색 -->
+<select id="singleGroup" parameterType="String" resultType="mul.cam.a.dto.GroupDto">
+	select *
+	from busybGroup
+	where group_code=#{group_code};
+</select>
+
+<!-- 나의 Group 검색(Leader인 경우) -->
+<select id="selectGroup1" parameterType="String" resultType="mul.cam.a.dto.GroupDto">
+	select *
+	from busybGroup
+	where leader_id=#{id};
+</select>
+
+<select id="selectGroup1Cnt" parameterType="mul.cam.a.dto.GroupDto" resultType="Integer">
+	select count(*)
+	from busybGroup
+	where leader_id=#{leader_id} and group_code=#{group_code};
+</select>
+
+
+<!-- 나의 Group 검색(Group Member인 경우) - Inner Join -->
+<select id="selectGroup2" parameterType="String" resultType="mul.cam.a.dto.GroupDto">
+	select b.group_code, group_name, group_info, leader_name, leader_id, b.regidate
+	from busybGroupMem a, busybGroup b
+	where a.group_code = b.group_code
+	and a.id = #{id};
+</select>
+
+
+
+<select id="selectGroup2Cnt" parameterType="mul.cam.a.dto.GroupMemDto" resultType="Integer">
+	select count(*)
+	from busybGroupMem
+	where id=#{id} and group_code=#{group_code}
+</select>
+
+<!-- 전체 Group 검색 -->
+<select id="allGroup" parameterType="mul.cam.a.dto.GroupDto" resultType="mul.cam.a.dto.GroupDto">
+	select *
+	from busybGroup
+	where 1=1
+		<if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'group_code'">
+		 		and group_code like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'group_name'">
+		 		and group_name like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'leader_name'">
+		 		and leader_name like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'leader_id'">
+		 		and leader_id like concat('%', #{search}, '%')
+		 	</if>
+		 </if>
+</select>
+
+<!-- Group Member 검색 Inner Join-->
+<select id="allGroupMem" parameterType="String" resultType="mul.cam.a.dto.GroupMemDto">
+	select b.id, name, email, phone, phone_public, a.group_code, a.regidate
+	from busybGroupMem a, user b
+	where a.id = b.id
+	and group_code=#{group_code}
+</select>
+
+<!-- Group 정보 수정 -->
+<update id="updGroup" parameterType="mul.cam.a.dto.GroupDto">
+	update busybGroup
+	set group_name=#{group_name}, group_info=#{group_info}
+	where group_code=#{group_code}
+</update>
+
+<!-- Group 리더 수정 -->
+<update id="updLeader" parameterType="mul.cam.a.dto.GroupDto">
+	update busybGroup
+	set leader_name=#{leader_name}, leader_id=#{leader_id}
+	where group_code=#{group_code}
+</update>
+
+<!-- 가입신청시 알림 추가 -->
+<insert id="addNoti" parameterType="mul.cam.a.dto.NotiDto">
+	insert into noti(to_id, from_id, group_code, regimsg, regidate)
+	values(#{to_id}, #{from_id}, #{group_code}, #{regimsg}, now())
+</insert>
+
+<!-- 알림 가져오기 Inner Join-->
+<select id="selectNoti_from" parameterType="String" resultType="mul.cam.a.dto.NotiDto">
+	select c.name, a.from_id, a.group_code, b.group_name, a.regimsg, a.regidate
+	from noti a, busybGroup b, user c
+	where a.group_code = b.group_code
+	and a.from_id = c.id
+	and a.to_id = #{to_id}
+</select>
+
+<select id="selectNoti_to" parameterType="String" resultType="mul.cam.a.dto.NotiDto">
+	select c.name, a.to_id, a.group_code, b.group_name, a.regimsg, a.regidate
+	from noti a, busybGroup b, user c
+	where a.group_code = b.group_code
+	and a.to_id = c.id
+	and a.from_id=#{from_id}
+</select>
+
+<!-- 알림 삭제하기 -->
+<delete id="deleteNoti" parameterType="mul.cam.a.dto.NotiDto">
+	delete from noti
+	where from_id=#{from_id} and group_code=#{group_code}
+</delete>
+
+<!-- 승인 대기중인지 확인  -->
+<select id="duplNoti" parameterType="mul.cam.a.dto.NotiDto" resultType="Integer">
+	select count(*)
+	from noti
+	where from_id = #{from_id} and group_code = #{group_code}
+</select>
+
+<select id="inv_duplNoti" parameterType="mul.cam.a.dto.NotiDto" resultType="Integer">
+	select count(*)
+	from noti
+	where to_id = #{to_id} and group_code = #{group_code}
+</select>
+</mapper>

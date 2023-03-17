@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	@Override
+	public UserDto selectUser(String id) {
+		return dao.selectUser(id);
+	}
+	
 	
 	
 }

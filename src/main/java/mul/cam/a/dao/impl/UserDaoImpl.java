@@ -58,4 +58,9 @@ public class UserDaoImpl implements UserDao {
 		return session.update(ns + "userIn", dto);
 	}
 
+	@Override
+	public UserDto selectUser(String id) {
+		return session.selectOne(ns + "selectUser", id);
+	}
+
 }
