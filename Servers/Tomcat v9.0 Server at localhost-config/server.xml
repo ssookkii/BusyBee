@@ -152,7 +152,11 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="BusyBee" path="/BusyBee" reloadable="true" source="org.eclipse.jst.jee.server:BusyBee"/></Host>
+      <Context docBase="BusyBee" path="/BusyBee" reloadable="true" source="org.eclipse.jst.jee.server:BusyBee"/>
+      
+      <!-- (*) Web에서 local의 이미지를 볼 수 있게 하는 설정  -->
+      <Context docBase="C:\\BusyBeeProject\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\BusyBee\\upload" path="/busyBeeImg/" reloadable="true"/>
+      </Host>
     </Engine>
   </Service>
 </Server>
