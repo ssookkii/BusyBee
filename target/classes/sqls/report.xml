@@ -4,6 +4,21 @@
 
 	<mapper namespace="Report">
 	
+<!-- 	create table report(
+
+	report_id int not null primary key,
+	reporter_id varchar(45) not null,
+	reported_id varchar(45) not null,
+	report_content varchar(200) not null,
+	report_seq int not null,
+	report_type varchar(45) not null,
+	report_date timestamp not null,
+	auth int not null,
+	report_count decimal(8)
+
+); -->
+	
+	
 	<select id="reportList" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.ReportDto">
 	select report_id, reporter_id, reported_id, report_content,
