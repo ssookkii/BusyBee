@@ -1,12 +1,17 @@
 package mul.cam.a.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import mul.cam.a.service.GroupService;
+
 @Controller
 public class MenuController {
-
+	@Autowired
+	GroupService service;
+	
 	@GetMapping(value = "login.do")
 	public String login() {
 		
@@ -66,7 +71,13 @@ public class MenuController {
 		model.addAttribute("group_code", group_code);
 		return "goManagegroup";
 	}
-	
+	/*그룹 메인 페이지 이동*/
+	@GetMapping(value = "groupMainPage.do")
+	public String groupMainPage(Model model, String group_code) {
+		
+		model.addAttribute("group_code", group_code);
+		return "groupMainPage";
+	}
 }
 
 

@@ -74,38 +74,7 @@ font-size: 15px;
 </head>
 <body>
 
-
-<div id="notice" class="card border-light mb-3" style="max-width: 125rem;">
-  <div class="card-header">공지사항</div>
-  <div class="notice-card-body">
-notice
-  </div>
-</div>
-
-<div class="flex-container" >
-
-<div class="flex-item card border-light mb-3" >
-  <div class="card-header" >게시판 영역</div>
-  <div class="card-body">
-    <p class="card-text">임시</p>
-  </div>
-</div>
-
-<div class="flex-item card border-light mb-3">
-  <div class="card-header">일정관리 영역</div>
-  <div class="card-body">
-    <p class="card-text"></p>
-  </div>
-</div>
-
-<div class="flex-item card border-light mb-3">
-  <div class="card-header">친구 영역</div>
-  <div class="card-body">
-    <p class="card-text">임시</p>
-  </div>
-</div>
-
-</div>
+<h1 style=" text-align: center;"><- 그룹을 선택하세요</h1>
 
 </body>
 </html>

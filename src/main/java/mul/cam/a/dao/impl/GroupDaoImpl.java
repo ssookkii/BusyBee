@@ -123,6 +123,7 @@ public class GroupDaoImpl implements GroupDao {
 	public GroupDto selectGroupInfo(String group_code) {
 	    return session.selectOne(ns + "selectGroupInfo", group_code);
 	}
+	
 }
 	
 	

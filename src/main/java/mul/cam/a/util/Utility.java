@@ -3,7 +3,7 @@ package mul.cam.a.util;
 public class Utility {
 
 	public static String arrow(int depth){
-		String img = "<img src='./images/arrow.png' width='20px' height='20px' />&nbsp;";	
+		String arrow = "┗";	
 		String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
 		
 		String ts = "";
@@ -11,6 +11,14 @@ public class Utility {
 			ts += nbsp;
 		}
 		
-		return depth==0?"":ts + img;
+		return depth==0?"":ts + arrow;
 	}
+	
+	public static String lock(boolean sceret){
+		String lock = "&nbsp;<img src='./images/lock.png' width='15px' height='15px' />";	
+		
+		
+		return sceret?lock:"";
+	}
+	
 }
