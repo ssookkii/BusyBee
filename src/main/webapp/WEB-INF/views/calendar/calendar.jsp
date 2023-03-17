@@ -587,19 +587,19 @@ function initTimepicker() {
 							추가</div>
 							<div class="card-body" style="height: 600px">
 							 <div class="form-group">
-						      <label for="event-title" style = "font-size: 14px;">일정 제목</label>
-						      <input type="text" class="form-control" id="event-title" placeholder="일정 제목을 입력하세요" style = "font-size: 14px;">
+						      <label for="event-title" style = "font-size: 14px;" >일정 제목</label>
+						      <input type="text" class="form-control" id="event-title" placeholder="일정 제목을 입력하세요" style = "font-size: 14px;" autocomplete="off">
 						    </div>
 						    
 						    <div class="form-group">
 						    <label for="event-start-date" style = "font-size: 14px;">일정</label>
 						    <div class="input-group date">
 						    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-						        <input type="text" class="form-control datetimepicker-input" id="event-start-date" data-target="#event-start-date" placeholder="시작일" style = "font-size: 14px;">
-						        <input type="text" class="form-control datetimepicker-input" id="event-start-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;">
+						        <input type="text" class="form-control datetimepicker-input" id="event-start-date" data-target="#event-start-date" placeholder="시작일" style = "font-size: 14px;" autocomplete="off">
+						        <input type="text" class="form-control datetimepicker-input" id="event-start-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
 						        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-						        <input type="text" class="form-control datetimepicker-input" id="event-end-date" data-target="#event-start-date" placeholder="종료일" style = "font-size: 14px;">
-						        <input type="text" class="form-control datetimepicker-input" id="event-end-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;">
+						        <input type="text" class="form-control datetimepicker-input" id="event-end-date" data-target="#event-start-date" placeholder="종료일" style = "font-size: 14px;" autocomplete="off">
+						        <input type="text" class="form-control datetimepicker-input" id="event-end-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
 						        <div class="input-group-append" data-target="#event-start-date">
 						        <div class="input-group-text">
 						        <input type="checkbox" id="all-day" aria-label="all-day" style="margin-top: 1px;">
@@ -777,7 +777,7 @@ $(document).ready(function() {
 				
 				// 일정 수정
 				$('#update-event-btn').off('click').on('click', function() {
-					
+
 					// datepicker 초기화
 					$(document).ready(function() {												
 					  $('#edit-start-date, #edit-end-date').datepicker({
@@ -803,6 +803,7 @@ $(document).ready(function() {
 					});
 
 
+						
 					  var eventId = $(this).data('scheduleId');
 					  var scheduleId = $(this).data('scheduleId'); // 모달창에 전달할 scheduleId
 					  
@@ -810,31 +811,50 @@ $(document).ready(function() {
 					  var event = events.filter(function(event) {
 					    return event.scheduleId === eventId;
 					  })[0];
+					  
 
-
+					 
 					$('#eventModal').modal('hide');
 					$('#editEventModal').modal('show');
-					$('#editEventModalLabel').html('<form action="eventupdate.do" id="frm" method="post"><input type="text" id="edit-title" data-eventid="' + event.scheduleId + '" value="[수정] ' + event.title + '">');
+					
+					$('#editEventModalLabel').html('<form action="eventupdate.do" id="frm" method="post"><input type="text" id="edit-title" data-eventid="' + event.scheduleId + '" value="[수정] ' + event.title + '"autocomplete="off">');
 
 					$('#editEventDate').html('<div class="form-group">' +
 						    '<label for="event-start-date" style="font-size: 14px;">일정</label>' +
 						    '<div class="input-group date">' +
 						    '<div class="input-group-text"><i class="fa fa-calendar"></i></div>' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-date" value="' + event.start.format('YYYY-MM-DD') + '" style="font-size: 14px;">' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-time" value="' + event.start.format('HH:mm') + '" style="font-size: 14px;">' +
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-date" value="' + event.start.format('YYYY-MM-DD') + '" style="font-size: 14px;" autocomplete="off">' +
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-start-time" value="' + event.start.format('HH:mm') + '" style="font-size: 14px;" autocomplete="off">' +
 						    
 						    '<div class="input-group-text"><i class="fa fa-calendar"></i></div>' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-date" value="' + event.end.format('YYYY-MM-DD') + '" style="font-size: 14px;"> ' +
-						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-time" value="' + event.end.format('HH:mm') + '" style="font-size: 14px;">' +
-						
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-date" value="' + event.end.format('YYYY-MM-DD') + '" style="font-size: 14px;" autocomplete="off"> ' +
+						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-time" value="' + event.end.format('HH:mm') + '" style="font-size: 14px;" autocomplete="off">' +
 						    '<div class="input-group-append" data-target="#edit-start-date">' +
-						    
+						    '<div class="input-group-text">' +
+						    '<input type="checkbox" id="all-day-update" name="all-day-update" aria-label="all-day-update" style="margin-top: 1px;">'+
+						    '<label for="all-day-update" style="margin-bottom: 0; font-size: 14px; margin-left: 5px;">종일</label>'+
+
 						    '</div>' +
 						    '</div>' +
 						    '</div>' +
 
 						    '</form>');
-
+					$('#all-day-update').on('change', function() {
+					    // 체크박스가 체크되면 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 비활성화
+					    if (this.checked) {
+					        console.log('checked');
+					        // 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 비활성화
+					        $('#edit-start-time, #edit-end-date, #edit-end-time').prop('disabled', true);
+					        // 시작일정의 시간을 '00:00'으로 변경
+					        $('#edit-start-time').val('00:00');
+					        // 종료일정의 날짜를 시작일정과 동일한 날짜로 변경
+					        $('#edit-end-date').val($('#edit-start-date').val());
+					        $('#edit-end-time').val('23:59');
+					    } else {
+					        // 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 활성화
+					        $('#edit-start-time, #edit-end-date, #edit-end-time').prop('disabled', false);
+					    }
+					}); 
 					$('.edit-event-description').html('<textarea id="edit-description" style="width:470px; height: 300px;">' + event.description + '</textarea>');
 					$('#edit-save-event-btn').data('scheduleId', scheduleId); 
 

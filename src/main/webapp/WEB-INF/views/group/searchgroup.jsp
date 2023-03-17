@@ -47,7 +47,7 @@ $("#search").keyup(function(){
 	}
 	
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/allGroup.do",
+		url:"allGroup.do",
 		type:"get",
 		data:{"choice":$("#choice").val(), "search":$("#search").val()},
 		success:function(data){
