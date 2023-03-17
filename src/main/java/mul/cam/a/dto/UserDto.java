@@ -1,3 +1,4 @@
+
 package mul.cam.a.dto;
 
 import java.io.Serializable;
@@ -16,12 +17,17 @@ public class UserDto implements Serializable {
 	String profPic_Origin;
 	String profPic_Server;
 	String regidate;
+	int reported_count;
 	
 	public UserDto() {
 	}
 	
-	public UserDto(String id, String password, String name, String birth, String email, String phone, String phone_public,
-			int auth, String profMsg, String profPic_Origin, String profPic_Server, String regidate) {
+
+
+
+	public UserDto(String id, String password, String name, String birth, String email, String phone,
+			String phone_public, int auth, String profMsg, String profPic_Origin, String profPic_Server,
+			String regidate, int reported_count, int seq) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -35,8 +41,12 @@ public class UserDto implements Serializable {
 		this.profPic_Origin = profPic_Origin;
 		this.profPic_Server = profPic_Server;
 		this.regidate = regidate;
+		this.reported_count = reported_count;
 	}
-	
+
+
+
+
 	public UserDto(String id, String password) {
 		super();
 		this.id = id;
@@ -119,6 +129,24 @@ public class UserDto implements Serializable {
 	public void setRegidate(String regidate) {
 		this.regidate = regidate;
 	}
+
+
+
+	public int getReported_count() {
+		return reported_count;
+	}
+
+
+
+	public void setReported_count(int reported_count) {
+		this.reported_count = reported_count;
+	}
+
+	
+	
+
+
+	
 	
 	
 	

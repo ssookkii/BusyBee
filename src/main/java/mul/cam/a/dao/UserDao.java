@@ -12,4 +12,19 @@ public interface UserDao {
 	
 	// Login
 	public UserDto login(UserDto dto);
+	
+	// 유저 리스트
+	List<UserDto> userList(BbsParam param);
+	
+	// 유저 총 수
+	int getAllUser(BbsParam param);
+	
+	// 유저 정지
+	int userBan(UserDto dto);
+	
+	// 정지 해제
+	int userIn(UserDto dto);
+	
+	UserDto selectUser(String id);
+
 }

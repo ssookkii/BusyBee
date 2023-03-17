@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -60,7 +61,7 @@ $("#id").keyup(function(e){
 	}
 	
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/idCheck.do",
+		url:"idCheck.do",
 		type:"post",
 		data:{"id":$("#id").val()},
 		success:function(idCheck_Msg) {

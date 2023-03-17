@@ -10,6 +10,7 @@
 	<!-- spring MVC annotation(주석문, 지시문)을 사용하기 위한 설정 --> 
 	<context:annotation-config />
 		
+<<<<<<< HEAD
 	<!-- 
 		view폴더의 위치, 확장자명을 설정
 		
@@ -30,6 +31,34 @@
  		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
 	</bean>
 	 
+=======
+		
+		
+	<!-- 		
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	 -->
+	 
+	<!-- tiles 설정 --> 
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/layouts.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="requestContextAttribute" value="requestContext"/>
+ 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	</bean>
+	 
+	
+	
+	
+>>>>>>> refs/remotes/origin/iye
 	
 	<!-- 공통 팩키지(경로) -->
 	<context:component-scan base-package="mul.cam.a"/>

@@ -11,6 +11,16 @@
 		<property name="defaultEncoding" value="utf-8"/>
 		<property name="uploadTempDir" value="upload"/>
 	</bean>
+	
+	<!-- download -->
+	<bean id="downloadView" class="mul.cam.a.util.DownloadView"></bean>
+	<!-- DownloadView downloadView = new DownloadView(); -->
+	
+	<bean id="downloadViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order">
+			<value>0</value>
+		</property>	
+	</bean>
 
 </beans>
 	

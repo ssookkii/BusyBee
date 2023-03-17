@@ -13,4 +13,11 @@ public class Utility {
 		
 		return depth==0?"":ts + img;
 	}
+	
+	public static String lock(boolean sceret){
+		String lock = "&nbsp;<img src='./images/lock.png' width='15px' height='15px' />";	
+		
+		
+		return sceret?lock:"";
+	}
 }
