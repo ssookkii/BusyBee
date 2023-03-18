@@ -6,18 +6,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-public class WebSocket extends TextWebSocketHandler {
+import mul.cam.a.dto.ChatMessageDto;
+import mul.cam.a.service.ChatMessageService;
 
+public class WebSocket extends TextWebSocketHandler {
+	
 	// 프론트로부터 소켓에 접속 받으면 클라이언트 정보를 userNap
 	// userMap 은 클라이언트 정보를 저장하기 위함. (session id 가 key값, session 전체가 value 값이다)
 	// ConcurrentHashMap 은 HashMap 에서 thread-safe 한 자료형.
 	private Map<String, WebSocketSession> userMap = new ConcurrentHashMap<String, WebSocketSession>();
-	private Map<String, String> userIdMap = new ConcurrentHashMap<String, String>();
 	
 	public WebSocket() {
 		System.out.println("EchoHandler 생성됨 " + new Date());
@@ -43,12 +47,9 @@ public class WebSocket extends TextWebSocketHandler {
 	// 메시지 수신(recv)&송신(send)
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("보낸 세션: "+ session);
-		System.out.println("보낸 메세지: "+ message);
-		System.out.println("message: " + message.getPayload());
 		// 수신(recv)
-		System.out.println("메시지 수신:" + message.getPayload() + " " + new Date());
-		
+		// System.out.println("message: " + message.getPayload());
+				
 		// 송신(send) - 모든 client(session)에 전송	
 		for(WebSocketSession s : userMap.values()) {
 			s.sendMessage(message);			

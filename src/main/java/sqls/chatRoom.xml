@@ -4,29 +4,34 @@
 <!-- 
 
 create table chatRoom(
-	roomName varchar(50) not null,
+	roomId varchar(45) not null,
+    title varchar(45) not null,
     descriptions varchar(100),
-    roomNumber int not null auto_increment,
     members varchar(100) not null,
-	createdBy varchar(45),
-    createdAt datetime,
-    primary key (roomNumber)
+    createdBy varchar(20) not null,
+    createdAt datetime not null
 );
+ALTER TABLE chatRoom
+ADD primary key(roomId);
 
  -->
 <mapper namespace="ChatRoom">
-	<insert id="createChatRoom" parameterType="mul.cam.a.dto.ChatRoomDto">
-		insert into chatRoom(roomName, descriptions, members, createdBy, createdAt)
-		values(#{roomName}, #{descriptions}, #{members}, #{createdBy}, now())
-	</insert>
+
 	<select id="printAllChatRoom" resultType="mul.cam.a.dto.ChatRoomDto" parameterType="String">
-		select roomName, descriptions, roomNumber, members, createdBy, createdAt
+		select roomId, title, descriptions, members, createdBy, createdAt
 		from chatRoom
 		where members like concat("%/",#{userId},"/%")
 	</select>
+	
+	<insert id="createChatRoom" parameterType="mul.cam.a.dto.ChatRoomDto">
+		insert into chatRoom(roomId, title, descriptions, members, createdBy, createdAt)
+		values(#{roomId}, #{title}, #{descriptions}, #{members}, #{createdBy}, now())
+	</insert>
+	
 	<select id="chatRoomInfo" resultType="mul.cam.a.dto.ChatRoomDto" parameterType="String">
-		select roomName, descriptions, roomNumber, members, createdBy, createdAt
+		select roomId ,title, descriptions, members, createdBy, createdAt
 		from chatRoom
-		where roomNumber=#{roomNumber}
+		where roomId=#{roomId}
 	</select>
+	
 </mapper>

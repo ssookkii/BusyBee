@@ -1,10 +1,12 @@
 
+<%@page import="mul.cam.a.dto.ChatRoomDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
 String User = (String)session.getAttribute("User");
+List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChatRoom");
 System.out.println(User);
 %>
 <!DOCTYPE html>
@@ -36,6 +38,7 @@ li {
 #createChatBtn {
 	width: 300px;
 	height: 100px;
+	font-size: 40px;
 	background-color: gray;
 	color: white;
 	margin-bottom: 50px;
@@ -43,7 +46,7 @@ li {
 
 #createChatBtn:hover{
 	background-color:black;
-	opacity: 0.2 1s;
+	transition: 2s;
 }
 
 #modal {
@@ -72,7 +75,7 @@ li {
 
 #chatList {
 	display: flex;
-	height: 300px;
+	height: 400px;
 	justify-content: center;
 	align-items: center;
 }
@@ -81,6 +84,7 @@ li {
 	width: 200px;
 	height: 60px;
 	border-radius: 15px;
+	margin: 50px;
 }
 .show {
 	display: inline-flex !important;
@@ -92,11 +96,25 @@ li {
 .chat {
 	display: inline-block;
 	text-align: left;
+	text-decoration: none;
 	width: 300px;
 	height: 200px;
 	border: 5px solid yellow;
 	border-radius: 15px;
 	margin: 10px;
+	
+	list-style: none;
+}
+
+.chat:hover {
+	text-decoration: none;
+	cursor: pointer;
+	transform: scale(1.1);
+	transition: transform 1s;
+}
+.cjat:action {
+	transform: scale(0.9);
+	transition: transform 1s;
 }
 
 .center {
@@ -105,7 +123,8 @@ li {
 .flexible {
 	display: inline-flex;
 	justify-content: center;
-	align-items: center
+	align-items: center;
+	width: 100%;
 }
 
 @keyframes fadein {
@@ -120,7 +139,11 @@ li {
 </head>
 <body>
 	<div id="ChatContainer">
-		<button id="createChatBtn">Create Chat!</button>
+		<div class="flexible">
+			<div>
+				<button id="createChatBtn">Create Chat!</button>
+			</div>
+		</div>
 		<div id="modal">
 			<div id="modalBtn">
 				<button id="closeModal">X</button>
@@ -128,20 +151,46 @@ li {
 			<div>
 				<h3>Create Your Chat!</h3>
 				<form method="POST" id="ChatForm">
-					<input id="roomName" name="roomName" type="text" placeholder="Chat Name" required/><br/>
-					<input id="description" name="descriptions" type="text" placeholder="description" required/><br/>
-					<input id="member" name="members" type="text" placeholder="member" /><br/>
+					<input id="roomId" name="roomId" type="text" placeholder="Chat ID(identifier)" required /><br/>
+					<input id="title" name="title" type="text" placeholder="Chat Name" required/><br/>
+					<input id="description" name="description" type="text" placeholder="description" required/><br/>
+					<input id="member" name="member" type="text" placeholder="member" /><br/>
 					<input type="submit" value="Create Chat!"/> 
 				</form>
-			
 			</div>
 		</div>
 		<div id="chatList">
+		<%
+		// 참여하고 있는 방이없으면 
+		if (allChatRoom == null) {
+			%>
+			<h1>참여하고있는 채팅방이 없습니다.</h1>
+			<% 
+		}else{
+		// 침여하고 있는 방 표시
+			for (ChatRoomDto chatRoom: allChatRoom){
+				%>
+				<div class="chat">
+					<a href="chatRoom/<%=chatRoom.getRoomId()%>.do" target="_blank">
+						<ul>
+							<li>chat name || <%=chatRoom.getRoomId()%></li>
+							<li>host || <%=chatRoom.getCreatedBy()%></li>
+							<li>member || <%=chatRoom.getMembers()%></li>
+							<li>description || <%=chatRoom.getDescriptions() %></li>
+						</ul>
+					</a>
+				</div>
+				<% 
+			}
+		}
+		%>
 		</div>
 		<hr>
-		<div class="center">
-			<h3>전체채팅방입장!</h3>
-			<Button id="chatForAll">입장</Button>
+		<div class="flexible">
+			<div>
+				<h1 style="text-align:center;">전체 채팅방</h1>
+				<Button id="chatForAll">입장</Button>
+			</div>
 		</div>
 	</div>
 <script>
@@ -153,7 +202,8 @@ const chatForm = document.getElementById("ChatForm");
 const chatForAllBtn = document.getElementById("chatForAll");
 
 const clickCreateChatBtn = () => {
-	document.getElementById("roomName").value = "";
+	document.getElementById("roomId").value = "";
+	document.getElementById("title").value = "";
 	document.getElementById("description").value = "";
 	document.getElementById("member").value = "";
 	if (!modalWindow.classList.contains("show")) modalWindow.classList.add("show");
