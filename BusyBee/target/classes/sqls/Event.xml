@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- CREATE TABLE Schedule (
+    `scheduleId`   INT              NOT NULL    AUTO_INCREMENT COMMENT '일정 고유 번호', 
+    `id`           VARCHAR(45)      NULL        COMMENT '사용자 id', 
+    `title`        VARCHAR(200)     NULL        COMMENT '일정 제목', 
+    `description`  VARCHAR(3000)    NOT NULL    COMMENT '일정 상세',
+    `startDate`   DATETIME         NULL        COMMENT '일정 시작 날짜', 
+    `endDate`     DATETIME         NULL        COMMENT '일정 종료 날짜', 
+    `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
+    `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
+    `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
+     PRIMARY KEY (sheduleId)
+); -->
+
+<!-- 외래키 설정
+ALTER TABLE schedule
+ADD FOREIGN KEY (id) references user (id);
+  -->
+
+<mapper namespace="Event">
+
+	
+	<!-- 그룹의 일정 정보를 조회하는 SQL문 -->
+	<select id="groupScheduleList" resultType="mul.cam.a.dto.EventDto">
+	    SELECT * FROM schedule WHERE id = #{id} AND groupCode = #{groupCode}
+	</select>
+
+	<!-- 일정 번호를 기준으로 특정 일정 정보를 조회하는 SQL문 -->
+	<select id="selectSchedule" parameterType="int" resultType="mul.cam.a.dto.EventDto">
+		SELECT * FROM schedule WHERE scheduleId = #{scheduleId}
+	</select>
+
+<!-- 새로운 일정을 추가하는 SQL문 -->
+<insert id="insertSchedule" parameterType="mul.cam.a.dto.EventDto">
+  INSERT INTO schedule (id, title, description, startDate, endDate, groupCode, isPublic, isAllDay)
+  VALUES (#{id}, #{title}, #{description}, #{startDate}, #{endDate}, #{groupCode}, 0, 0)
+</insert>
+
+	<!-- 기존 일정 정보를 수정하는 SQL문 -->
+	<update id="updateSchedule" parameterType="mul.cam.a.dto.EventDto">
+		UPDATE schedule SET title = #{title}, description = #{description}, startDate = #{startDate}, endDate = #{endDate}, isAllDay = #{isAllDay}
+		WHERE scheduleId = #{scheduleId}
+	</update>
+
+	<!-- 일정 번호를 기준으로 기존 일정 정보를 삭제하는 SQL문 -->
+	<delete id="deleteSchedule" parameterType="int">
+		DELETE FROM schedule WHERE scheduleId = #{scheduleId}
+	</delete>
+
+	<!-- 모든 일정 정보를 조회하는 SQL문 -->
+	<select id="getScheduleList" resultType="mul.cam.a.dto.EventDto">
+	    SELECT * FROM schedule WHERE id = #{id}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

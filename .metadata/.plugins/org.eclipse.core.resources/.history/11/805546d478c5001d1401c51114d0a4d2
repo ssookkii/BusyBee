@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  
+(1) User table 생성
+create table user(
+    id varchar(20) not null primary key,
+    password varchar(70) not null,
+    name varchar(20) not null,
+    birth date,
+    email varchar(30) not null,
+    phone varchar(20) not null,
+    phone_public varchar(5),
+    auth int,
+    profMsg varchar(30),
+    profPic_Origin varchar(20),
+    profPic_Server varchar(20),
+    regidate timestamp,
+    report_count decimal(8)
+);
+
+(2) Email 인증 table 생성
+create table emailCerti(
+    seq int auto_increment primary key,
+    cert_email varchar(20) not null,
+    authkey varchar(8) not null,
+    senddate timestamp
+);
+-->
+
+<mapper namespace="User">
+
+<!-- 이메일 및 인증번호 추가 -->
+<insert id="addCert" parameterType="mul.cam.a.dto.EmailCertiDto">
+	insert into emailCerti(cert_email, authkey, senddate)
+	values(#{cert_email}, #{authkey}, now())
+</insert>
+
+<!-- 인증 확인 -->
+<select id="selectCert" parameterType="mul.cam.a.dto.EmailCertiDto" resultType="Integer">
+	select count(*)
+	from emailCerti
+	where cert_email=#{cert_email} and authkey=#{authkey}
+</select>
+
+<!-- 인증되면 해당 이메일과 관련된 인증번호 DB 전부 삭제 -->
+<delete id="delCert" parameterType="String">
+	delete from emailCerti
+	where cert_email=#{cert_email}
+</delete>
+
+<!-- 일일 3회  -->
+<select id="select3" parameterType="String" resultType="Integer">
+	select count(*)
+	from emailCerti
+	where cert_email=#{cert_email}
+</select>
+
+<!-- User 추가(프로필사진 있을 때) -->
+<insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
+	insert into user(id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count)
+	values(#{id}, #{password}, #{name}, #{birth}, #{email}, #{phone}, #{phone_public}, 3, #{profMsg}, #{profPic_Origin}, #{profPic_Server}, now(), 0)
+</insert>
+
+<!-- User 추가(프로필 사진 없을 때) -->
+<insert id="addUser_N" parameterType="mul.cam.a.dto.UserDto">
+	insert into user(id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate)
+	values(#{id}, #{password}, #{name}, #{birth}, #{email}, #{phone}, #{phone_public}, 3, #{profMsg}, '', 'basic.png', now())
+</insert>
+
+<!-- ID검색 -->
+<select id="findId" parameterType="mul.cam.a.dto.UserDto" resultType="mul.cam.a.dto.UserDto">
+	select id, regidate
+	from user
+	where name=#{name} and email=#{email}
+</select>
+
+<!-- Pwd 인증번호 전송을 위한 검색-->
+<select id="findforPwd" parameterType="mul.cam.a.dto.UserDto" resultType="Integer">
+	select count(*)
+	from user
+	where name=#{name} and email=#{email} and id=#{id}
+</select>
+
+<!-- Pwd 재설정 -->
+<update id="updPwd" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set password=#{password}
+	where id=#{id}
+</update>
+	
+	<!-- 유저 리스트 -->
+	<select id="userList" parameterType="mul.cam.a.dto.BbsParam"
+	resultType="mul.cam.a.dto.UserDto">
+	select id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+	from
+			(select row_number()over(order by report_count desc) as rnum,
+			id, password, name, birth, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+	from user
+	where 1=1 
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'id'">
+	 		and id like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'report_count'">
+	 		and report_count>4
+	 	</if>
+	 	<if test="choice == 'auth'">
+	 		and auth=#{search}
+	 	</if>
+		 </if>		 
+		 order by report_count desc) a
+	where rnum between ${start} and ${end}
+	</select>
+
+<!-- 회원의 총 수 -->
+<select id="getAllUser" parameterType="mul.cam.a.dto.BbsParam" resultType="Integer">
+		select ifnull(count(*), 0)
+	from user
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'id'">
+	 		where id like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'report_count'">
+	 		where report_count>4
+	 	</if>
+	 	<if test="choice == 'auth'">
+	 		where auth=#{search}
+	 	</if>
+	 </if>
+</select>
+
+<!-- ID 중복체크 -->
+<select id="idCheck" parameterType="String" resultType="Integer">
+	select count(*)
+	from user
+	where id=#{id}
+</select>
+
+<!-- Login 확인 -->
+<select id="login" parameterType="mul.cam.a.dto.UserDto" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id} and password=#{password}
+</select>
+
+<!-- User 검색 -->
+<select id="selectUser" parameterType="String" resultType="mul.cam.a.dto.UserDto">
+	select *
+	from user
+	where id=#{id}
+</select>
+
+<!-- User 정보 수정(프로필사진 변경 없을 때) -->
+<update id="updUser_n" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg}
+	where id=#{id}
+</update>
+
+<!-- User 정보 수정(프로필사진 변경 있을 때 : 다른 사진) -->
+<update id="updUser_y" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	profPic_Origin=#{profPic_Origin}, profPic_Server=#{profPic_Server}
+	where id=#{id}
+</update>
+
+<!-- User 정보 수정(프로필사진 변경 있을 때 : 기본 프로필) -->
+<update id="updUser_b" parameterType="mul.cam.a.dto.UserDto">
+	update user
+	set name=#{name}, birth=#{birth}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	profPic_Origin='기본프로필', profPic_Server='basic.png'
+	where id=#{id}
+</update>
+
+<!-- 계정삭제 (서비스 탈퇴) -->
+<delete id="delUser" parameterType="String">
+	delete from user
+	where id=#{id}
+</delete>
+
+<update id="userBan" parameterType="mul.cam.a.dto.UserDto">
+    update user
+    set auth=2
+    where id=#{id}
+</update>
+
+<update id="userIn" parameterType="mul.cam.a.dto.UserDto">
+    update user
+    set auth=1
+    where id=#{id}
+</update>
+
+</mapper>
