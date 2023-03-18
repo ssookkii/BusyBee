@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mul.cam.a.dto.ChatRoomDto;
 import mul.cam.a.service.ChatRoomService;
@@ -28,7 +31,7 @@ public class ChatRoomController {
 		model.addAttribute("allChatRoom", allChatRoom);
 		return "chatHome";
 	}
-	// 채팅방 생성
+	// 채팅방 생성 + 유효성검사(roomId 중복되면 안됨)
 	@PostMapping(value = "chatHome.do")
 	public String createChat (
 			@RequestParam(value="roomId", required=true)String roomId,
@@ -54,5 +57,14 @@ public class ChatRoomController {
 		ChatRoomDto dto = chatRoomService.chatRoomInfo(chatRoomId);
 		model.addAttribute("chatRoomInfo", dto);
 		return "chatRoom";
+	}
+	
+	//AJAX
+	@RequestMapping(value = "clickChat.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ChatRoomDto clickChat(@RequestParam(value="chatRoomId")String chatRoomId) {
+		ChatRoomDto chatRoomInfo = chatRoomService.chatRoomInfo(chatRoomId);
+		System.out.println(chatRoomInfo.getTitle());
+		return chatRoomInfo;
 	}
 }

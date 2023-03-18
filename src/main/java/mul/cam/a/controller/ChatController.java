@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mul.cam.a.dto.ChatMessageDto;
 import mul.cam.a.dto.ChatRoomDto;
@@ -32,7 +33,7 @@ public class ChatController {
 	}
 	
 	// 채팅내용 저장
-	@RequestMapping(value="AllChatSave.do", method=RequestMethod.POST) //절대경로
+	@RequestMapping(value="allChatSave.do", method=RequestMethod.POST) //절대경로
 	public String chatingDB(@RequestParam(value="writer")String writer,
 			@RequestParam(value="message")String message,
 			@RequestParam(value="recipient")String recipient) {
@@ -41,5 +42,6 @@ public class ChatController {
 		ChatMessageDto chatMessage = new ChatMessageDto(roomId, writer, recipient, message);
 		chatMessageService.saveChatMessage(chatMessage);
 		return "chating";
-	}
+	};
+
 }

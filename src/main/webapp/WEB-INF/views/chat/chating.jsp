@@ -222,7 +222,7 @@ function send() {
 	// DB 저장
 	$.ajax ({
 		type: "post",
-		url: "AllChatSave.do",
+		url: "allChatSave.do",
 		data: { 
 			"writer" : writer,
 			"message" : message,

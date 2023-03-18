@@ -97,7 +97,7 @@ li {
 	display: inline-block;
 	text-align: left;
 	text-decoration: none;
-	width: 300px;
+	width: 200px;
 	height: 200px;
 	border: 5px solid yellow;
 	border-radius: 15px;
@@ -136,6 +136,52 @@ li {
 	}
 }
 </style>
+<script>
+
+
+function showChatInfo(element) {
+	const chatRoomId = element.childNodes[1].innerText; // 태그 구분을 개행으로 하면 첫 자식이 빈 text 가 잡힌다..
+	$.ajax({
+		method: "post",
+		data: { "chatRoomId": chatRoomId },
+		url: "clickChat.do",
+		dataType: "text",
+		success: function(data){
+			data = JSON.parse(data);
+			console.log(data.title);
+			const chatTitle = data.title;
+			const chatDescription = data.descriptions;
+			const chatMembers = data.members;
+			const chatHost = data.createdBy;
+			const chatCreatedAt = data.createdAt;
+			document.getElementById("showChatTitle").innerText = chatTitle;
+			document.getElementById("showChatDescription").innerText = chatDescription;
+			document.getElementById("showChatMember").innerText = chatMembers;
+			document.getElementById("showChatHost").innerText = chatHost;
+			document.getElementById("showChatCreatedAt").innerText = chatCreatedAt;
+		},
+		error: function(){
+			alert("실패");
+		}
+	});
+	
+	
+}
+
+function enterChat(element) {
+	const chatRoomId = element.childNodes[1].innerText;
+	console.log(element.childNodes[1]);
+	console.log("룸 id >>" , chatRoomId);
+	if (chatRoomId == null || chatRoomId == "") {
+		alert("해당 채팅방을 찾을 수 없습니다.");
+		return;
+	}
+	location.href = "chatRoom/"+ chatRoomId +".do";
+}
+
+
+
+</script>
 </head>
 <body>
 	<div id="ChatContainer">
@@ -170,21 +216,46 @@ li {
 		// 침여하고 있는 방 표시
 			for (ChatRoomDto chatRoom: allChatRoom){
 				%>
-				<div class="chat">
-					<a href="chatRoom/<%=chatRoom.getRoomId()%>.do" target="_blank">
-						<ul>
-							<li>chat name || <%=chatRoom.getRoomId()%></li>
-							<li>host || <%=chatRoom.getCreatedBy()%></li>
-							<li>member || <%=chatRoom.getMembers()%></li>
-							<li>description || <%=chatRoom.getDescriptions() %></li>
-						</ul>
-					</a>
+				<div class="chat " onclick="showChatInfo(this)" ondblclick="enterChat(this)">
+					<p class="none"><%=chatRoom.getRoomId() %><p>
+					<div class="flexible">
+						<h2>chat : <%=chatRoom.getTitle() %></h2>
+					</div>
 				</div>
 				<% 
 			}
 		}
 		%>
 		</div>
+	
+		<table border="1" style="text-align: center;">
+			<colgroup>
+				<col width="10%" />
+				<col width="40%" />
+				<col width="30%" />
+				<col width="10%" />
+				<col width="10%" />
+			</colgroup>
+			<thead style="text-align: center;">
+				<tr>
+					<th>Chat Title</th>
+					<th>Chat Description</th>
+					<th>Chat Member</th>
+					<th>Chat Host</th>
+					<th>Created At</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td id="showChatTitle"></td>
+					<td id="showChatDescription"></td>
+					<td id="showChatMember"></td>
+					<td id="showChatHost"></td>
+					<td id="showChatCreatedAt"></td>
+				</tr>
+			</tbody>
+		</table>
+	
 		<hr>
 		<div class="flexible">
 			<div>
@@ -200,6 +271,8 @@ const modalWindow = document.getElementById("modal");
 const closeModal = document.getElementById("closeModal");
 const chatForm = document.getElementById("ChatForm");
 const chatForAllBtn = document.getElementById("chatForAll");
+
+
 
 const clickCreateChatBtn = () => {
 	document.getElementById("roomId").value = "";
