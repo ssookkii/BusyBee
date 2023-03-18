@@ -24,6 +24,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean selectEmail(String email) {
+		int count = dao.selectEmail(email);
+		
+		// true면 중복 이메일
+		return count>0?true:false;
+	}
+	
+	@Override
 	public boolean selectCert(EmailCertiDto dto) {
 		int count = dao.selectCert(dto);
 		// true면 인증 완료
@@ -70,7 +78,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto login(UserDto dto) {
-
 		return dao.login(dto);
 	}
 
@@ -144,5 +151,6 @@ public class UserServiceImpl implements UserService {
 		return count>0?true:false;
 		
 	}
+	
 
 }

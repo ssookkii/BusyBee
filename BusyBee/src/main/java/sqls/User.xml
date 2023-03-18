@@ -37,6 +37,13 @@ create table emailCerti(
 	values(#{cert_email}, #{authkey}, now())
 </insert>
 
+<!-- 이미 있는 이메일은 사용 불가 -->
+<select id="selectEmail" parameterType="String" resultType="Integer">
+	select count(*)
+	from user
+	where email=#{email}
+</select>
+
 <!-- 인증 확인 -->
 <select id="selectCert" parameterType="mul.cam.a.dto.EmailCertiDto" resultType="Integer">
 	select count(*)

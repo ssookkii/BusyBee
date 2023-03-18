@@ -7,7 +7,6 @@
 
 <%
 	UserDto login = (UserDto)session.getAttribute("login");
-
 %>
 
 <!DOCTYPE html>

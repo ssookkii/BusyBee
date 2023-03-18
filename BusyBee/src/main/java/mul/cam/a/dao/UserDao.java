@@ -15,6 +15,8 @@ public interface UserDao {
 	int select3(String id);
 	int delCert(String email);
 	int valCert(String email);
+	int selectEmail(String email);
+	
 	
 	// User 추가
 	int addUser(UserDto dto);

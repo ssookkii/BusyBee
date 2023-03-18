@@ -87,33 +87,59 @@ function doCert() {
 		if(!emailValid.test(userEmail)) {
 			alert('유효한 이메일을 입력해주세요.');
 			$("#email1").val('');
-			$("#email2").val('');
+			$("#email3").val('');
 			return;
 		}
 	}
 	
+	var checkE = true;
+	
+	$.ajax({
+		url : "selectEmail.do",
+		async : false,
+		type : "get",
+		data : {"email" : userEmail},
+		success: function(msg) {
+			if(msg=="NO") {
+				alert('BUSY BEE에 이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.');
+				$("#email1").val('');
+				$("#email2").val('');
+				$("#email3").val('');
+				$("#email3").hide();
+				checkE = false;
+			} else {
+				checkE = true;
+			}
+		}
+		
+	});
+	
 	var checkCert = $("#certNum").val();
 	var check3 = true;
 	
-	$.ajax({
-		url : "select3.do",
-		async:false,
-		type : 'get',
-		data : {"cert_email" : userEmail},
-		success : function(msg) {
-			if(msg=="cert3_FAIL"){
-				alert('일일 최대 인증횟수 3회를 초과했습니다. 다음에 다시 시도해주세요.');
-				$("#certNum").attr('disabled', true);
-				$("#emailCert").attr('disabled', true);
-				$("#check").attr('disabled', true);
-				location.href='loginMain.do';
-				check3 = false;
+	if (!checkE) {
+		return
+	} else {
+		$.ajax({
+			url : "select3.do",
+			async:false,
+			type : 'get',
+			data : {"cert_email" : userEmail},
+			success : function(msg) {
+				if(msg=="cert3_FAIL"){
+					alert('일일 최대 인증횟수 3회를 초과했습니다. 다음에 다시 시도해주세요.');
+					$("#certNum").attr('disabled', true);
+					$("#emailCert").attr('disabled', true);
+					$("#check").attr('disabled', true);
+					location.href='loginMain.do';
+					check3 = false;
+				}
+			},
+			error : function(){
+				alert('error');
 			}
-		},
-		error : function(){
-			alert('error');
-		}
-	})
+		})
+	}
 	
 	if (!check3) {
 		return;

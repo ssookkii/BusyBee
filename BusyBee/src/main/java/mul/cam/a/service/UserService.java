@@ -13,6 +13,7 @@ public interface UserService {
 	boolean select3(String id);
 	boolean delCert(String email);
 	boolean valCert(String email);
+	boolean selectEmail(String email);
 	
 	// User 추가
 	boolean addUser(UserDto dto);

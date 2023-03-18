@@ -74,21 +74,44 @@ public class UserController {
 
 			msg.setSubject("안녕하세요? BUSY BEE 가입 인증 번호입니다..");
 
-			String content = "안녕하세요?"  + '\n' + "부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다." + '\n';
+//			String content = "안녕하세요?"  + '\n' + "부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다." + '\n';
+//			
+
+//				content += "인증번호는 아래와 같습니다." + '\n' + AuthenticationKey + '\n'
+//					+ "인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요." + "\n\n"
+//					+ "만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요." + "\n\n"
+//					+ "감사합니다." + '\n'
+//					+ "BUSY BEE 드림";
+			
+			/*String content = "<h3>안녕하세요?</h3>"
+						+ "<br><h3>부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다.</h3></br>";*/
+			
+			String content = "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:20px;' >"
+			  + "🐝  부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE  🐝"
+			  + "</p><br>";
+			
+			content += "<p>안녕하세요?<p><br>"
+					+ "꿀벌처럼 열심히 일하는, 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
 			
 			if(purpose.equals("regi") ) {
-				content += "BUSY BEE 회원 가입 과정에서 보내드리는 인증 번호입니다." + "\n\n";
+				content += "<p>BUSY BEE 회원 가입을 위해서 보내드리는 인증 번호입니다.</p><br>";
 			} else {
-				content += "BUSY BEE 비밀번호 재설정 과정에서 보내드리는 인증 번호입니다." + "\n\n";
+				content += "<p>BUSY BEE 비밀번호 재설정을 위해서 보내드리는 인증 번호입니다.</p><br>";
 			}
-				content += "인증번호는 아래와 같습니다." + '\n' + AuthenticationKey + '\n'
-					+ "인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요." + "\n\n"
-					+ "만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요." + "\n\n"
-					+ "감사합니다." + '\n'
-					+ "BUSY BEE 드림";
 			
-			msg.setText(content);
-
+			content += "<p>인증번호는 아래와 같습니다.</p>"
+					+ "<p style='font-size:30px; font-weight:bold'>" + AuthenticationKey + "</p><br>";
+			
+			content += "<p>인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요.</p>"
+					+ "<p>만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요.</p>"
+					+ "<p>감사합니다.</p><br>"
+					+ "<p>🐝 BUSY BEE 서비스팀 드림 🐝</p>";	
+			
+			content += "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:10px;'>"
+					+ "Copyright ⓒ BUSY BEE, 2023. All Rights Reserved."
+					+ "</p>";
+			
+			msg.setContent(content, "text/html;charset=utf-8");
 
 			Transport.send(msg);
 			System.out.println("이메일 전송");
@@ -100,6 +123,20 @@ public class UserController {
 		}
 		
 		return AuthenticationKey;
+	}
+	
+
+	@ResponseBody
+	@GetMapping(value = "selectEmail.do")
+	public String selectEmail(String email) {
+		boolean isS = service.selectEmail(email);
+		
+		String selectEmail_Msg = "YES";
+		if(isS) {
+			selectEmail_Msg = "NO";
+		}
+		
+		return selectEmail_Msg;
 	}
 	
 	

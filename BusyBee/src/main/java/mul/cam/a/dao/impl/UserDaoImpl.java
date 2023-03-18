@@ -25,6 +25,11 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
+	public int selectEmail(String email) {
+		return session.selectOne(ns + "selectEmail", email);
+	}
+	
+	@Override
 	public int selectCert(EmailCertiDto dto) {
 		return session.selectOne(ns + "selectCert", dto);
 	}
