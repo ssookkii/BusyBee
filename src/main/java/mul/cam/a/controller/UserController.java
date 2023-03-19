@@ -37,17 +37,14 @@ public class UserController {
 
 	@ResponseBody
 	@GetMapping(value = "mailCheck.do")
-	protected String mailCheck(String email) {
+	public String mailCheck(String email, String purpose) {
 
-		//mail server 설정
 		String host = "smtp.naver.com";
 		String user = "mulcamsemi2023@naver.com";
 		String password = "semibusybee!";
 
-		//메일 받을 주소
 		String to_email = email;
 
-		//SMTP 서버 정보를 설정한다.
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", 465);
@@ -55,7 +52,6 @@ public class UserController {
 		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
-		//인증 번호 생성기
 		StringBuffer temp =new StringBuffer();
 		Random rnd = new Random();
 		for(int i=0;i<6;i++) {
@@ -71,25 +67,51 @@ public class UserController {
 			}
 		});
 
-		//email 전송
 		try {
 			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(user, "Busy Bee"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
 
-			//메일 제목
 			msg.setSubject("안녕하세요? BUSY BEE 가입 인증 번호입니다..");
-			//메일 내용
-			String content = "안녕하세요?"  + '\n' + "부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다." + '\n'
-					+ "BUSY BEE 회원 가입 과정에서 보내드리는 인증 번호입니다." + "\n\n"
-					+ "인증번호는 아래와 같습니다." + '\n' + AuthenticationKey + '\n'
-					+ "인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요." + "\n\n"
-					+ "만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요." + "\n\n"
-					+ "감사합니다." + '\n'
-					+ "BUSY BEE 드림";
-			
-			msg.setText(content);
 
+//			String content = "안녕하세요?"  + '\n' + "부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다." + '\n';
+//			
+
+//				content += "인증번호는 아래와 같습니다." + '\n' + AuthenticationKey + '\n'
+//					+ "인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요." + "\n\n"
+//					+ "만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요." + "\n\n"
+//					+ "감사합니다." + '\n'
+//					+ "BUSY BEE 드림";
+			
+			/*String content = "<h3>안녕하세요?</h3>"
+						+ "<br><h3>부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다.</h3></br>";*/
+			
+			String content = "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:20px;' >"
+			  + "🐝  부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE  🐝"
+			  + "</p><br>";
+			
+			content += "<p>안녕하세요?<p><br>"
+					+ "꿀벌처럼 열심히 일하는, 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
+			
+			if(purpose.equals("regi") ) {
+				content += "<p>BUSY BEE 회원 가입을 위해서 보내드리는 인증 번호입니다.</p><br>";
+			} else {
+				content += "<p>BUSY BEE 비밀번호 재설정을 위해서 보내드리는 인증 번호입니다.</p><br>";
+			}
+			
+			content += "<p>인증번호는 아래와 같습니다.</p>"
+					+ "<p style='font-size:30px; font-weight:bold'>" + AuthenticationKey + "</p><br>";
+			
+			content += "<p>인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요.</p>"
+					+ "<p>만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요.</p>"
+					+ "<p>감사합니다.</p><br>"
+					+ "<p>🐝 BUSY BEE 서비스팀 드림 🐝</p>";	
+			
+			content += "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:10px;'>"
+					+ "Copyright ⓒ BUSY BEE, 2023. All Rights Reserved."
+					+ "</p>";
+			
+			msg.setContent(content, "text/html;charset=utf-8");
 
 			Transport.send(msg);
 			System.out.println("이메일 전송");
@@ -97,11 +119,26 @@ public class UserController {
 			service.addCert(new EmailCertiDto(0, to_email, AuthenticationKey, null));
 
 		} catch (Exception e) {
-			e.printStackTrace();// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return AuthenticationKey;
 	}
+	
+
+	@ResponseBody
+	@GetMapping(value = "selectEmail.do")
+	public String selectEmail(String email) {
+		boolean isS = service.selectEmail(email);
+		
+		String selectEmail_Msg = "YES";
+		if(isS) {
+			selectEmail_Msg = "NO";
+		}
+		
+		return selectEmail_Msg;
+	}
+	
 	
 	@ResponseBody
 	@GetMapping(value = "selectCert.do")
@@ -112,6 +149,7 @@ public class UserController {
 		String cert_Msg = "cert_FAIL";
 		if(isS) {
 			cert_Msg = "cert_SUCCESS";
+			service.delCert(dto.getCert_email());
 		}
 		
 		return cert_Msg;
@@ -121,6 +159,7 @@ public class UserController {
 	@GetMapping(value = "select3.do")
 	public String select3(String cert_email) {
 		
+		service.valCert(cert_email);
 		boolean isS = service.select3(cert_email);
 		
 		String cert3_Msg = "cert3_FAIL";
@@ -130,9 +169,7 @@ public class UserController {
 		
 		return cert3_Msg;
 	}
-
-
-
+	
 	@GetMapping(value = "regi1.do")
 	public String regi1() {
 
@@ -154,6 +191,18 @@ public class UserController {
 			@RequestParam(value = "profPic", required = false)
 	MultipartFile profPic, HttpServletRequest req) {
 
+		if(profPic.isEmpty()) {
+			boolean isS = service.addUser_N(dto);
+
+			String addUser_Msg = "addUser_FAIL";
+			if(isS) {
+				addUser_Msg = "addUser_SUCCESS";
+			}
+
+			model.addAttribute("addUser_Msg", addUser_Msg);
+			return "message";
+		}
+		
 		// filename 취득
 		String filename = profPic.getOriginalFilename(); // 원본파일명
 		dto.setProfPic_Origin(filename);
@@ -295,6 +344,45 @@ public class UserController {
 
 		return "message";
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "findId.do")
+	public UserDto findId(Model model, UserDto dto) {
+
+		return service.findId(dto);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "findforPwd.do")
+	public String findforPwd(Model model, UserDto dto) {
+
+		boolean isS = service.findforPwd(dto);
+		String findforPwd_Msg;
+		if(isS) {
+			findforPwd_Msg = "findforPwd_SUCCESS";
+		} else {
+			findforPwd_Msg = "findforPwd_FAIL";
+		}
+		
+		return findforPwd_Msg;
+	}
+	
+	@PostMapping(value = "updPwd.do")
+	public String updPwd(Model model, UserDto dto) {
+		
+		boolean isS = service.updPwd(dto);
+		String updPwd_Msg;
+		
+		if(isS) {
+			updPwd_Msg = "updPwd_SUCCESS";
+		} else {
+			updPwd_Msg = "updPwd_FAIL";
+		}
+		
+		model.addAttribute("updPwd_Msg", updPwd_Msg);
+		
+		return "message";
+	}
 
 	@GetMapping(value = "delUser.do")
 	public String delUser(Model model, String id) {
@@ -310,6 +398,4 @@ public class UserController {
 
 		return "message";
 	}
-	
-
 }

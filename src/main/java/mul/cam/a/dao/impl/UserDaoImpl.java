@@ -25,6 +25,11 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
+	public int selectEmail(String email) {
+		return session.selectOne(ns + "selectEmail", email);
+	}
+	
+	@Override
 	public int selectCert(EmailCertiDto dto) {
 		return session.selectOne(ns + "selectCert", dto);
 	}
@@ -35,8 +40,23 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
+	public int delCert(String email) {
+		return session.delete(ns + "delCert", email);
+	}
+	
+	@Override
+	public int valCert(String email) {
+		return session.delete(ns + "valCert", email);
+	}
+	
+	@Override
 	public int addUser(UserDto dto) {
 		return session.insert(ns + "addUser", dto);
+	}
+	
+	@Override
+	public int addUser_N(UserDto dto) {
+		return session.insert(ns + "addUser_N", dto);
 	}
 
 	@Override
@@ -68,6 +88,21 @@ public class UserDaoImpl implements UserDao {
 	public int updUser_b(UserDto dto) {
 		return session.update(ns + "updUser_b", dto);
 	}
+	
+	@Override
+	public UserDto findId(UserDto dto) {
+		return session.selectOne(ns + "findId", dto);
+	}
+	
+	@Override
+	public int findforPwd(UserDto dto) {
+		return session.selectOne(ns + "findforPwd", dto);
+	}
+
+	@Override
+	public int updPwd(UserDto dto) {
+		return session.update(ns + "updPwd", dto);
+	}
 
 	@Override
 	public int delUser(String id) {
@@ -97,6 +132,5 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		return session.update(ns + "userIn", dto);
 	}
-
 
 }

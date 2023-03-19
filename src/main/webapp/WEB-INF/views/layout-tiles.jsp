@@ -6,7 +6,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <%
-UserDto login = (UserDto)session.getAttribute("login");
+	UserDto login = (UserDto)session.getAttribute("login");
 %>
 
 <!DOCTYPE html>
@@ -89,27 +89,20 @@ span {
 	float: right;
 	margin-right: 3px;
 }
-
 body {
-
 	margin: 0px;
 }
-
 table {
 	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
 }
-
 td {
 	vertical-align: top;
 	padding: 0;
 }
-
     
     
-
-
 </style>
 </head>
 <body>
@@ -118,38 +111,38 @@ td {
 
 		<table>
 
-<!-- header -->
-            <tr align="center" style="background-color: #fff7e1; color: gray;">
-                <td><header>
-                        <img src="images/logo.png" width="250px" height="40px"
-                            style="float: left; margin: 20px;">
-                    </header></td>
+			<!-- header -->
+			<tr align="center" style="background-color: #fff7e1; color: gray;">
+				<td><header>
+						<img src="images/logo.png" width="250px" height="40px"
+							style="float: left; margin: 20px;">
+					</header></td>
 
-                <td style="height: 5%">
-                    <div style="float: right; margin-right: 30px; margin-top: 15px">
+				<td style="height: 5%">
+					<div style="float: right; margin-right: 30px; margin-top: 15px">
+					
+						<!-- user Name 받아오기     
+    					 <span>${user.name}</span> -->
+						<!--  user 상태 메시지
+						<span style="color: gray;">${user.status}</span> -->
 
-                        <!-- user Name 받아오기
-                         <span>${user.name}</span> -->
-                        <!--  user 상태 메시지
-                        <span style="color: gray;">${user.status}</span> -->
+						<!-- 임시 -->
+						<span style="font-size: 15px;"><%=login.getName()%>(<%=login.getId() %>)</span> <br /> 
+						<span style="color: #938046; font-size: 13px;"><%=login.getProfMsg() %></span>
 
-                        <!-- 임시 -->
-                        <span style="font-size: 15px;"><%=login.getName()%>(<%=login.getId() %>)</span> <br /> 
-                        <span style="color: #938046; font-size: 13px;"><%=login.getProfMsg() %></span>
-
-                        <!-- 로그아웃 , 회원정보 수정-->
-                        <br /> 
-                        <a style="float: right; margin-right: 5px;"    href="${logoutUrl}">로그아웃</a> 
-                        <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
-                    </div>
-                         <!-- user image -->
-                    <div style="float: right; margin: 5px; margin-right: 30px;">
-                        <img src="/busyBeeImg/<%=login.getProfPic_Server() %>" width="70px" height="70px"
-                            style="border-radius: 50%;">
-                    </div>
-                </td>
-
-        </tr>
+						<!-- 로그아웃 , 회원정보 수정-->
+						<br /> 
+						<a style="float: right; margin-right: 5px;"	href="${logoutUrl}">로그아웃</a> 
+						<a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
+					</div>
+					 	<!-- user image -->
+					<div style="float: right; margin: 5px; margin-right: 30px;">
+						<img src="/busyBeeImg/<%=login.getProfPic_Server() %>" width="70px" height="70px"
+							style="border-radius: 50%;">
+					</div>
+				</td>
+				
+		</tr>
 		
 		<!-- 메뉴 이동 네비게이션 -->
 		<tr>
@@ -210,9 +203,3 @@ td {
 
 </body>
 </html>
-
-
-
-
-
-

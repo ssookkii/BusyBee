@@ -24,6 +24,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean selectEmail(String email) {
+		int count = dao.selectEmail(email);
+		
+		// true면 중복 이메일
+		return count>0?true:false;
+	}
+	
+	@Override
 	public boolean selectCert(EmailCertiDto dto) {
 		int count = dao.selectCert(dto);
 		// true면 인증 완료
@@ -37,8 +45,26 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public boolean delCert(String email) {
+		int count = dao.delCert(email);
+		return count>0?true:false;
+	}
+	
+	@Override
+	public boolean valCert(String email) {
+		int count = dao.valCert(email);
+		return count>0?true:false;
+	}
+	
+	@Override
 	public boolean addUser(UserDto dto) {
 		int count = dao.addUser(dto);
+		return count>0?true:false;
+	}
+	
+	@Override
+	public boolean addUser_N(UserDto dto) {
+		int count = dao.addUser_N(dto);
 		return count>0?true:false;
 	}
 
@@ -52,7 +78,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto login(UserDto dto) {
-
 		return dao.login(dto);
 	}
 
@@ -79,6 +104,23 @@ public class UserServiceImpl implements UserService {
 		return count>0?true:false;
 	}
 
+	@Override
+	public UserDto findId(UserDto dto) {
+		return dao.findId(dto);
+	}
+	
+	@Override
+	public boolean findforPwd(UserDto dto) {
+		int count = dao.findforPwd(dto);
+		return count>0?true:false;
+	}
+
+	@Override
+	public boolean updPwd(UserDto dto) {
+		int count = dao.updPwd(dto);
+		return count>0?true:false;
+	}
+	
 	@Override
 	public boolean delUser(String id) {
 		int count = dao.delUser(id);
@@ -110,4 +152,5 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+
 }

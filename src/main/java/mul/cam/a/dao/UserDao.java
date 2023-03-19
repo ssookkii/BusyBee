@@ -8,12 +8,19 @@ import mul.cam.a.dto.UserDto;
 
 public interface UserDao {
 
+	// 이메일 인증
+	// 이메일 + 인증번호 추가
 	int addCert(EmailCertiDto dto);
 	int selectCert(EmailCertiDto dto);
 	int select3(String id);
+	int delCert(String email);
+	int valCert(String email);
+	int selectEmail(String email);
+	
 	
 	// User 추가
 	int addUser(UserDto dto);
+	int addUser_N(UserDto dto);
 	
 	// ID 중복체크
 	int idCheck(String id);
@@ -26,6 +33,12 @@ public interface UserDao {
 	int updUser_n(UserDto dto);
 	int updUser_y(UserDto dto);
 	int updUser_b(UserDto dto);
+	
+	// Id 찾기/PWD 재설정
+	UserDto findId(UserDto dto);
+	int findforPwd(UserDto dto);
+	int updPwd(UserDto dto);
+	
 	
 	int delUser(String id);
 	

@@ -11,9 +11,13 @@ public interface UserService {
 	boolean addCert(EmailCertiDto dto);
 	boolean selectCert(EmailCertiDto dto);
 	boolean select3(String id);
+	boolean delCert(String email);
+	boolean valCert(String email);
+	boolean selectEmail(String email);
 	
 	// User 추가
 	boolean addUser(UserDto dto);
+	boolean addUser_N(UserDto dto);
 	
 	// ID 중복체크
 	boolean idCheck(String id);
@@ -26,6 +30,10 @@ public interface UserService {
 	boolean updUser_n(UserDto dto);
 	boolean updUser_y(UserDto dto);
 	boolean updUser_b(UserDto dto);
+	
+	UserDto findId(UserDto dto);
+	boolean findforPwd(UserDto dto);
+	boolean updPwd(UserDto dto);
 	
 	boolean delUser(String id);
 	
