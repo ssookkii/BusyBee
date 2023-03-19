@@ -217,6 +217,7 @@ function initTimepicker() {
 		      }
 		    }, 100);
 		 
+		 var previousDate = null;
 	    $('#calendar').fullCalendar({
 	        // 일정 데이터
 	        events: function(start, end, timezone, callback) {
@@ -251,18 +252,25 @@ function initTimepicker() {
 	            right: 'next'
 	          },
 	          
-	        // 일정 추가/수정/삭제 기능
-	        editable: true,
 	        eventStartEditable: true,
 	        eventDurationEditable: true,
 	        displayEventTime: false,
-			
 
 	        eventClick: function(event, jsEvent, view) {
 	          
 	        },
 
 	        dayClick: function(date, jsEvent, view) {
+	        	//선택한 날짜 표시하기
+	        	var currentDate = $(this);
+
+	        	    if (previousDate !== null && previousDate[0] !== currentDate[0]) {
+	        	      previousDate.css('background-color', 'transparent');
+	        	    }
+
+	        	    currentDate.css('background-color', '#fcf8e3');
+	        	    previousDate = currentDate;
+	        	    
 	            var clickedDate = date.format('YYYY-MM-DD');
 	            selectedDate = clickedDate;
 	            
@@ -316,13 +324,14 @@ function initTimepicker() {
 
 	        if (events.length === 0 ) {
 	            // 해당 날짜에 일정이 없는 경우
-	            $('#messageConfirmModal .modal-title').html(selectedDate + '');
-	            $('#messageConfirmModal .modal-body').html('삭제할 일정이 없습니다');
-	            $('#messageConfirmModal').modal('show');
+	        	  $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+	        		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+	        		        '삭제할 일정이 없습니다.' +
+	        		        '</div>');
 	        } else {
 	            var html = '<form>';
 	            $.each(events, function(index, event) {
-	                html += '<div id="alert-message"></div><li style="display: block;"><input type="checkbox" name="eventIds[]" value="' + event.scheduleId + '"> ' + event.title + '</li> <br/>';
+	                html += '<div id="delete-message"></div><li style="display: block;"><input type="checkbox" name="eventIds[]" value="' + event.scheduleId + '"> ' + event.title + '</li> <br/>';
 	            });
 	            html += '</form> ';
 	            $('#deleteConfirmModal .modal-title').html('삭제할 일정을 선택하세요.');
@@ -337,7 +346,7 @@ function initTimepicker() {
 	        		    return $(this).val();
 	        		  }).get();
 	        	 if (selectedEventIds.length === 0) {
-	        		    $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+	        		    $('#delete-message').html('<div class="alert alert-dismissible alert-danger">' +
 	        		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
 	        		        '삭제할 일정을 선택하세요.' +
 	        		        '</div>');
@@ -397,6 +406,7 @@ function initTimepicker() {
 								<div class="card-header"
 									style="height: 40px; font-size: 15px; display: flex; justify-content: center; align-items: center;">일정
 									리스트</div>
+									<div id="alert-message" style="font-size:14px;"></div>
 								<div class="card-title" style="height: 40px; font-size: 15px;"></div>
 								<div class="card-body" style="height: 620px"></div>
 								<ul id="event-check-list"></ul>
@@ -537,22 +547,7 @@ function initTimepicker() {
     </div>
   </div>
 </div>
-	<!-- 다중 삭제 모달 -->
-<div class="modal" id="deleteConfirmModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-warning text-white" >
-        <h8 class="modal-title" ></h8>
-      </div>
-      <div class="modal-body" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
-        <button type="button" class="btn btn-dark" id="deleteConfirmBtn" style=" font-size: 13px; font-weight: 700;" >삭제</button>
-      </div>
-    </div>
-  </div>
-</div>
+	
 	<!-- 메시지 모달 -->
 <div class="modal" id="messageConfirmModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -577,6 +572,22 @@ function initTimepicker() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal" id="alarmCancel" style=" font-size: 13px; font-weight: 700;" >확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 다중 삭제 모달 -->
+<div class="modal" id="deleteConfirmModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-white" >
+        <h8 class="modal-title" ></h8>
+      </div>
+      <div class="modal-body" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
+        <button type="button" class="btn btn-dark" id="deleteConfirmBtn" style=" font-size: 13px; font-weight: 700;" >삭제</button>
       </div>
     </div>
   </div>
@@ -1036,9 +1047,6 @@ $(document).ready(function() {
 						});
 					$('#deletecancel').click(function() {
 						$('#deleteConfirmModal').modal('hide');
-						});
-					$('#messageCancel').click(function() {
-						$('#messageConfirmModal').modal('hide');
 						});
 					$('#alarmCancel').click(function() {
 						$('#today-event-modal').modal('hide');
