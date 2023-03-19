@@ -23,6 +23,38 @@ font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
 font-family: 'Noto Sans KR', sans-serif;
 } 
+.fc-title {
+  font-size: 12px;
+}
+.fc-day-header {
+  font-size: 14px;
+}
+.fc-sun{
+  color: #ff889c;
+}
+
+.fc-sat{
+  color: #b0bde4;
+}
+.fc-view {
+background-image: url('images/calendar.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+input {
+ border-color: #d9c38f;
+ border-width: 0.5px;
+  border-radius: 5px; /* 인풋 요소의 선 모서리를 둥글게 처리 */
+}
+input:focus {
+  border-color: #f7c85c;
+}
+textarea {
+  border: 1px solid #d9c38f; /* 기본 border 스타일 */
+}
+textarea:focus {
+  border-color: #d9c38f; /* focus 상태일 때 border 색상 */
+}
 </style>
 <meta charset="UTF-8">
 <title>일정 관리</title>
@@ -198,6 +230,7 @@ function initTimepicker() {
 		                    
 		                    for (var i = 0; i < response.length; i++) {
 		                        events.push({
+		                        	
 		                        	color:"#f1b100",
 		                            id: response[i].id,
 		                            groupCode: response[i].groupCode,
@@ -213,13 +246,17 @@ function initTimepicker() {
 		                }
 		            })
 	        },
-	    
+	        header: {
+	            left: 'prev, title',
+	            right: 'next'
+	          },
+	          
 	        // 일정 추가/수정/삭제 기능
 	        editable: true,
 	        eventStartEditable: true,
 	        eventDurationEditable: true,
 	        displayEventTime: false,
-
+			
 
 	        eventClick: function(event, jsEvent, view) {
 	          
@@ -243,7 +280,7 @@ function initTimepicker() {
 
 	            if (events.length === 0) {
 	                // 해당 날짜에 일정이 없는 경우
-	                $('.card-body').html('<p>해당 날짜에 일정이 없습니다.</p>');
+	                $('.card-body').html('<p style="font-size:14px">해당 날짜에 일정이 없습니다.</p>');
 	                $('.card-title').html(date.format('YYYY-MM-DD'));
 	            } else {
 	                var html = '<table class="event-table"><thead><tr><th></th><th>일정 제목</th><th>일정 시간</th></tr></thead><tbody>';
@@ -285,9 +322,9 @@ function initTimepicker() {
 	        } else {
 	            var html = '<form>';
 	            $.each(events, function(index, event) {
-	                html += '<li style="display: block;"><input type="checkbox" name="eventIds[]" value="' + event.scheduleId + '"> ' + event.title + '</li> <br/>';
+	                html += '<div id="alert-message"></div><li style="display: block;"><input type="checkbox" name="eventIds[]" value="' + event.scheduleId + '"> ' + event.title + '</li> <br/>';
 	            });
-	            html += '</form>';
+	            html += '</form> ';
 	            $('#deleteConfirmModal .modal-title').html('삭제할 일정을 선택하세요.');
 	            $('#deleteConfirmModal .modal-body').html(html);
 	            $('#deleteConfirmModal #customConfirmBtn').html('삭제');
@@ -300,9 +337,12 @@ function initTimepicker() {
 	        		    return $(this).val();
 	        		  }).get();
 	        	 if (selectedEventIds.length === 0) {
-	        	        alert('삭제할 일정을 선택해주세요.');
-	        	        return;
-	        	    }
+	        		    $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+	        		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+	        		        '삭제할 일정을 선택하세요.' +
+	        		        '</div>');
+	        		    return;
+	        		}
 			    // 일정 삭제 요청, 여러개를 삭제하기 위해 each 사용
 			    $.each(selectedEventIds, function(index, eventId) {
 				    $.ajax({
@@ -348,17 +388,17 @@ function initTimepicker() {
 					
 						<div id="event-list">
 							<div style="margin-right: 20px;">
-								<button id="add-event-btn" class="btn btn-warning">일정
+								<button id="add-event-btn" class="btn btn-warning" style="width: 80px; height: 30px; font-size: 13px; font-weight: 700;">일정
 									추가</button>
-								<button id="delete-event-btn" class="btn btn-warning">일정
+								<button id="delete-event-btn" class="btn btn-warning" style="width: 80px; height: 30px; font-size: 13px; font-weight: 700; ">일정
 									삭제</button>
 							</div>
-							<div class="flex-item card border-light mb-3">
+							<div class="flex-item card border-warning mb-3">
 								<div class="card-header"
 									style="height: 40px; font-size: 15px; display: flex; justify-content: center; align-items: center;">일정
 									리스트</div>
 								<div class="card-title" style="height: 40px; font-size: 15px;"></div>
-								<div class="card-body" style="height: 600px"></div>
+								<div class="card-body" style="height: 620px"></div>
 								<ul id="event-check-list"></ul>
 
 
@@ -380,8 +420,8 @@ function initTimepicker() {
 		aria-labelledby="eventModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="eventModalLabel"></h5>
+				<div class="modal-header bg-warning text-white">
+					<h5 class="modal-title bg-warning text-white" id="eventModalLabel"></h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true"></span>
@@ -422,11 +462,11 @@ function initTimepicker() {
 					<div>
 
 						<button type="button" class="btn btn-warning"
-							data-bs-dismiss="modal" id="share-event-btn">일정 공유</button>
+							data-bs-dismiss="modal" id="share-event-btn" style=" font-size: 13px; font-weight: 700;" >일정 공유</button>
 						<button type="button" class="btn btn-warning"
-							data-bs-dismiss="modal" id="update-event-btn">일정 수정</button>
+							data-bs-dismiss="modal" id="update-event-btn" style=" font-size: 13px; font-weight: 700;" >일정 수정</button>
 						<button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-							id="one-delete-event-btn">일정 삭제</button>
+							id="one-delete-event-btn" style=" font-size: 13px; font-weight: 700;" >일정 삭제</button>
 					</div>
 
 				</div>
@@ -439,8 +479,8 @@ function initTimepicker() {
 		aria-labelledby="editEventModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="editEventModalLabel"></h5>
+				<div class="modal-header bg-warning text-white" >
+					<h5 class="modal-title bg-warning text-white " id="editEventModalLabel" ></h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true"></span>
@@ -473,8 +513,8 @@ function initTimepicker() {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-warning"
-						id="edit-save-event-btn">수정 완료</button>
-					<button type="button" class="btn btn-dark" data-bs-dismiss="modal">취소</button>
+						id="edit-save-event-btn" style=" font-size: 13px; font-weight: 700;" >수정 완료</button>
+					<button type="button" class="btn btn-dark" data-bs-dismiss="modal" style=" font-size: 13px; font-weight: 700;" >취소</button>
 
 				</div>
 			</div>
@@ -491,8 +531,8 @@ function initTimepicker() {
         <p>정말로 일정을 삭제하시겠습니까?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel">취소</button>
-        <button type="button" class="btn btn-dark" id="customConfirmBtn">삭제</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
+        <button type="button" class="btn btn-dark" id="customConfirmBtn" style=" font-size: 13px; font-weight: 700;" >삭제</button>
       </div>
     </div>
   </div>
@@ -507,8 +547,8 @@ function initTimepicker() {
       <div class="modal-body" style="height: 200px; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel">취소</button>
-        <button type="button" class="btn btn-dark" id="deleteConfirmBtn">삭제</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
+        <button type="button" class="btn btn-dark" id="deleteConfirmBtn" style=" font-size: 13px; font-weight: 700;" >삭제</button>
       </div>
     </div>
   </div>
@@ -517,12 +557,12 @@ function initTimepicker() {
 <div class="modal" id="messageConfirmModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" >
-      <div class="modal-header bg-warning text-white">
+      <div class="modal-header bg-warning text-white" >
       </div>
       <div class="modal-body" style="height: 150px; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="messageCancel">확인</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="messageCancel" style=" font-size: 13px; font-weight: 700;" >확인</button>
       </div>
     </div>
   </div>
@@ -531,12 +571,12 @@ function initTimepicker() {
 <div class="modal" id="today-event-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" >
-      <div class="modal-header bg-warning text-white" style="font-size:17px">
+      <div class="modal-header bg-warning text-white" style="font-size:17px; font-weight: 700;">
       </div>
       <div class="modal-body" style="height: 100px; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal" id="alarmCancel">확인</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" id="alarmCancel" style=" font-size: 13px; font-weight: 700;" >확인</button>
       </div>
     </div>
   </div>
@@ -632,13 +672,14 @@ function initTimepicker() {
 			  
 					  <form action="eventwriteAf.do" id="frm" method="post">
 					  
-						<div class="flex-item card border-light mb-3">
+						<div class="flex-item card border-warning mb-3">
 						<div class="card-header"
 							style="height: 40px; font-size: 16px; display: flex; justify-content: center; align-items: center;">일정
 							추가</div>
-							<div class="card-body" style="height: 600px">
+							<div class="card-body" style="height: 680px">
 							 <div class="form-group">
 						      <label for="event-title" style = "font-size: 14px;" >일정 제목</label>
+						      <div id="alert-message" style="font-size: 14px"></div>
 						      <input type="text" class="form-control" id="event-title" placeholder="일정 제목을 입력하세요" style = "font-size: 14px;" autocomplete="off">
 						    </div>
 						    
@@ -676,7 +717,7 @@ function initTimepicker() {
 						    </div>
 						    
 						    <button type="button" class="btn btn-warning" id="save-event-btn" style = "font-size: 14px;">저장</button>
-						    <button type="button" class="btn btn-secondary" id="cancel-event-btn" style = "font-size: 14px;">취소</button>
+						    <button type="button" class="btn btn-dark" id="cancel-event-btn" style = "font-size: 14px;">취소</button>
 						  </form>
 						</div>
 
@@ -719,27 +760,43 @@ $(document).ready(function() {
 			  $('#save-event-btn').on('click', function() {
 			    var title = $('#event-title').val();
 			
+			    if (!title) {
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '일정 제목을 입력하세요.' +
+			    		        '</div>');
+			        return;
+			    }
+			    
 			    var startDate = $('#event-start-date').val() + 'T' + $('#event-start-time').val();
 			    var endDate = $('#event-end-date').val() + 'T' + $('#event-end-time').val();
 			    
 			    if (!$('#event-start-date').val() || $('#event-start-date').val() === '') {
-			    	  $('#messageConfirmModal .modal-body').html('시작일을 선택해주세요.');
-			    	  $('#messageConfirmModal').modal('show');
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '시작일을 선택하세요.' +
+			    		        '</div>');
 			    	  return;
 			    	}
 			    if (!$('#event-start-time').val() || $('#event-start-time').val() === '') {
-			    	  $('#messageConfirmModal .modal-body').html('시작일 시간을 선택해주세요.');
-			    	  $('#messageConfirmModal').modal('show');
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '시작일 시간을 선택하세요.' +
+			    		        '</div>');
 			    	  return;
 			    	}
 			    if (!$('#event-end-date').val() || $('#event-end-date').val() === '') {
-			    	  $('#messageConfirmModal .modal-body').html('종료일을 선택해주세요.');
-			    	  $('#messageConfirmModal').modal('show');
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '종료일을 선택하세요.' +
+			    		        '</div>');
 			    	  return;
 			    	}
 			    if (!$('#event-end-time').val() || $('#event-end-time').val() === '') {
-			    	  $('#messageConfirmModal .modal-body').html('종료일 시간을 선택해주세요.');
-			    	  $('#messageConfirmModal').modal('show');
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '종료일 시간을 선택하세요.' +
+			    		        '</div>');
 			    	  return;
 			    	}
 			    if ($('#all-day').prop('checked')) {
@@ -762,15 +819,13 @@ $(document).ready(function() {
 				 "endDate": endDate,
 				  "description": description
 			    };
-			    if (!title) {
-		            $('#messageConfirmModal .modal-body').html('제목을 입력해주세요');
-		            $('#messageConfirmModal').modal('show');
-			        return;
-			    }
+
 			    // 종료 일정 유효성 검사
 			    if (moment(endDate).isSameOrBefore(startDate)) {
-		            $('#messageConfirmModal .modal-body').html('종료일은 시작일보다 이후여야 합니다.');
-		            $('#messageConfirmModal').modal('show');
+			    	 $('#alert-message').html('<div class="alert alert-dismissible alert-danger">' +
+			    		        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+			    		        '종료일은 시작일 이후여야 합니다.' +
+			    		        '</div>');
 			        return;
 			      }
 				 // 체크박스가 선택된 경우
@@ -868,7 +923,7 @@ $(document).ready(function() {
 					$('#eventModal').modal('hide');
 					$('#editEventModal').modal('show');
 					
-					$('#editEventModalLabel').html('<form action="eventupdate.do" id="frm" method="post"><input type="text" id="edit-title" data-eventid="' + event.scheduleId + '" value="[수정] ' + event.title + '"autocomplete="off">');
+					$('#editEventModalLabel').html('<form action="eventupdate.do" id="frm" method="post"><input type="text" id="edit-title" data-eventid="' + event.scheduleId + '" value="[수정] ' + event.title + '"autocomplete="off" style="background-color: #ffce67">');
 
 					$('#editEventDate').html('<div class="form-group">' +
 						    '<label for="event-start-date" style="font-size: 14px;">일정</label>' +
@@ -1094,7 +1149,7 @@ $('#share-event-btn').click(function() {
 			        // 일정 리스트로 변경합니다.
 			        
 			        $('#today-event-modal .modal-header').html('알림');
-			        $('#today-event-modal .modal-body').html('일정을 공유하였습니다.');
+			        $('#today-event-modal .modal-body').html('해당 일정을 같은 그룹 멤버에게 공유하였습니다.');
 			        $('#today-event-modal').modal('show');
 			      },
 			      error: function() {
@@ -1155,7 +1210,7 @@ $('#share-event-btn').click(function() {
 				        // 일정 리스트로 변경합니다.
 				        
 				        $('#today-event-modal .modal-header').html('알림');
-				        $('#today-event-modal .modal-body').html('일정을 공유하였습니다.');
+				        $('#today-event-modal .modal-body').html('해당 일정을 같은 그룹 멤버에게 공유하였습니다.');
 				        $('#today-event-modal').modal('show');
 				      },
 				      error: function() {
