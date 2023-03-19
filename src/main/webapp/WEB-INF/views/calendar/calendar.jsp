@@ -16,6 +16,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.body{
+font-family: 'Black Han Sans', sans-serif;
+font-family: 'Dongle', sans-serif;
+font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+} 
+</style>
 <meta charset="UTF-8">
 <title>일정 관리</title>
 <link rel="stylesheet" href="css/mystyle.css">
@@ -53,7 +61,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
 <!-- Font Awesome 아이콘 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -191,6 +198,7 @@ function initTimepicker() {
 		                    
 		                    for (var i = 0; i < response.length; i++) {
 		                        events.push({
+		                        	color:"#f1b100",
 		                            id: response[i].id,
 		                            groupCode: response[i].groupCode,
 		                            scheduleId:response[i].scheduleId,
@@ -791,7 +799,7 @@ $(document).ready(function() {
 			  // 이전 화면으로 돌아가기 전에 클릭 이벤트 핸들러를 제거합니다.
 				 $('#add-event-btn').off('click');
 				 // 일정 리스트로 변경
-			     $('#event-list').html(previousHTML);
+			    location.reload();
 						  });
 
 								});
@@ -1047,7 +1055,7 @@ $('#share-event-btn').click(function() {
         for (var i = 0; i < data.length; i++) {
             
             var shareid = data[i];
-            console.log(shareid);
+            //console.log(shareid);
             // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
             if (data[i] === '<%= id %>') {
                 continue;
@@ -1056,7 +1064,7 @@ $('#share-event-btn').click(function() {
           	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
           	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
           	     
-          	      var title = event.title;
+          	      var title = "[공유]"+event.title;
 				  var start = event.startDate;
 				  var end = event.endDate;
 				  var description = event.description;
@@ -1112,16 +1120,14 @@ $('#share-event-btn').click(function() {
 	    type: 'get',
 	    success: function(data) {
 	            
-	            var shareid = data.leader;
+	            var shareid = data.leader_id;
 	            console.log(shareid);
 	            // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
-	            if (data !== '<%= id %>') {
-	            
-	          
+            if (id !== shareid) {
 	          	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
 	          	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
 	          	     
-	          	      var title = event.title;
+	          	      var title = "[공유]"+event.title;
 					  var start = event.startDate;
 					  var end = event.endDate;
 					  var description = event.description;
@@ -1160,11 +1166,8 @@ $('#share-event-btn').click(function() {
 
 	          	    // 캘린더에 일정 추가하는 로직 작성
 	          	  },"json");
-	          	
-				   
-	            
-	        
-	            }},
+
+            } },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        // 처리 중 오류가 발생했을 때 수행할 코드
 	    }

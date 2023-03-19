@@ -161,7 +161,7 @@
 				var submenu = '';
 				$.each(data, function(i){
 					var group_code = data[i].group_code;
-					submenu += "<li><a href='goSubMenu.do?group_code="+data[i].group_code+"&group_name="+data[i].group_name+"' class='submenuLink longLink'>"+data[i].group_name+"</a></li>";
+					submenu += "<li><a href='groupMainPage.do?group_code="+data[i].group_code+"&group_name="+data[i].group_name+"' class='submenuLink longLink'>"+data[i].group_name+"</a></li>";
 
 				});
 				$("#submenu").append(submenu);

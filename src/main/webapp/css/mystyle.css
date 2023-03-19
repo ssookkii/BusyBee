@@ -1,5 +1,14 @@
+.body{
+font-family: 'Black Han Sans', sans-serif;
+font-family: 'Dongle', sans-serif;
+font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+font-size: 15px;
+}
 #calendar {
 	width: 100%;
+	color: "#fff7e1";
+	eventcolor: "#fff7e1";
 }
 
 #event-info {

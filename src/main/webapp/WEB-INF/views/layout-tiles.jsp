@@ -146,8 +146,8 @@ td {
 		
 		<!-- 메뉴 이동 네비게이션 -->
 		<tr>
-		<td colspan="2">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
+		<td colspan="2" >
+			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px; ">
 		<div class="container-fluid">
 		<div class="collapse navbar-collapse" id="navbarColor03">
 				<ul class="navbar-nav me-auto" style="font-size: 14px">
