@@ -6,8 +6,24 @@
 <% 
 String User = (String)session.getAttribute("login");
 %>
+<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
+*{
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Dongle', sans-serif;
+	font-family: 'Jua', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+#sendOption{
+	margin-top: 10px;
+	text-align: middle;
+	height: 50px;
+}
 
 .item-center {
 	display:flex;
@@ -52,99 +68,30 @@ String User = (String)session.getAttribute("login");
 	font-weight: bold;
 }
 
-#createChatBtn {
-	width: 300px;
-	height: 100px;
-	background-color: gray;
-	color: white;
-	margin-bottom: 50px;
-}
-
-#createChatBtn:hover{
-	background-color:black;
-	opacity: 0.2 1s;
-}
-
-#modal {
-	display: none;
-	position: absolute;
-	width: 500px;
-	height: 400px;
-	background-color: rgba(0,0,0,0.8);
-	top: 100px;
-	left: 37%;
-	animation: fadein 2s;
-}
-
-#closeModal {
-	posotion: absolute;
-	right: 0;
-	top:0;
-}
-
-#chatList {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-#chatHeader {
-	text-align: center;
-}
-
-#message {
-	font-size: 20px;
-	margin-left: 15px;
-	border: 3px solid black;
-	border-radius: 5px;
-	height: 40px;
-	width: 350px;
-}
-
-#sendBtn {
-	text-align: center;
-	border: 3px solid black;
-	border-radius: 5px;
-	font-weight: bold;
-	height: 40px;
-	width: 80px;
-}
-
-#sendBtn:hover {
-	background-color: orange;
-	transition: 3s;
-}
-
-#sendBtn:active {
-	background-color: black;
-	color: white;
-}
-
 </style>
 
-
-<div id="chatHeader">
-	<h1>전체채팅방</h1>
-	<p></p>
-</div>
-<div class="item-center">
-	<div class="chat-contents-container">
-		<div class="chat-contents">
+<div>	
+	<h1 style="text-align: center;">전체채팅방</h1>
+	<div class="item-center">
+		<div class="chat-contents-container">
+			<div class="chat-contents">
+			</div>
 		</div>
 	</div>
-</div>
-<div class="item-center margin">
-	<div>
-		<select id="chatOption" onchange="toChatWho()">
-			<option value="toAll">--전체--</option>
-			<option value="toOne">--귓속말--</option>
-		</select>
-		<input type="text" id="recipient" disabled placeholder="send to" value="to All"/>
+	<div class="item-center" id="sendOption">
+		<div>
+			<select id="chatOption" class="form-select" onchange="toChatWho()">
+				<option value="toAll">--전체--</option>
+				<option value="toOne">--귓속말--</option>
+			</select>
+			<input type="text" id="recipient" class="form-control-sm" disabled placeholder="send to" value="to All"/>
+		</div>
+		<input type="text" class="form-control" size="50" required style="width: 300px; height:45px; font-size:35px;"/>
+		<input type="button" class="btn btn-warning" value="전송" onclick="send()" style="width:80px; height: 45px;" />
 	</div>
-	<input type="text" id="message" size="50" required />
-	<input type="button" id="sendBtn" value="전송" onclick="send()" />
+	<input type="button" id="enterBtn" value="입장" onclick="connect()" />
+	<input type="button" id="exitBtn" value="나가기" onclick="disconnect()" />
 </div>
-<input type="button" id="enterBtn" value="입장" onclick="connect()" />
-<input type="button" id="exitBtn" value="나가기" onclick="disconnect()" />
 <script>
 
 var wsocket;

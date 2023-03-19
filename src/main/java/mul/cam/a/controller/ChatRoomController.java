@@ -32,8 +32,9 @@ public class ChatRoomController {
 		return "chatHome";
 	}
 	// 채팅방 생성 + 유효성검사(roomId 중복되면 안됨)
-	@PostMapping(value = "chatHome.do")
-	public String createChat (
+	@ResponseBody
+	@RequestMapping(value = "createChat.do", method=RequestMethod.POST)
+	public ChatRoomDto createChat (
 			@RequestParam(value="roomId", required=true)String roomId,
 			@RequestParam(value="title", required=true)String title,
 			@RequestParam(value="description", required=true)String descriptions,
@@ -41,15 +42,19 @@ public class ChatRoomController {
 			HttpSession session,
 			Model model
 			) {
-		String createdBy = (String)session.getAttribute("User"); // ㄹ그인 정보
 		
+		ChatRoomDto isExistDto = chatRoomService.chatRoomInfo(roomId);
+		if (isExistDto != null) { // 이미 존재하는 방이면 생성불가
+			return null;
+		}
+		
+		String createdBy = (String)session.getAttribute("User"); // ㄹ그인 정보
 		ChatRoomDto dto = new ChatRoomDto(roomId, title, descriptions, members, createdBy);
 		Boolean isSuccess = chatRoomService.createChatRoom(dto);
 		if (!isSuccess) { 
-			model.addAttribute("fail create chat", "fail create Chat!");
-			return "message";
+			return null;
 		}
-		return "redirect:/chatHome.do";
+		return dto;
 	}
 	
 	@GetMapping(value="chatRoom/{chatRoomId}.do")
@@ -60,11 +65,24 @@ public class ChatRoomController {
 	}
 	
 	//AJAX
-	@RequestMapping(value = "clickChat.do", method=RequestMethod.POST)
 	@ResponseBody
+	@RequestMapping(value = "clickChat.do", method=RequestMethod.POST)
 	public ChatRoomDto clickChat(@RequestParam(value="chatRoomId")String chatRoomId) {
 		ChatRoomDto chatRoomInfo = chatRoomService.chatRoomInfo(chatRoomId);
-		System.out.println(chatRoomInfo.getTitle());
 		return chatRoomInfo;
+	}
+	
+	//AJAX
+	@ResponseBody
+	@RequestMapping(value = "exitChatRoom.do", method=RequestMethod.POST)
+	public String exitChatRoom(@RequestParam(value="chatRoomId")String chatRoomId,
+			HttpSession session) {
+		String user = (String)session.getAttribute("User"); // 로그인정보
+		boolean updateSuccess = chatRoomService.exitChatRoom(chatRoomId, user);
+		
+		String message ="Fail";
+		if (updateSuccess) message = "Success";
+		
+		return message;
 	}
 }

@@ -26,4 +26,8 @@ public class ChatRoomService {
 	public ChatRoomDto chatRoomInfo(String roomId) {
 		return dao.chatRoomInfo(roomId);
 	}
+	
+	public boolean exitChatRoom(String roomId, String user) {
+		return dao.exitChatRoom(roomId, user)>0 ? true : false;
+	}
 }

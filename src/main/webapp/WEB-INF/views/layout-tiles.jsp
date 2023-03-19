@@ -110,7 +110,7 @@ td {
 					<li class="nav-item"><a class="nav-link" href="#">임시 게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">임시 일정관리</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="chatHome.do">임시 채팅</a></li>
+					<li class="nav-item"><a class="nav-link" href="/busyBee/chatHome.do">임시 채팅</a></li>
 
 				</ul>
 			</div>

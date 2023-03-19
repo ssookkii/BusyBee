@@ -34,4 +34,11 @@ ADD primary key(roomId);
 		where roomId=#{roomId}
 	</select>
 	
+	<!-- mysql update 허가해야함 -->
+	<update id="exitChatRoom" parameterType="hashMap">
+		update chatRoom
+		set members=#{updateMembers}
+		where roomId=#{roomId}
+	</update> 
+	
 </mapper>

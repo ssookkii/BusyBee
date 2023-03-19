@@ -13,55 +13,24 @@ System.out.println(User);
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Chat!</title>
+<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
 <style>
-input {
-	width: 250px;
-	height: 30px;
-	padding-left: 15px;
-	padding-right: 15px;
-	border-radius: 5px;
-}
-
-
-ul{
-	list-style: none;
-	padding: 0px;
-	margin: 0px;
-}
-
-li {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding: 10px;
-}
-#createChatBtn {
-	width: 300px;
-	height: 100px;
-	font-size: 40px;
-	background-color: gray;
-	color: white;
-	margin-bottom: 50px;
-}
-
-#createChatBtn:hover{
-	background-color:black;
-	transition: 2s;
+*{
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Dongle', sans-serif;
+	font-family: 'Jua', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 #modal {
 	display: none;
-	position: absolute;
-	width: 300px;
-	height: 250px;
-	background-color: rgba(200,230,255,0.8);
-	border: 0px solid gray;
-	border-radius: 15px;
-	box-shadow: 10px 5px 2px gray;
-	top: 300px;
-	left: 37%;
-	padding: 20px, 10px;
-	animation: fadein 2s;
+	top: 100px;
 }
 
 #modalBtn {
@@ -80,11 +49,19 @@ li {
 	align-items: center;
 }
 
-#chatForAll {
-	width: 200px;
-	height: 60px;
+#allChatContainer {
+	text-align: middle;
+	margin: 20px;
+}
+
+.exitChatBtn {
+	border-style: none;
 	border-radius: 15px;
-	margin: 50px;
+	color: black;
+	width: 100%;
+	height: 100%;
+}
+
 }
 .show {
 	display: inline-flex !important;
@@ -93,33 +70,13 @@ li {
 	display: none !important;
 }
 
-.chat {
-	display: inline-block;
-	text-align: left;
-	text-decoration: none;
-	width: 200px;
-	height: 200px;
-	border: 5px solid yellow;
-	border-radius: 15px;
-	margin: 10px;
-	
-	list-style: none;
-}
-
-.chat:hover {
+.card:hover {
 	text-decoration: none;
 	cursor: pointer;
 	transform: scale(1.1);
 	transition: transform 1s;
 }
-.cjat:action {
-	transform: scale(0.9);
-	transition: transform 1s;
-}
 
-.center {
-	text-align:middle;
-}
 .flexible {
 	display: inline-flex;
 	justify-content: center;
@@ -127,20 +84,13 @@ li {
 	width: 100%;
 }
 
-@keyframes fadein {
-	from{
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
 </style>
 <script>
 
 
 function showChatInfo(element) {
-	const chatRoomId = element.childNodes[1].innerText; // 태그 구분을 개행으로 하면 첫 자식이 빈 text 가 잡힌다..
+	const chatRoomId = element.id; // 태그 구분을 개행으로 하면 첫 자식이 빈 text 가 잡힌다..
+
 	$.ajax({
 		method: "post",
 		data: { "chatRoomId": chatRoomId },
@@ -148,17 +98,19 @@ function showChatInfo(element) {
 		dataType: "text",
 		success: function(data){
 			data = JSON.parse(data);
-			console.log(data.title);
+			
 			const chatTitle = data.title;
 			const chatDescription = data.descriptions;
 			const chatMembers = data.members;
 			const chatHost = data.createdBy;
 			const chatCreatedAt = data.createdAt;
+			document.getElementById("showChatId").innerText = chatRoomId;
 			document.getElementById("showChatTitle").innerText = chatTitle;
 			document.getElementById("showChatDescription").innerText = chatDescription;
 			document.getElementById("showChatMember").innerText = chatMembers;
 			document.getElementById("showChatHost").innerText = chatHost;
 			document.getElementById("showChatCreatedAt").innerText = chatCreatedAt;
+			document.getElementById("chatExit").innerHTML = "<button class='exitChatBtn' onclick='exitChat(this)'>Chat Exit</button>";
 		},
 		error: function(){
 			alert("실패");
@@ -169,14 +121,44 @@ function showChatInfo(element) {
 }
 
 function enterChat(element) {
-	const chatRoomId = element.childNodes[1].innerText;
-	console.log(element.childNodes[1]);
-	console.log("룸 id >>" , chatRoomId);
+	const chatRoomId = element.id;
+	
 	if (chatRoomId == null || chatRoomId == "") {
 		alert("해당 채팅방을 찾을 수 없습니다.");
 		return;
 	}
 	location.href = "chatRoom/"+ chatRoomId +".do";
+}
+
+function exitChat(element) { // 자신을 제거
+	const toExitChatRoomId = document.getElementById("showChatId").innerText;
+	const chatRoomInfo = document.getElementById(toExitChatRoomId);
+	
+	// 노드를 제거하기 위해서는 해당 노드의 부모에 접근해야함.
+	chatRoomInfo.parentElement.removeChild(chatRoomInfo);
+	
+	// 채팅정보 초기화
+	document.getElementById("showChatId").innerText = "-";
+	document.getElementById("showChatTitle").innerText = "-";
+	document.getElementById("showChatDescription").innerText = "-";
+	document.getElementById("showChatMember").innerText = "-";
+	document.getElementById("showChatHost").innerText = "-";
+	document.getElementById("showChatCreatedAt").innerText = "-";
+	document.getElementById("chatExit").innerHTML = "-";
+	
+	// DB 에서도 참여자에서 제거
+	$.ajax({
+		url: "exitChatRoom.do",
+		method: "post",
+		data: { "chatRoomId" : toExitChatRoomId },
+		dataType: "text",
+		success: function() {
+			alert("채팅방에서 나갔습니다");
+		},
+		error: function() {
+			alert("예기지치 못한 오류가 발생했습니다.");
+		}
+	});
 }
 
 
@@ -187,23 +169,31 @@ function enterChat(element) {
 	<div id="ChatContainer">
 		<div class="flexible">
 			<div>
-				<button id="createChatBtn">Create Chat!</button>
+				<button onclick="clickOpenModal()" class="btn btn-danger" style="width: 200px; height: 80px; font-size: 15px;">Create Chat!</button>
 			</div>
 		</div>
-		<div id="modal">
-			<div id="modalBtn">
-				<button id="closeModal">X</button>
-			</div>
-			<div>
-				<h3>Create Your Chat!</h3>
-				<form method="POST" id="ChatForm">
-					<input id="roomId" name="roomId" type="text" placeholder="Chat ID(identifier)" required /><br/>
-					<input id="title" name="title" type="text" placeholder="Chat Name" required/><br/>
-					<input id="description" name="description" type="text" placeholder="description" required/><br/>
-					<input id="member" name="member" type="text" placeholder="member" /><br/>
-					<input type="submit" value="Create Chat!"/> 
-				</form>
-			</div>
+		
+		<div class="modal" id="modal">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h3>Create Your Chat!</h3>
+		        <button type="button" id="closeModal" class="btn-close" onclick="clickCloseModal()" data-bs-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true" ></span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				<input class="form-control" id="roomId" name="roomId" type="text" placeholder="Chat ID" maxLength="20" required /><br/>
+				<input class="form-control" id="title" name="title" type="text" placeholder="Chat Name(20자)" maxLength="20" required/><br/>
+				<textarea class="form-control" id="description" name="description" placeholder="description (200자)" maxLength="200" rows="10" required/></textarea><br/>
+				<input class="form-control" id="member" name="member" type="text" placeholder="member(콤마로 구분해주세요)" maxLength="200"/><br/>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button"  class="btn btn-primary" onclick="createChat()">Create Chat!</button>
+		        <button type="button" class="btn btn-secondary" onclick="clickCloseModal()" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		<div id="chatList">
 		<%
@@ -216,10 +206,12 @@ function enterChat(element) {
 		// 침여하고 있는 방 표시
 			for (ChatRoomDto chatRoom: allChatRoom){
 				%>
-				<div class="chat " onclick="showChatInfo(this)" ondblclick="enterChat(this)">
-					<p class="none"><%=chatRoom.getRoomId() %><p>
-					<div class="flexible">
-						<h2>chat : <%=chatRoom.getTitle() %></h2>
+				<div>
+					<div class="card text-white bg-warning mb-3" id="<%=chatRoom.getRoomId() %>" onclick="showChatInfo(this)" ondblclick="enterChat(this)" style="width: 150px; height: 150px; margin:15px;">
+					  <div class="card-header" style="background-color: yellow; color: black;">[ Chat Name ] <%=chatRoom.getTitle() %></div>
+					  <div class="card-body">
+					    <p class="card-text"><%=chatRoom.getDescriptions() %></p>
+					  </div>
 					</div>
 				</div>
 				<% 
@@ -227,54 +219,61 @@ function enterChat(element) {
 		}
 		%>
 		</div>
-	
-		<table border="1" style="text-align: center;">
-			<colgroup>
-				<col width="10%" />
-				<col width="40%" />
-				<col width="30%" />
-				<col width="10%" />
-				<col width="10%" />
-			</colgroup>
-			<thead style="text-align: center;">
-				<tr>
-					<th>Chat Title</th>
-					<th>Chat Description</th>
-					<th>Chat Member</th>
-					<th>Chat Host</th>
-					<th>Created At</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td id="showChatTitle"></td>
-					<td id="showChatDescription"></td>
-					<td id="showChatMember"></td>
-					<td id="showChatHost"></td>
-					<td id="showChatCreatedAt"></td>
-				</tr>
-			</tbody>
-		</table>
-	
+		<div id="chatInfo" class="flexible">
+			<div>
+				<table class="table table-hover">
+					<colgroup>
+						<col />
+						<col width="100" />
+						<col width="400" />
+						<col width="100"/>
+						<col width="100" />
+						<col width="100" />
+						<col width="100" />
+					</colgroup>
+					<thead>
+						<tr class="table-warning" style="color: black;">
+							<th>Chat Id</th>
+							<th>Chat Title</th>
+							<th>Chat Description</th>
+							<th>Chat Member</th>
+							<th>Chat Host</th>
+							<th>Created At</th>
+							<th>Chat Exit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td id="showChatId">-</td>
+							<td id="showChatTitle"> - </td>
+							<td id="showChatDescription">- </td>
+							<td id="showChatMember">-</td>
+							<td id="showChatHost">-</td>
+							<td id="showChatCreatedAt">-</td>
+							<td id="chatExit">-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		<hr>
 		<div class="flexible">
 			<div>
-				<h1 style="text-align:center;">전체 채팅방</h1>
-				<Button id="chatForAll">입장</Button>
+				<div id="allChatContainer">
+					<h1>전체 채팅방</h1>
+				</div>
+				<Button onclick="chatForAll()" class="btn btn-outline-primary" style="width: 100%; height: 100px; font-size: 15px;">입장</Button>
 			</div>
 		</div>
 	</div>
 <script>
 
-const createChatBtn = document.getElementById("createChatBtn");
+
 const modalWindow = document.getElementById("modal");
-const closeModal = document.getElementById("closeModal");
-const chatForm = document.getElementById("ChatForm");
+
 const chatForAllBtn = document.getElementById("chatForAll");
 
-
-
-const clickCreateChatBtn = () => {
+const clickOpenModal = () => {
 	document.getElementById("roomId").value = "";
 	document.getElementById("title").value = "";
 	document.getElementById("description").value = "";
@@ -285,14 +284,56 @@ const clickCreateChatBtn = () => {
 const clickCloseModal = () => {
 	if (modalWindow.classList.contains("show")) modalWindow.classList.remove("show");
 }
-createChatBtn.addEventListener("click",clickCreateChatBtn);
-closeModal.addEventListener("click", clickCloseModal);
 
-const chatForAll = () =>{
-	location.href="chating.do";
+const createChat = () => {
+	
+	const roomId = document.getElementById("roomId").value;
+	const title = document.getElementById("title").value;
+	const description = document.getElementById("description").value;
+	const member = document.getElementById("member").value;
+	
+	console.log(roomId);
+	console.log(title);
+	console.log(description);
+	console.log(member);
+	
+	$.ajax({
+		url: "createChat.do",
+		method: "post",
+		data: {
+			"roomId": roomId,
+			"title": title,
+			"description": description,
+			"member": member
+			},
+		dataType: "text",
+		success: function(data){
+			if (data == null) {
+				alert("이미 존재하는 Chat ID 입니다.");
+				document.getElementById("roomId").value = "";
+				document.getElementById("roomId").focus();
+				return;
+			}
+			const json = JSON.parse(data);
+			
+			const chatDiv = document.createElement("div");
+			const chatDivChild = "<div class='card text-white bg-warning mb-3' id=" + json.roomId + " onclick='showChatInfo(this)' ondblclick='enterChat(this)' style='width: 150px; height: 150px; margin:15px;'>";
+									+ "<div class='card-header' style='background-color: yellow; color: black;'>[ Chat Name ] " + json.title + " </div>"
+									+ "<div class='card-body'>" 
+										+ "<p class='card-text'>" + json.descriptions + "</p>" 
+									+ "</div>" 
+							   + "</div>";
+			chatDiv.appendChild(chatDivChild)
+		},
+		error: function(error) {
+			alert("예기치 못한 에러가 발생하였습니다");
+		},
+	});
 }
 
-chatForAllBtn.addEventListener("click", chatForAll);
+const chatForAll = () =>{
+	window.open("chating.do", "chatAll", "width=500,height=600");
+}
 
 </script>
 </body>

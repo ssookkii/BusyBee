@@ -1,5 +1,6 @@
 package mul.cam.a.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,6 +41,18 @@ public class ChatRoomDao {
 		return chatRoom;
 	};
 	
+	public int exitChatRoom(String roomId, String user){
+		// 먼저 나갈 채팅방의 정보를 가져온다(member) 
+		// 멤버를 수정해서 update 해줄 것이다.
+		ChatRoomDto chatRoom = session.selectOne(namespace+"chatRoomInfo", roomId);
+		// DB 에 있는 멤버 중에서 채팅나간 유저를 제거한다
+		String updateMembers = removeUserFromChatMembers(user, chatRoom.getMembers());
+		System.out.println(updateMembers);
+		HashMap<String, String> roomIdAndUpdateMembers= new HashMap<>();
+		roomIdAndUpdateMembers.put("roomId", roomId); // 채팅방 찾고
+		roomIdAndUpdateMembers.put("updateMembers", updateMembers); // 채팅방 멤버 업데이트
+		return session.update(namespace + "exitChatRoom", roomIdAndUpdateMembers);
+	} 
 	
 	// 문자열 처리 부분
 	public String memberStringSplitedBySlash(String[] memberList, String createdBy) {
@@ -64,5 +77,23 @@ public class ChatRoomDao {
 		stringSplitedByComma += memberList[memberList.length-1];
 		// 마지막 멤버일 경우 뒤에 콤마 없음
 		return stringSplitedByComma;
+	}
+	
+	public String removeUserFromChatMembers(String user, String members) {
+		int userNameLength = user.length();
+		int userNameIndex = members.indexOf("/" + user + "/");
+		int membersLength = members.length();
+		
+		String updateMembers = "";
+		if (userNameIndex == 0) {
+			// 해당 유저가 맨앞의 위치한 경우
+			updateMembers = members.substring(userNameLength + 2);
+		}else if (userNameIndex == (membersLength - userNameIndex - 2)){
+			updateMembers = members.substring(userNameIndex);
+		}else {			
+			// 해당 유저가 중간에 위치한 경우
+			updateMembers = members.substring(0, userNameIndex) + members.substring(userNameIndex + userNameLength + 1);			
+		}
+		return updateMembers;
 	}
 }
