@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="Bbs">
+
+
+<select id="bbslist" parameterType="mul.cam.a.dto.BbsParam"
+	resultType="mul.cam.a.dto.BbsDto">
+
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+	from
+		(select row_number()over(order by ref desc, step asc) as rnum,
+			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+		 from busybee_bbs
+		 where 1=1
+		 <if test="category != null and category != ''">
+		 and category=#{category}
+		 </if>
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		and title like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		and content like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'writer'">
+		 		and id=#{search} and del=0
+		 	</if>
+		 </if>
+		 
+		 order by ref desc, step asc) a
+	where rnum between ${start} and ${end}
+</select>
+
+<!-- 글의 총수 -->
+<select id="getAllBbs" parameterType="mul.cam.a.dto.BbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from busybee_bbs
+	where 1=1
+	<if test="category != null and category != ''">
+	and category=#{category}
+	</if>
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		and title like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		and content like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'writer'">
+	 		and id=#{search}
+	 	</if>
+	 </if>
+</select>
+
+
+<insert id="writeBbs" parameterType="mul.cam.a.dto.BbsDto">
+INSERT INTO busybee_bbs(`ref`, step, `depth`, id, title, content, wdate, readcount, org, filename, newfilename, category, del)
+VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title}, #{content}, now(), 0, #{org}, #{filename}, #{newfilename}, #{category}, 0)
+
+</insert>
+
+<select id="getBbs" parameterType="Integer" resultType="mul.cam.a.dto.BbsDto">
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+	from busybee_bbs
+	where seq=#{seq}
+</select>
+
+<update id="updateBbs" parameterType="mul.cam.a.dto.BbsDto">
+	update busybee_bbs
+	set title=#{title}, content=#{content}, filename=#{filename}, 
+		newfilename=#{newfilename}, wdate=now()
+	where seq=#{seq}
+</update>
+
+<update id="deletBbs" parameterType="Integer">
+	update busybee_bbs
+	set del = 1
+	where seq=#{seq}
+</update>
+
+<insert id="commentWrite" parameterType="mul.cam.a.dto.BbsComment">
+	insert into busybee_bbscomment(seq, id, content, wdate)
+	values(#{seq}, #{id}, #{content}, now())
+</insert>
+
+<select id="commentList" parameterType="Integer" resultType="mul.cam.a.dto.BbsComment">
+	select seq, anseq, id, content, wdate
+	from busybee_bbscomment
+	where seq=#{seq}
+	order by wdate desc
+</select>
+
+<delete id="deleteBbscomment" parameterType="Integer">
+	delete from busybee_bbscomment
+	where anseq=#{anseq}
+</delete>
+
+<insert id="staradd" parameterType="mul.cam.a.dto.starDto">
+	insert into busybee_star(seq, id)
+	values(#{seq}, #{id})
+</insert>
+
+<select id="starlist" parameterType="java.lang.String" resultType="mul.cam.a.dto.starDto">
+	select id, seq
+	from busybee_star
+	where id=#{id}
+</select>
+
+</mapper>
+
+
+
+
+
+
