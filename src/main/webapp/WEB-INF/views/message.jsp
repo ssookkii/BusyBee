@@ -1,3 +1,4 @@
+<%@page import="mul.cam.a.dto.BbsDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,24 +7,35 @@
 <meta charset="UTF-8">
 </head>
 <body>
+<%
+String group_code = (String)session.getAttribute("group_code");
+String org = (String)session.getAttribute("org");
+%>
+
+<input type="hidden" id="org" value="<%=org %>">
+<input type="hidden" id="group_code" value="<%=group_code %>">
+
 
 <%
-
 String bbswrite = (String)request.getAttribute("bbswrite");
 if(bbswrite != null && !bbswrite.equals("")){
 	if(bbswrite.equals("bbswrite_YES")){
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("성공적으로 작성되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
 	else{
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("다시 작성해 주십시오");
-		location.href = "bbswrite.do";
+		location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
@@ -34,8 +46,10 @@ if(bbsupdate != null && !bbsupdate.equals("")){
 	if(bbsupdate.equals("bbsupdate_YES")){
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("성공적으로 수정되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
@@ -56,8 +70,10 @@ if(bbsdelete != null && !bbsdelete.equals("")){
 	if(bbsdelete.equals("bbsdelete_YES")){
 	%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("삭제되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 	<% 
 } else{	

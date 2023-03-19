@@ -8,12 +8,13 @@
 <select id="bbslist" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.BbsDto">
 
-	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
 	from
 		(select row_number()over(order by ref desc, step asc) as rnum,
-			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
 		 from busybee_bbs
 		 where 1=1
+		 and group_code=#{group_code}
 		 <if test="category != null and category != ''">
 		 and category=#{category}
 		 </if>
@@ -27,8 +28,7 @@
 		 	<if test="choice == 'writer'">
 		 		and id=#{search} and del=0
 		 	</if>
-		 </if>
-		 
+		 </if>	 
 		 order by ref desc, step asc) a
 	where rnum between ${start} and ${end}
 </select>
@@ -39,10 +39,12 @@
 	select ifnull(count(*), 0)
 	from busybee_bbs
 	where 1=1
+	and group_code=#{group_code}
 	<if test="category != null and category != ''">
 	and category=#{category}
 	</if>
 	<if test="choice != null and choice != '' and search != null and search != '' ">
+			and del != 1
 	 	<if test="choice == 'title'">
 	 		and title like concat('%', #{search}, '%')
 	 	</if>
@@ -57,16 +59,22 @@
 
 
 <insert id="writeBbs" parameterType="mul.cam.a.dto.BbsDto">
-INSERT INTO busybee_bbs(`ref`, step, `depth`, id, title, content, wdate, readcount, org, filename, newfilename, category, del)
-VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title}, #{content}, now(), 0, #{org}, #{filename}, #{newfilename}, #{category}, 0)
+INSERT INTO busybee_bbs(`ref`, step, `depth`, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code)
+VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title}, #{content}, now(), 0, #{org}, #{filename}, #{newfilename}, #{category}, 0, #{group_code})
 
 </insert>
 
 <select id="getBbs" parameterType="Integer" resultType="mul.cam.a.dto.BbsDto">
-	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
 	from busybee_bbs
 	where seq=#{seq}
 </select>
+
+<update id="updatereadcount" parameterType="Integer">
+	update busybee_bbs
+	set readcount = readcount +1 
+	where seq=#{seq}
+</update>
 
 <update id="updateBbs" parameterType="mul.cam.a.dto.BbsDto">
 	update busybee_bbs
@@ -108,6 +116,126 @@ VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title},
 	from busybee_star
 	where id=#{id}
 </select>
+
+<delete id="stardelete" parameterType="mul.cam.a.dto.starDto">
+	delete from busybee_star
+	where id=#{id}
+	and seq=#{seq}
+</delete>
+
+<select id="mybbslist" parameterType="mul.cam.a.dto.MyBbsParam"
+	resultType="mul.cam.a.dto.BbsDto">
+
+	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
+	from
+		(select row_number()over(order by ref desc, step asc) as rnum,
+			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
+		 from busybee_bbs
+		 where 1=1
+		 and del != 1
+		 and id=#{id}
+		 <if test="category != null and category != ''">
+		 and category=#{category}
+		 </if>
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		and title like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		and content like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'org'">
+	 			and org=#{search}
+	 		</if>
+		 </if>
+		 
+		 order by ref desc, step asc) a
+	where rnum between ${start} and ${end}
+</select>
+
+<!-- 나의 글의 총수 -->
+<select id="getMyBbs" parameterType="mul.cam.a.dto.MyBbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from busybee_bbs
+	where 1=1
+	and del != 1
+	and id=#{id}
+	<if test="category != null and category != ''">
+	and category=#{category}
+	</if>
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		and title like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		and content like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'org'">
+	 		and org=#{search}
+	 	</if>
+	 </if>
+</select>
+
+
+
+
+<select id="mystarlist" parameterType="mul.cam.a.dto.MyBbsParam"
+	resultType="mul.cam.a.dto.BbsDto">
+
+	select 
+	seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
+	from
+		(select row_number()over(order by ref desc, step asc) as rnum,
+			bbs.seq, ref, step, depth, bbs.id, title, content, wdate, readcount, org, filename, newfilename, category, del, group_code
+		 from busybee_bbs bbs, (select * from busybee_star
+									where id=#{id}) as sub
+		 where 1=1
+		 and bbs.seq = sub.seq
+		 and del != 1
+		 <if test="category != null and category != ''">
+		 and category=#{category}
+		 </if>
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		and title like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		and content like concat('%', #{search}, '%') and del=0
+		 	</if>
+		 	<if test="choice == 'org'">
+	 			and org=#{search}
+	 		</if>
+		 </if>
+		 order by ref desc, step asc) a
+	where rnum between ${start} and ${end}
+</select>
+
+<!-- 나의 글의 총수 -->
+<select id="getMystarBbs" parameterType="mul.cam.a.dto.MyBbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from busybee_bbs bbs, (select * from busybee_star
+									where id=#{id}) as sub
+	where 1=1
+	and bbs.seq = sub.seq
+	and del != 1
+	<if test="category != null and category != ''">
+	and category=#{category}
+	</if>
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		and title like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		and content like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'org'">
+	 		and org=#{search}
+	 	</if>
+	 </if>
+</select>
+
 
 </mapper>
 

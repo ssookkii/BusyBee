@@ -22,7 +22,6 @@
 
 <%	
 	BbsDto dto = (BbsDto)request.getAttribute("bbsdto");
-	
 %> 
 
 <h1>상세 글보기</h1>
@@ -78,7 +77,11 @@
 
 <br>
 
-<button type="button" class="btn btn-primary" onclick="location.href='bbslist.do'">글목록</button>
+<button type="button" class="btn btn-primary" onclick="bbslist()">글목록</button>
+
+<input type="hidden" id="org" value="<%=dto.getOrg() %>">
+<input type="hidden" id="group_code" value="<%=dto.getGroup_code() %>">
+<input type="hidden" id="category" value="<%=dto.getCategory() %>">
 
 <%
 UserDto login = (UserDto)session.getAttribute("login");
@@ -87,6 +90,10 @@ if(dto.getId().equals(login.getId())){
 	<button type="button" class="btn btn-primary" onclick="updateBbs(<%=dto.getSeq() %>)">수정</button>
 	
 	<button type="button" class="btn btn-primary" onclick="deleteBbs(<%=dto.getSeq() %>)">삭제</button>
+	
+	<br>
+	
+	<button type="button" class="btn btn-primary" onclick="reportBbs(<%=dto.getSeq() %>)">신고하기</button>
 	<%
 }
 %>
@@ -100,12 +107,24 @@ if(dto.getId().equals(login.getId())){
 </form>
 
 <script type="text/javascript">
+let category = document.getElementById('category').value;
+let group_code = document.getElementById("group_code").value;
+let org = document.getElementById("org").value;
+
+function bbslist(){
+	location.href= "bbslist.do?group_code=" + group_code + "&org=" + org;
+}
+
 function updateBbs( seq ) {
 	location.href = "bbsupdate.do?seq=" + seq;
 }
 
 function deleteBbs( seq ) {
 	location.href = "bbsdelete.do?seq=" + seq;  // update del=1
+}
+
+function reportBbs( seq ) {
+	location.href = "reportBbs.do?seq=" + seq;
 }
 
 function filedown(seq, newfilename, filename){

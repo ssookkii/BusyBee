@@ -20,15 +20,71 @@
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.3/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+	
+<!-- Moment.js -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js'></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	
+
 
 <!-- 원하는 글꼴 추가 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
 <!-- Font Awesome 아이콘 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- jQuery -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- Moment.js -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js'></script>
+
+<!-- jQuery UI CSS -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<!-- FullCalendar CSS -->
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' />
+
+
+<!-- Bootstrap Datepicker -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+
+
+<!-- timepicker -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
+<!-- Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://bootswatch.com/5/minty/bootstrap.min.css">
 
 <style>
 span {
@@ -37,7 +93,6 @@ span {
 }
 
 body {
-
 	margin: 0px;
 }
 
@@ -51,10 +106,6 @@ td {
 	vertical-align: top;
 	padding: 0;
 }
-
-    
-    
-
 
 </style>
 </head>
@@ -86,7 +137,7 @@ td {
 						<!-- 로그아웃 , 회원정보 수정-->
 						<br /> 
 						<a style="float: right; margin-right: 5px;"	href="${logoutUrl}">로그아웃</a> 
-						<a style="float: right; margin-right: 5px;" href="${mem_info}">정보 수정</a>
+						<a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
 					</div>
 					 	<!-- user image -->
 					<div style="float: right; margin: 5px; margin-right: 30px;">
@@ -111,7 +162,10 @@ td {
 					<li class="nav-item"><a class="nav-link" href="#">임시 일정관리</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">임시 채팅</a></li>
-
+					<li class="nav-item"><a class="nav-link" href="goAddgroup.do">그룹 생성</a></li>
+					<li class="nav-item"><a class="nav-link" href="goMygroup.do">내 그룹</a></li>
+					<li class="nav-item"><a class="nav-link" href="goSearchgroup.do">그룹 검색</a></li>
+					<li class="nav-item"><a class="nav-link" href="goNoti.do">그룹 알림</a></li>
 				</ul>
 			</div>
 		</div>
@@ -125,17 +179,20 @@ td {
 			<tr>
 				<td align="left" valign="top"
 					style="background-color: #fffaea; padding: 15px;" height="730px"
-					width="10%"><tiles:insertAttribute name="menu" /></td>
+					width="10%">
+					<tiles:insertAttribute name="menu" /></td>
 
 				<!-- content 영역 -->
-				<td valign="top" style="padding: 10px;"><tiles:insertAttribute
+				<td valign="top" style="padding: 10px;">
+				<tiles:insertAttribute
 						name="content" /></td>
 
 			</tr>
 
 			<!-- footer 영역 -->
 			<tr align="right" style="background-color: #fff7e1; color: #938046;">
-				<td colspan="5" height="25px"><tiles:insertAttribute
+				<td colspan="5" height="25px">
+				<tiles:insertAttribute
 						name="footer" /></td>
 
 			</tr>

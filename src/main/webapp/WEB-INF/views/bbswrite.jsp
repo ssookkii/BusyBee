@@ -5,7 +5,8 @@
         
 <%
 	UserDto login = (UserDto)session.getAttribute("login");
-	
+	String group_code = (String)request.getAttribute("group_code");
+	String org = (String)request.getAttribute("org");
 %>      
     
     
@@ -26,12 +27,14 @@
 <!-- 나중에 파일 추가할때 필요함 -->
 <form id="frm" action="bbswriteAf.do" method="post" enctype="multipart/form-data">
 
+<input type="hidden" id="group_code" name="group_code" class="form-control form-control-lg" value="<%=group_code%>" readonly="readonly">
+
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 <tr>
 	<th>모임명</th>
 	<td>
-		<input type="text" id="org" name="org" class="form-control form-control-lg">
+		<input type="text" id="org" name="org" class="form-control form-control-lg" value="<%=org%>" readonly="readonly">
 	</td>
 </tr>
 <tr>
@@ -84,7 +87,6 @@
 $(document).ready(function() {
 	
 	$("button").click(function() {
-//		alert("작동합니다");
 		
 		if($("#title").val().trim() == "" ){
 			alert("제목을 기입해 주십시오");

@@ -34,13 +34,14 @@ String cate = dto.getCategory();
 <!-- 나중에 파일 추가할때 필요함 -->
 <form id="frm" action="bbsupdateAf.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+<input type="hidden" name="group_code" value="<%=dto.getGroup_code() %>">
 
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 <tr>
 	<th>모임명</th>
 	<td>
-		<input value="<%=dto.getOrg() %>" type="text" id="org" name="org" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getOrg()%>" type="text" id="org" name="org" class="form-control form-control-lg" readonly="readonly">
 	</td>
 </tr>
 <tr>

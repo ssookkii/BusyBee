@@ -10,17 +10,20 @@ import mul.cam.a.dao.BbsDao;
 import mul.cam.a.dto.BbsComment;
 import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
+import mul.cam.a.dto.MyBbsParam;
 import mul.cam.a.dto.starDto;
 import mul.cam.a.service.BbsService;
 
 @Service
 public class BbsServiceimpl implements BbsService {
+	
 
 	@Autowired
 	BbsDao dao;
 	
 	@Override
 	public List<BbsDto> bbslist(BbsParam bbs) {		
+		System.out.println("bbslistService" + new Date());
 		return dao.bbslist(bbs);
 	}
 
@@ -38,6 +41,7 @@ public class BbsServiceimpl implements BbsService {
 	
 	@Override
 	public BbsDto getBbs(int seq) {
+		dao.updatereadcount(seq);
 		return dao.getBbs(seq);
 	}
 	
@@ -80,5 +84,31 @@ public class BbsServiceimpl implements BbsService {
 	public List<starDto> starlist(String id) {
 		System.out.println("starlist Service" + new Date());
 		return dao.starlist(id);
+	}
+	
+	@Override
+	public boolean stardelete(starDto star) {
+		System.out.println("stardelete Service" + new Date());
+		return dao.stardelete(star)>0?true:false;
+	}
+	
+	@Override
+	public List<BbsDto> mybbslist(MyBbsParam mybbs) {
+		return dao.mybbslist(mybbs);
+	}
+	
+	@Override
+	public int getMyBbs(MyBbsParam mybbs) {
+		return dao.getMyBbs(mybbs);
+	}
+
+	@Override
+	public List<BbsDto> mystarlist(MyBbsParam mybbs) {
+		return dao.mystarlist(mybbs);
+	}
+
+	@Override
+	public int getMystarBbs(MyBbsParam param) {
+		return dao.getMystarBbs(param);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import mul.cam.a.dto.BbsComment;
 import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
+import mul.cam.a.dto.MyBbsParam;
 import mul.cam.a.dto.starDto;
 
 public interface BbsService {
@@ -30,4 +31,12 @@ public interface BbsService {
 	boolean staradd (starDto star);
 	
 	List<starDto> starlist(String id);
+	
+	boolean stardelete (starDto star);
+	
+	List<BbsDto> mybbslist(MyBbsParam mybbs);
+	int getMyBbs(MyBbsParam mybbs);
+	
+	List<BbsDto> mystarlist(MyBbsParam mybbs);
+	int getMystarBbs(MyBbsParam param);
 }

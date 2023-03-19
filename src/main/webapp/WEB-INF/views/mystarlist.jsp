@@ -57,24 +57,26 @@ int pageNumber = (Integer)request.getAttribute("pageNumber");
 String choice = (String)request.getAttribute("choice");
 String search = (String)request.getAttribute("search");
 String category = (String)request.getAttribute("category");
-String group_code = (String)request.getAttribute("group_code");
-String org = (String)request.getAttribute("org");
+
+String group_code = (String)session.getAttribute("group_code");
+String org = (String)session.getAttribute("org");
+
 %>
 
-<h1>게시판</h1>
+<input type="hidden" id="org" value="<%=org %>">
+<input type="hidden" id="group_code" value="<%=group_code %>">
 
-
+<h1>즐겨찾기</h1>
 <br><br>
 
 <div align="center">
 
 <div class="panel-body">
-
-	<div class="form-inline" >
+  	<div class="form-inline" >
 	    <input type="button" id="bbslist"  onclick="bbslist()" value="그룹선택" class="btn btn-primary"/>
   	</div>
   	<br>
-  	 
+  	
     <div class="form-inline" >
   		<input type="button" id="categorybtn"  onclick="categorybtn()" value="전체글" class="btn btn-primary"/>
         <input type="button" id="categorybtn1"  onclick="categorybtn1()" value="공지사항" class="btn btn-primary"/>
@@ -85,21 +87,19 @@ String org = (String)request.getAttribute("org");
     <br>
     
     <div class="form-inline">
-    	<input type="button" id="mybbslist"  onclick="mybbslist()" value="내가작성한글" class="btn btn-primary"/>
-        <input type="button" id="mystarlist"  onclick="mystarlist()" value="즐겨찾기한글" class="btn btn-primary"/>
+         <input type="button" id="bbslist"  onclick="beforelist()" value="게시판으로" class="btn btn-primary"/>
+         <input type="button" id="mybbslist"  onclick="mybbslist()" value="내가작성한글" class="btn btn-primary"/>
     </div>
     <br><br>
 </div>
 
-<input type="hidden" id="org" value="<%=org %>">
-<input type="hidden" id="group_code" value="<%=group_code %>">
 <input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
-<table id="bbs" class="table table-hover table-sm" style="width: 1000px">
-<col width="70"><col width="150"><col width="70"><col width="600"><col width="100"><col width="150"><col width="70">
+<table id="bbs" class="table table-hover table-sm" style="width: 1200px">
+<col width="70"><col width="150"><col width="70"><col width="150"><col width="600"><col width="100"><col width="150"><col width="70">
 <thead class="thead-dark">
 <tr>
-	<th>즐겨찾기</th><th>분류</th><th>번호</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
+	<th>즐겨찾기</th><th>분류</th><th>번호</th><th>그룹명</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
 </tr>
 </thead>
 <tbody>
@@ -108,7 +108,7 @@ String org = (String)request.getAttribute("org");
 if(list == null || list.size() == 0){
 	%>
 	<tr>
-		<td colspan="4">작성된 글이 없습니다</td>
+		<td colspan="4">작성한 글이 없습니다</td>
 	</tr>
 	<%
 }else{
@@ -119,9 +119,8 @@ if(list == null || list.size() == 0){
 		boolean starcheck = false;
 		%>
 		<tr>
-			<%
+		<%
 			if(dto.getDel() == 0){
-
 				if(starlist != null){
 					for(int j = 0; j < starlist.size(); j++)
 					{
@@ -176,9 +175,9 @@ if(list == null || list.size() == 0){
 			
 			<th><%=dto.getCategory()%></th>
 			<th><%=i + 1 + (pageNumber * 10) %></th>
-
+			<td><%=dto.getOrg() %></td>
 			<%
-			if(dto.getDel() == 0){
+			
 				%>			
 				<td style="text-align: left">
 					<%=Utility.arrow(dto.getDepth()) %>
@@ -186,17 +185,6 @@ if(list == null || list.size() == 0){
 						<%=dto.getTitle() %>
 					</a>
 				</td>			
-				<%
-			}else if(dto.getDel() == 1){
-				%>
-				<td>
-					<%=Utility.arrow(dto.getDepth()) %>
-					<font color="#ff0000">*** 이 글은 작성자에 의해서 삭제되었습니다 ***</font>	
-				</td>
-				<%
-			}	
-			%>
-			
 			<td><%=dto.getReadcount() %></td>
 			<td><%=dto.getId() %></td>
 			
@@ -213,6 +201,7 @@ if(list == null || list.size() == 0){
 			 %>
 		</tr>
 		<%
+		
 	}
 }
 %>
@@ -221,25 +210,6 @@ if(list == null || list.size() == 0){
 </table>
 
 <br>
-
-<%-- <%
-for(int i = 0;i < pageBbs; i++){
-	if(pageNumber == i){	// 현재 페이지
-		%>
-		<span style="font-size: 15pt;color: #0000ff">
-			<%=i+1 %>
-		</span>
-		<%
-	}else{					// 그밖에 다른 페이지
-		%>
-		<a href="#none" title="<%=i+1 %>페이지" onclick="goPage(<%=i %>)"
-			style="font-size: 15pt; color: #000; text-decoration: none;">
-			[<%=i+1 %>]
-		</a>			
-		<%
-	}		
-}
-%> --%>
 
 
 <div class="container">
@@ -255,7 +225,7 @@ for(int i = 0;i < pageBbs; i++){
 	<option value="">검색</option>
 	<option value="title">제목</option>
 	<option value="content">내용</option>
-	<option value="writer">작성자</option>
+	<option value="org">그룹</option>
 </select>
 
 <div class="col-sm-2 my-1">
@@ -286,44 +256,41 @@ for(int i = 0;i < pageBbs; i++){
   </div>
 </div>
   
+  
 <script type="text/javascript">
-function bbslist(){
-//	alert("bbslist작동합니다");
-	location.href="login.do";
-}
-
-function categorybtn() {
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
+let group_code = document.getElementById("group_code").value;
+let org = document.getElementById("org").value;
+function beforelist() {
 	location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 }
 
+function categorybtn() {
+	location.href="mystarlist.do";
+}
+
 function categorybtn1() {
-	let group_code = document.getElementById("group_code").value;
 	let category = document.getElementById("categorybtn1").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=" + category  + "&org=" + org;
+	location.href="mystarlist.do?category=" + category;
 }
 
 function categorybtn2() {
-	let group_code = document.getElementById("group_code").value;
 	let category = document.getElementById("categorybtn2").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=" + category  + "&org=" + org;
+	location.href="mystarlist.do?category=" + category;
 }
 
 function categorybtn3() {
-	let group_code = document.getElementById("group_code").value;
 	let category = document.getElementById("categorybtn3").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=" + category  + "&org=" + org;
+	location.href="mystarlist.do?category=" + category;
 }
 
 function categorybtn4() {
-	let group_code = document.getElementById("group_code").value;
 	let category = document.getElementById("categorybtn4").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=" + category  + "&org=" + org;
+	location.href="mystarlist.do?category=" + category;
+}
+
+function bbslist(){
+//	alert("bbslist작동합니다");
+	location.href="login.do";
 }
 
 function mybbslist(){
@@ -331,15 +298,9 @@ function mybbslist(){
 	location.href="mybbslist.do";
 }
 
-function mystarlist(){
-	location.href="mystarlist.do";
-}
-
 function bbswrite() {
 //	alert("작동합니다")
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
+	location.href = "bbswrite.do";
 }
 
 
@@ -355,18 +316,14 @@ function goPage( pageNumber ) {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	let category = document.getElementById('category').value;
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
 	
-	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber + "&category=" + category + "&org=" + org;	
+	location.href = "mybbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber + "&category=" + category;	
 }
 
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	let category = document.getElementById('category').value;
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
 	
 //	alert(category);
 	
@@ -380,7 +337,7 @@ function searchBtn() {
 		return;
 	} */
 	
-	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&category=" + category + "&org=" + org;
+	location.href = "mybbslist.do?choice=" + choice + "&search=" + search + "&category=" + category;
 }
 
 
@@ -397,10 +354,8 @@ $('#pagination').twbsPagination({
     	let choice = document.getElementById('choice').value;
     	let search = document.getElementById('search').value;
     	let category = document.getElementById('category').value;
-    	let group_code = document.getElementById("group_code").value;
-    	let org = document.getElementById("org").value;
     	
-    	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + (page-1) + "&org=" + org;
+    	location.href = "mybbslist.do?choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + (page-1);
     //	location.href = "bbslist.do?choice=null&search=null" + "&category=" + category + "&pageNumber=" + (page-1);
     }
 })
@@ -427,7 +382,6 @@ $('#staradd').click(function() {
 	let search = document.getElementById('search').value;
 	let category = document.getElementById('category').value;
 	let id = document.getElementById('login').value;
-	let org = document.getElementById("org").value;
 	let pageNumber = <%=pageNumber%>;
 	
 
@@ -438,7 +392,7 @@ $('#staradd').click(function() {
 		data:{ "seq": seq, "id":id },
 		success:function(msg){
 //			alert("ajax 작동");
-			location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber + "&org=" + org;
+			location.href = "mystarlist.do?choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber;
 		},
 		error:function(){
 			alert('error');	
@@ -451,12 +405,10 @@ $('#stardelete').click(function() {
 	let seq = document.getElementById('stardelete').value;
 //	alert(stardelete);
 	
-	let group_code = document.getElementById("group_code").value;
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	let category = document.getElementById('category').value;
 	let id = document.getElementById('login').value;
-	let org = document.getElementById("org").value;
 	let pageNumber = <%=pageNumber%>;
 
 	$.ajax({
@@ -466,7 +418,7 @@ $('#stardelete').click(function() {
 		data:{ "seq": seq, "id":id },
 		success:function(msg){
 //			alert("ajax 작동");
-			location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber + "&org=" + org;
+			location.href = "mystarlist.do?choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber;
 		},
 		error:function(){
 			alert('error');	
@@ -497,7 +449,9 @@ for(var j = 0; j < target.length; j++){
     this.parentNode.parentNode.style.display = 'none';
   });
 }
+
 </script>
+
 
 
 

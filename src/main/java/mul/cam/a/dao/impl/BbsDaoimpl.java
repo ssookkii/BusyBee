@@ -11,6 +11,7 @@ import mul.cam.a.dao.BbsDao;
 import mul.cam.a.dto.BbsComment;
 import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
+import mul.cam.a.dto.MyBbsParam;
 import mul.cam.a.dto.starDto;
 
 @Repository
@@ -23,6 +24,7 @@ public class BbsDaoimpl implements BbsDao {
 	
 	@Override
 	public List<BbsDto> bbslist(BbsParam bbs) {
+		System.out.println("bbslist dao" + new Date());
 		return session.selectList(ns + "bbslist", bbs);
 	}
 
@@ -43,6 +45,11 @@ public class BbsDaoimpl implements BbsDao {
 		System.out.println("getBbsDao" + new Date());
 		
 		return session.selectOne(ns + "getBbs", seq);
+	}
+	@Override
+	public int updatereadcount(int seq) {
+	//	System.out.println("updatereadcountdao" + new Date());
+		return session.update(ns + "updatereadcount", seq);
 	}
 
 	@Override
@@ -85,5 +92,34 @@ public class BbsDaoimpl implements BbsDao {
 		System.out.println("starlist dao" + new Date());
 		return session.selectList(ns + "starlist", id);
 	}
+	
+	@Override
+	public int stardelete(starDto star) {
+		System.out.println("stardelete dao" + new Date());
+		return session.delete(ns + "stardelete", star);
+	}
+	
+	@Override
+	public List<BbsDto> mybbslist(MyBbsParam mybbs) {
+		return session.selectList(ns + "mybbslist", mybbs);
+	}
+	
+	@Override
+	public int getMyBbs(MyBbsParam param) {
+		return session.selectOne(ns + "getMyBbs", param);
+	}
+
+	@Override
+	public List<BbsDto> mystarlist(MyBbsParam mybbs) {
+		return session.selectList(ns + "mystarlist", mybbs);
+	}
+
+	@Override
+	public int getMystarBbs(MyBbsParam param) {
+		// TODO Auto-generated method stub
+		return session.selectOne(ns + "getMystarBbs", param);
+	}
+	
+	
 	
 }
