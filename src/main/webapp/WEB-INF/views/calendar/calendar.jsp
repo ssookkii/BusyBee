@@ -393,10 +393,10 @@ function initTimepicker() {
 				</td>
 				<td>
 				
-					<div style="text-align: right;">
+					<div style="text-align: right; margin-top:25px">
 					
 						<div id="event-list">
-							<div style="margin-right: 20px;">
+							<div style="margin-right: 20px; ">
 								<button id="add-event-btn" class="btn btn-warning" style="width: 80px; height: 30px; font-size: 13px; font-weight: 700;">일정
 									추가</button>
 								<button id="delete-event-btn" class="btn btn-warning" style="width: 80px; height: 30px; font-size: 13px; font-weight: 700; ">일정
@@ -404,11 +404,11 @@ function initTimepicker() {
 							</div>
 							<div class="flex-item card border-warning mb-3">
 								<div class="card-header"
-									style="height: 40px; font-size: 15px; display: flex; justify-content: center; align-items: center;">일정
+									style="height: 40px; font-size: 15px; display: flex; justify-content: center; align-items: center; background-color : #fcf8e3;">일정
 									리스트</div>
 									<div id="alert-message" style="font-size:14px;"></div>
 								<div class="card-title" style="height: 40px; font-size: 15px;"></div>
-								<div class="card-body" style="height: 620px"></div>
+								<div class="card-body" style="height: 610px"></div>
 								<ul id="event-check-list"></ul>
 
 
@@ -683,11 +683,11 @@ function initTimepicker() {
 			  
 					  <form action="eventwriteAf.do" id="frm" method="post">
 					  
-						<div class="flex-item card border-warning mb-3">
+						<div class="flex-item card border-warning mb-3" style="margin-top:40px">
 						<div class="card-header"
-							style="height: 40px; font-size: 16px; display: flex; justify-content: center; align-items: center;">일정
+							style="height: 40px; font-size: 16px; display: flex; justify-content: center; align-items: center; background-color: #fcf8e3;" >일정
 							추가</div>
-							<div class="card-body" style="height: 680px">
+							<div class="card-body" style="height: 660px">
 							 <div class="form-group">
 						      <label for="event-title" style = "font-size: 14px;" >일정 제목</label>
 						      <div id="alert-message" style="font-size: 14px"></div>
@@ -719,12 +719,12 @@ function initTimepicker() {
 						<label for="event-start-date" style = "font-size: 14px;">현재 내 그룹</label>
 						 <div class="input-group-append">
 						 
-						 <select class="form-control" id="add-group-selector"  style = "font-size: 14px; " disabled>
+						 <select class="form-control" id="add-group-selector"  style = "font-size: 14px; background-color:#f1eedd" disabled>
 					    </select>
 					    </div>
 						    <div class="form-group">
 						      <label for="event-description" style = "font-size: 14px;">일정 내용</label>
-						      <textarea class="form-control" id="event-description" rows="3" style="height: 300px"></textarea>
+						      <textarea class="form-control" id="event-description" rows="3" style="height: 330px; font-size:14px;"></textarea>
 						    </div>
 						    
 						    <button type="button" class="btn btn-warning" id="save-event-btn" style = "font-size: 14px;">저장</button>
