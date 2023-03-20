@@ -38,7 +38,8 @@
 #bbs{
 	text-align: center;
 	vertical-align: bo;
-}
+}\
+
 </style>
 
 <style type="text/css">

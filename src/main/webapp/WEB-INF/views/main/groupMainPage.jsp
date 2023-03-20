@@ -126,6 +126,7 @@ notice
 
 
 <script type="text/javascript">
+console.log("?"+<%=group_name%>);
 //게시판 미리보기
 $.ajax({
        url: 'preBbsList.do',

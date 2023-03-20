@@ -542,7 +542,7 @@ function checkRegi(){
 		url:"idCheck.do",
 		type:"post",
 		async:false,
-		data:{"id":$("#id").val()},
+		data:{"id":$("#afId").val()},
 		success:function(idCheck_Msg) {
 			if(idCheck_Msg!=null && idCheck_Msg!="") {
 				if(idCheck_Msg=="idCheck_SUCCESS") {
