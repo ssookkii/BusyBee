@@ -32,13 +32,16 @@ public class ChatController {
 	// 채팅내용 저장
 	@ResponseBody
 	@RequestMapping(value="allChatSave.do", method=RequestMethod.POST) //절대경로
-	public void chatingDB(@RequestParam(value="writer")String writer,
+	public String chatingDB(@RequestParam(value="writer")String writer,
 			@RequestParam(value="message")String message,
 			@RequestParam(value="recipient")String recipient) {
 
 		String roomId = "AllChatRoom";
 		ChatMessageDto chatMessage = new ChatMessageDto(roomId, writer, recipient, message);
-		chatMessageService.saveChatMessage(chatMessage);
+		boolean saveSuccess = chatMessageService.saveChatMessage(chatMessage);
+		
+		String resultMessage = "Fail";
+		if (saveSuccess) resultMessage = "Success";
+		return resultMessage;
 	};
-
 }

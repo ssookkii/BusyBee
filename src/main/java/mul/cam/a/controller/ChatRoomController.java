@@ -67,8 +67,8 @@ public class ChatRoomController {
 	
 	//AJAX
 	@ResponseBody
-	@RequestMapping(value = "clickChat.do", method=RequestMethod.POST)
-	public ChatRoomDto clickChat(@RequestParam(value="chatRoomId")String chatRoomId) {
+	@RequestMapping(value = "showChatInfo.do", method=RequestMethod.POST)
+	public ChatRoomDto showChatInfo(@RequestParam(value="chatRoomId")String chatRoomId) {
 		ChatRoomDto chatRoomInfo = chatRoomService.chatRoomInfo(chatRoomId);
 		return chatRoomInfo;
 	}

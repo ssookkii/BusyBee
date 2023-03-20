@@ -19,10 +19,20 @@ String User = (String)request.getAttribute("User");
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+body {
+	height: 900px;
+}
 #sendOption{
 	margin-top: 10px;
 	text-align: middle;
 	height: 50px;
+}
+
+#allChatContainer {
+	height: 100%;
+	background-color: #fff7e1;
+	margin: 0;
+	padding-top: 20px;
 }
 
 .item-center {
@@ -39,6 +49,7 @@ String User = (String)request.getAttribute("User");
 	width: 500px;
 	height: 700px;
 	overflow: scroll;
+	background-color: white;
 }
 
 .chat-me {
@@ -86,7 +97,7 @@ String User = (String)request.getAttribute("User");
 
 </style>
 
-<div>	
+<div id="allChatContainer">	
 	<h1 style="text-align: center;">전체채팅방</h1>
 	<div class="item-center">
 		<div class="chat-contents-container">
@@ -188,11 +199,12 @@ function send() {
 			"recipient" : recipient,
 		},
 		dataType: "text",
-		success: function(){
-
+		success: function(msg){
+			if (msg === "Success") console.log("채팅내용 저장성공");
+			else console.log("채팅내용 저장실패");
 		},
 		error: function(){
-			alert("실패");
+			alert("메세지 전달에 실패하였습니다.");
 		}
 	});
 }
@@ -222,7 +234,7 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 		chatBox.appendChild(chatContent);
 	}
 	// 자신이 보낸 귓속말 메세지인경우
-	else if (writer == <%=User %> && recipient != "to All"){
+	else if (writer == "<%=User %>" && recipient != "to All"){
 		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>[" + recipient + "]에게 귓속말 | " + message + "</p><br/>" +

@@ -93,7 +93,7 @@ function showChatInfo(element) {
 	$.ajax({
 		method: "post",
 		data: { "chatRoomId": chatRoomId },
-		url: "clickChat.do",
+		url: "showChatInfo.do",
 		dataType: "text",
 		success: function(data){
 			data = JSON.parse(data);

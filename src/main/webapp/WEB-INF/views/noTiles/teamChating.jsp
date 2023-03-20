@@ -14,17 +14,28 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
+
 *{
 	font-family: 'Black Han Sans', sans-serif;
 	font-family: 'Dongle', sans-serif;
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+body {
+	height: 1000px;
+}
 #sendOption{
 	margin-top: 10px;
 	text-align: middle;
-	height: 50px;
+	height: 20px;
 }
+#teamChatContainer {
+	height: 100%;
+	background-color: #fff7e1;
+	margin: 0;
+	padding-top: 50px;
+}
+
 .chatHeader {
 	text-align: center;
 }
@@ -42,6 +53,7 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 	width: 500px;
 	height: 700px;
 	overflow: scroll;
+	background-color: white;
 }
 
 .chat-me {
@@ -73,7 +85,7 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 
 </style>
 
-<div class="item-center">
+<div id="teamChatContainer" class="item-center">
 	<div>
 		<div class="chatHeader">
 			<h1>[ <%=chatRoomInfo.getTitle() %> ]</h1>
@@ -105,6 +117,7 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 		</div>
 	</div>
 </div>
+
 <script>
 function resizeWindowSize() {
 	window.resizeTo(600,900);
