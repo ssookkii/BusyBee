@@ -146,18 +146,14 @@ td {
 		
 		<!-- 메뉴 이동 네비게이션 -->
 		<tr>
-		<td colspan="2" >
-			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px; ">
+		<td colspan="2">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
 		<div class="container-fluid">
 		<div class="collapse navbar-collapse" id="navbarColor03">
 				<ul class="navbar-nav me-auto" style="font-size: 14px">
-					<li class="nav-item"><a class="nav-link active" href="#">메인
+					<li class="nav-item"><a class="nav-link active" href="#">
 							<span class="visually-hidden">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">임시 게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">임시 일정관리</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">임시 채팅</a></li>
 					<li class="nav-item"><a class="nav-link" href="goAddgroup.do">그룹 생성</a></li>
 					<li class="nav-item"><a class="nav-link" href="goMygroup.do">내 그룹</a></li>
 					<li class="nav-item"><a class="nav-link" href="goSearchgroup.do">그룹 검색</a></li>

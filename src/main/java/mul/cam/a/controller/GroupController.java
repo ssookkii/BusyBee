@@ -30,6 +30,7 @@ public class GroupController {
 		if(isS) {
 			addGroup_Msg = "addGroup_SUCCESS";
 		}
+
 		model.addAttribute("addGroup_Msg", addGroup_Msg);
 		return "message";
 	}

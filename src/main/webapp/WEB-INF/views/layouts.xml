@@ -11,13 +11,7 @@
 	<put-attribute name="noTemplate" value=""/>
 </definition>
 
-<!-- 회원가입(1/2) -->
-<definition name="regi1" template="/WEB-INF/views/noTiles/regi1.jsp">
-	<put-attribute name="noTemplate" value=""/>
-</definition>
-
-<!-- 회원가입(2/2) -->
-<definition name="regi2" template="/WEB-INF/views/noTiles/regi2.jsp">
+<definition name="idandpwd" template="/WEB-INF/views/noTiles/idandpwd.jsp">
 	<put-attribute name="noTemplate" value=""/>
 </definition>
 
@@ -26,18 +20,22 @@
 	<put-attribute name="noTemplate" value=""/>
 </definition>
 
+<!-- Tiles -->
 <!-- 첫 화면 -->
 <definition name="login" template="/WEB-INF/views/layout-tiles.jsp">
-	<put-attribute name="header" value="/WEB-INF/views/login/header.jsp"/>
+	<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
 	<put-attribute name="menu" value="/WEB-INF/views/login/menu.jsp"/>
 	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
 	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
 </definition>
 
-
-
 <definition name="goUserinfo" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/login/userinfo.jsp"/>
+</definition>
+
+<!-- 그룹 메인페이지 이동 -->
+<definition name="groupMainPage" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/main/groupMainPage.jsp"/>
 </definition>
 
 <!-- 일정관리 이동 -->
@@ -82,18 +80,15 @@
 	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
 </definition>
 
-<!-- 회원관리 -->
-<definition name="userList" extends="admin">
-<put-attribute name="content" value="/WEB-INF/views/admin/userList.jsp" />
-</definition>
-
-
-
 <!-- 신고관리 -->
 <definition name="reportList" extends="admin">
 <put-attribute name="content" value="/WEB-INF/views/admin/reportList.jsp" />
 </definition>
 
+<!-- 회원관리 -->
+<definition name="userList" extends="admin">
+<put-attribute name="content" value="/WEB-INF/views/admin/userList.jsp" />
+</definition>
 
 <!-- 그룹 생성 이동 -->
 <definition name="goAddgroup" extends="login">
@@ -119,6 +114,7 @@
 <definition name="goManagegroup" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/group/managegroup.jsp"/>
 </definition>
+
 
 <!-- 그룹 메인 페이지 이동 -->
 <definition name="groupMainPage" extends="login">

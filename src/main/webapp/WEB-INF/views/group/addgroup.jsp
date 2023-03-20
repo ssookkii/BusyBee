@@ -22,7 +22,7 @@
 <h3>그룹 생성화면</h3>
 <form action="addGroup.do" id="frm" method="get">
 그룹 이름 : <input type="text" name="group_name" maxlength="15">
-그룹 정보 : <textarea rows="5" cols="50" name="group_info" maxlength="25"></textarea>
+그룹 정보 : <textarea rows="5" cols="50" name="group_info" maxlength="20"></textarea>
 그룹 리더 : <input type="text" readonly="readonly" style="width:200px" value="<%=name%>(<%=id%>)">
 
 <input type="hidden" name="leader_id" value='<%=id %>'>

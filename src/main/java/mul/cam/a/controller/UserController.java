@@ -73,25 +73,13 @@ public class UserController {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
 
 			msg.setSubject("안녕하세요? BUSY BEE 가입 인증 번호입니다..");
-
-//			String content = "안녕하세요?"  + '\n' + "부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다." + '\n';
-//			
-
-//				content += "인증번호는 아래와 같습니다." + '\n' + AuthenticationKey + '\n'
-//					+ "인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요." + "\n\n"
-//					+ "만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요." + "\n\n"
-//					+ "감사합니다." + '\n'
-//					+ "BUSY BEE 드림";
-			
-			/*String content = "<h3>안녕하세요?</h3>"
-						+ "<br><h3>부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE입니다.</h3></br>";*/
 			
 			String content = "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:20px;' >"
 			  + "🐝  부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE  🐝"
 			  + "</p><br>";
 			
 			content += "<p>안녕하세요?<p><br>"
-					+ "꿀벌처럼 열심히 일하는, 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
+					+ "꿀벌처럼 열심히 일하는 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
 			
 			if(purpose.equals("regi") ) {
 				content += "<p>BUSY BEE 회원 가입을 위해서 보내드리는 인증 번호입니다.</p><br>";
@@ -169,73 +157,22 @@ public class UserController {
 		
 		return cert3_Msg;
 	}
-	
-	@GetMapping(value = "regi1.do")
-	public String regi1() {
-
-		return "regi1";
-	}
-
-	@PostMapping(value = "regi2.do")
-	public String regi2(Model model, String id, String password, String email) {
-
-		model.addAttribute("id", id);
-		model.addAttribute("password", password);
-		model.addAttribute("email", email);
-
-		return "regi2";
-	}
 
 	@PostMapping(value = "regiAf.do")
-	public String regiAf(Model model, UserDto dto,
-			@RequestParam(value = "profPic", required = false)
-	MultipartFile profPic, HttpServletRequest req) {
+	public String regiAf(Model model, UserDto dto) {
 
-		if(profPic.isEmpty()) {
-			boolean isS = service.addUser_N(dto);
+		boolean isS = service.addUser(dto);
 
-			String addUser_Msg = "addUser_FAIL";
-			if(isS) {
-				addUser_Msg = "addUser_SUCCESS";
-			}
-
-			model.addAttribute("addUser_Msg", addUser_Msg);
-			return "message";
+		String addUser_Msg = "addUser_FAIL";
+		if(isS) {
+			addUser_Msg = "addUser_SUCCESS";
 		}
-		
-		// filename 취득
-		String filename = profPic.getOriginalFilename(); // 원본파일명
-		dto.setProfPic_Origin(filename);
 
-		// upload 경로 설정
-		// to server
-		String fUpload = req.getServletContext().getRealPath("/upload");
-
-		// 파일명을 고유한 명칭으로 변경(Date)
-		String newfilename = FileUtil.getNewFileName(filename);
-		dto.setProfPic_Server(newfilename);
-
-		File file = new File(fUpload + "/" + newfilename);
-
-		try {
-			FileUtils.writeByteArrayToFile(file, profPic.getBytes());
-
-			System.out.println(fUpload);
-			boolean isS = service.addUser(dto);
-
-			String addUser_Msg = "addUser_FAIL";
-			if(isS) {
-				addUser_Msg = "addUser_SUCCESS";
-			}
-
-			model.addAttribute("addUser_Msg", addUser_Msg);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		model.addAttribute("addUser_Msg", addUser_Msg);
 
 		return "message";
 	}
+	
 
 	@ResponseBody
 	@PostMapping(value = "idCheck.do")

@@ -50,7 +50,7 @@
 <h3>가입 신청</h3>
 그룹 코드 : <input type="text" id="wantTo">
 <h6>그룹 코드는 공백 없이, 영문 소문자 및 숫자를 포함한 8자입니다.</h6>
-가입 메세지 : <input type="text" id="wantTo_Msg">
+가입 메세지 : <input type="text" id="wantTo_Msg" maxlength="25">
 <input type="button" value="가입신청" onclick="go_checkDupl()">
 <table border="1">
 	<thead>
@@ -69,12 +69,9 @@
 </div>
 
 <script type="text/javascript">
-
-
 $("#search").keyup(function(){
 	searchGroup();
 });
-
 $("#wantTo").keyup(function(e){
 	
 	let key = e.key || e.keyCode;
@@ -127,10 +124,6 @@ $("#wantTo").keyup(function(e){
 		}
 	});
 });
-
-
-
-
 function go_checkDupl(){
 	
 	if($.trim($("#wantTo").val())=="") {
@@ -169,7 +162,6 @@ function go_checkDupl(){
 		}
 	});
 }
-
 function searchGroup() {
 	
 	if($.trim($("#choice").val())=="" || $.trim($("#search").val())==""  ) {
@@ -209,7 +201,6 @@ function searchGroup() {
 		}
 	});
 }
-
 </script>
 
 </body>

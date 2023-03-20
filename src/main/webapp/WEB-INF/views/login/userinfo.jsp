@@ -38,7 +38,7 @@
 		<th>생년월일</th>
 		<th>이메일</th>
 		<th>핸드폰 (공개<input type="checkbox" id="p_Check" onchange="public_Change()">)</th>
-		<th id="f">프로필사진<input type="file" onchange="filechange()" id="profPic" name="profPic">
+		<th id="f">프로필사진<input type="file" onchange="filechange(this)" id="profPic" name="profPic">
 		<input type="button" id="delProf" onclick="changeBee()" value="프로필사진 삭제">
 		</th>
 		<th>프로필메세지</th>
@@ -46,19 +46,19 @@
 	</tr>
 	</thead>
 	<tbody id="tBody">
-		<tr>
-		</tr>
 	</tbody>
 </table>
 <input type="hidden" id="id" name='id' value='<%=id%>'>
 </form>
 <input type="hidden" id="fChange">
 <input type="hidden" id="bChange">
+<button type="button" onclick="location.href='newPassword.do'">비밀번호 재설정</button>
 <button type="button" id="updUser" onclick="go_updUser()">수정하기</button>
 <button type="button" id="delUser" onclick="go_delUser()">계정 삭제</button>
 </div>
 
 <script type="text/javascript">
+var imgsrc = "";
 $(document).ready(function(){
 	
 	$.ajax({
@@ -78,10 +78,10 @@ $(document).ready(function(){
 							+ "<td><input type='text' id='phone' name='phone' value='" + data.phone + "'></td>"
 							+ "<td>";
 				if(data.profPic_Origin===undefined || data.profPic_Origin=="" || data.profPic_Origin=="basic.png" ) {
-					tableTd += "<img src='./images/BusyB.png' width='100px' height='100px' alt=''/></td>";
+					tableTd += "<img id='preview' src='./images/BusyB.png' width='100px' height='100px' alt=''/></td>";
 					$("#delProf").remove();
 				} else{ 
-					tableTd += "<img src='/busyBeeImg/" + data.profPic_Server + "'width='100px' height='100px' alt=''/></td>";
+					tableTd += "<img id='preview' src='/busyBeeImg/" + data.profPic_Server + "'width='100px' height='100px' alt=''/></td>";
 				}
 				tableTd += "<td><input type='text' id='profMsg' name='profMsg' value='" + data.profMsg + "'></td>"
 							+ "<td>" + data.regidate.substr(0,10) + "</td>"
@@ -95,22 +95,37 @@ $(document).ready(function(){
 					$("#p_Check").prop('checked', true);
 				}
 			}
+			
+			imgsrc = $("#preview").attr("src");
 		},
 		error:function(){
 			alert('error');
 		}
 	});
 });
-
-function filechange(){
+function filechange(input){
 	
 	$("#fChange").val('changed');
 	var cancelBtn = "<button type='button' id='cancelChange'>변경 취소</button>";
-	$("#f").append(cancelBtn)
+	$("#f").append(cancelBtn);
 	
-	alert($("#fChange").val());
+	
+	if($("#bChange").val()!='changed' && $("#fChange").val()=='changed'){
+		$("#cancelChange").show();
+	} else {
+		$("#cancelChange").hide();
+	}
+	
+	 if (input.files && input.files[0]) {
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('preview').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		  } else {
+		    document.getElementById('preview').src = "";
+		  }
 }
-
 function public_Change(){
 	
 	if($("#p_Check").is(':checked')) {
@@ -119,14 +134,14 @@ function public_Change(){
 		$("#phone_public").val(null);
 	}
 }
-
 function changeBee(){
 	$("#bChange").val('changed');
 	var cancelBtn = "<button type='button' id='cancelChange'>변경 취소</button>";
-	$("#f").append(cancelBtn)
+	document.getElementById('preview').src = './images/BusyB.png';
+	$("#cancelChange").remove();
+	$("#f").append(cancelBtn);
 	
 }
-
 function go_updUser() {
 	
 	if($("#fChange").val()=='changed') {
@@ -141,31 +156,22 @@ function go_updUser() {
 		$("#frm").submit();
 	}
 	
-
 }
-
 function go_delUser() {
-	
 	location.href="delUser.do?id=" + '<%=id%>';
 }
-
-
 $(document).on("click", "#cancelChange", function(){
 	$("#fChange").val('');
 	$("#bChange").val('');
 	$("#profPic").val('');
 	$(this).remove();
-	
+	document.getElementById('preview').src = imgsrc;
 });
-
 $(document).on("change", "input[type='file']", function(){
-
 	// 이미지 확장자 유효성 검사
 	var file_path = $(this).val();
 	var reg = /(.*?)\.(jpg|jpeg|png)$/;
-
 	if (file_path != "" && (file_path.match(reg) == null || reg.test(file_path) == false)) {
-
 		if ($.browser.msie) { // ie 일때 
 			$(this).replaceWith($(this).clone(true));
 		} else {
@@ -187,7 +193,6 @@ $(document).on("change", "input[type='file']", function(){
 	// 다른 분이 테스트하시는 환경에서는 오류가 날 수 있으니
 	// 프로필 사진명은 짧게 해서 올리시는 것을 추천합니다!
 });
-
 </script>
 </body>
 </html>

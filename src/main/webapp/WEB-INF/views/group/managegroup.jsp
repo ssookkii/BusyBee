@@ -55,7 +55,7 @@
 <h5>새 구성원 추가</h5>
 초대 ID : <input type="text" id="wantId" maxlength="12">
 <h6>아이디는 공백 없이, 영문 대소문자 및 숫자를 포함하여 12자 이내입니다.</h6>
-초대 메세지 : <input type="text" id="wantTo_Msg">
+초대 메세지 : <input type="text" id="wantTo_Msg" maxlength="25">
 <input type="button" value="그룹초대" onclick="go_checkDupl()">
 <table border="1">
 	<thead>
@@ -145,7 +145,6 @@ $(document).ready(function(){
 	});
 	
 });
-
 $("#wantId").keyup(function(e){
 	
 	let key = e.key || e.keyCode;
@@ -173,7 +172,8 @@ $("#wantId").keyup(function(e){
 		$("#tBody3").append(tableTdNone);
 		return;
 	}
-		
+	
+	// 초대 멤버 검색
 	$.ajax({
 		url:"selectUser.do",
 		type:"get",
@@ -184,6 +184,7 @@ $("#wantId").keyup(function(e){
 				var tableTd = "";
 				$("#tBody3").html('');
 				tableTd += '<tr>'
+							+ "<td><img src ='/busyBeeImg/" + data.profPic_Server + "'width='100px' height='100px' alt=''/>"
 							+ '<td>' + data.name +'(' + data.id + ')' + '</td>'
 							+ '<td>' + data.email + '</td>';
 				if(data.phone_public==null) {
@@ -207,12 +208,10 @@ $("#wantId").keyup(function(e){
 	});
 	
 });
-
 function go_groupUpd() {
 	location.href="updGroup.do?group_code=" + '<%=group_code%>' + "&group_name=" + $("#group_name").val()
 			+ "&group_info=" + $("#group_info").val();
 }
-
 function go_checkDupl(){
 	
 	if($.trim($("#wantId").val())=="") {
@@ -250,7 +249,6 @@ function go_checkDupl(){
 		}
 	});
 }
-
 </script>
 </body>
 </html>
