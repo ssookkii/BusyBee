@@ -27,6 +27,7 @@ public class ChatRoomController {
 	@GetMapping("chatHome.do")
 	public String chatHome(Model model, HttpSession session) {
 		String user = (String)session.getAttribute("User"); // ㄹ그인 정보
+		System.out.println(user);
 		List<ChatRoomDto> allChatRoom = chatRoomService.printAllChatRoom(user);
 		model.addAttribute("allChatRoom", allChatRoom);
 		return "chatHome";
@@ -49,6 +50,7 @@ public class ChatRoomController {
 		
 		String createdBy = (String)session.getAttribute("User"); // ㄹ그인 정보
 		ChatRoomDto dto = new ChatRoomDto(roomId, title, descriptions, members, createdBy);
+		System.out.println(dto.getCreatedAt());
 		Boolean isSuccess = chatRoomService.createChatRoom(dto);
 		if (!isSuccess) { 
 			return null;
@@ -56,17 +58,18 @@ public class ChatRoomController {
 		return dto;
 	}
 	
-	@GetMapping(value="chatRoom/{chatRoomId}.do")
-	public String enterChatRoom(@PathVariable("chatRoomId")String chatRoomId, Model model) {
+	@GetMapping(value="teamChating/{chatRoomId}.do")
+	public String enterChatRoom(@PathVariable("chatRoomId")String chatRoomId, Model model, HttpSession session) {
 		ChatRoomDto dto = chatRoomService.chatRoomInfo(chatRoomId);
 		model.addAttribute("chatRoomInfo", dto);
-		return "chatRoom";
+		model.addAttribute("User", session.getAttribute("User"));
+		return "teamChating";
 	}
 	
 	//AJAX
 	@ResponseBody
-	@RequestMapping(value = "clickChat.do", method=RequestMethod.POST)
-	public ChatRoomDto clickChat(@RequestParam(value="chatRoomId")String chatRoomId) {
+	@RequestMapping(value = "showChatInfo.do", method=RequestMethod.POST)
+	public ChatRoomDto showChatInfo(@RequestParam(value="chatRoomId")String chatRoomId) {
 		ChatRoomDto chatRoomInfo = chatRoomService.chatRoomInfo(chatRoomId);
 		return chatRoomInfo;
 	}

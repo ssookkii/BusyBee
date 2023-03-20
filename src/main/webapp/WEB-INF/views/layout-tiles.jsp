@@ -14,10 +14,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Busy bee</title>
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.3/dist/umd/popper.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.8.3/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <!-- jQuery -->
@@ -37,12 +38,6 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 	
-
-<!-- Moment.js -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js'></script>
 
 <!-- 원하는 글꼴 추가 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +87,7 @@ span {
 body {
 	margin: 0px;
 }
-table {
+.tilestable {
 	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
@@ -109,7 +104,7 @@ td {
 
 	<div align="center">
 
-		<table>
+		<table class="tilestable">
 
 			<!-- header -->
 			<tr align="center" style="background-color: #fff7e1; color: gray;">

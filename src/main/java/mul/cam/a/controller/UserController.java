@@ -240,6 +240,7 @@ public class UserController {
 		// upload 경로 설정
 		// to server
 		String fUpload = req.getServletContext().getRealPath("/upload");
+		System.out.println(fUpload);
 
 		// 파일명을 고유한 명칭으로 변경(Date)
 		String newfilename = FileUtil.getNewFileName(filename);

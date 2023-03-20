@@ -62,14 +62,15 @@ textarea:focus {
 input[type="checkbox"]:checked {
   background-color: #f8eac7;
 }
+
 </style>
 <meta charset="UTF-8">
 <title>일정 관리</title>
-<link rel="stylesheet" href="css/mystyle.css">
+
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.3/dist/umd/popper.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.8.3/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <!-- jQuery -->
@@ -79,6 +80,8 @@ input[type="checkbox"]:checked {
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <!-- Moment.js -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -116,13 +119,12 @@ input[type="checkbox"]:checked {
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+
 
 
 <!-- timepicker -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 
 
 <!-- Bootstrap -->
@@ -134,7 +136,7 @@ input[type="checkbox"]:checked {
 
 <link rel="stylesheet"
 	href="https://bootswatch.com/5/minty/bootstrap.min.css">
-
+<link rel="stylesheet" href="css/mystyle.css">
 
 <%
 EventDto dto = (EventDto) request.getAttribute("scheduleList");
@@ -147,6 +149,9 @@ String myGroupName = request.getParameter("group_name");;
 
 </head>
 <body>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>	
 
 function initTimepicker() {

@@ -7,7 +7,6 @@
 <%
 String User = (String)session.getAttribute("User");
 List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChatRoom");
-System.out.println(User);
 %>
 <!DOCTYPE html>
 <html>
@@ -27,12 +26,10 @@ System.out.println(User);
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 #modal {
 	display: none;
 	top: 100px;
 }
-
 #modalBtn {
 	align-text:right;
 }
@@ -41,19 +38,16 @@ System.out.println(User);
 	right: 0;
 	top:0;
 }
-
 #chatList {
 	display: flex;
 	height: 400px;
 	justify-content: center;
 	align-items: center;
 }
-
 #allChatContainer {
 	text-align: middle;
 	margin: 20px;
 }
-
 .exitChatBtn {
 	border-style: none;
 	border-radius: 15px;
@@ -61,7 +55,6 @@ System.out.println(User);
 	width: 100%;
 	height: 100%;
 }
-
 }
 .show {
 	display: inline-flex !important;
@@ -69,35 +62,32 @@ System.out.println(User);
 .none {
 	display: none !important;
 }
-
 .card:hover {
 	text-decoration: none;
 	cursor: pointer;
 	transform: scale(1.1);
 	transition: transform 1s;
 }
-
 .flexible {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 }
-
 </style>
 <script>
-
-
 function showChatInfo(element) {
 	const chatRoomId = element.id; // 태그 구분을 개행으로 하면 첫 자식이 빈 text 가 잡힌다..
-
 	$.ajax({
 		method: "post",
 		data: { "chatRoomId": chatRoomId },
-		url: "clickChat.do",
+		url: "showChatInfo.do",
 		dataType: "text",
 		success: function(data){
 			data = JSON.parse(data);
+			
+			let sendTime = new Date();
+			sendTime = sendTime.toLocaleString('ko-kr');
 			
 			const chatTitle = data.title;
 			const chatDescription = data.descriptions;
@@ -109,17 +99,14 @@ function showChatInfo(element) {
 			document.getElementById("showChatDescription").innerText = chatDescription;
 			document.getElementById("showChatMember").innerText = chatMembers;
 			document.getElementById("showChatHost").innerText = chatHost;
-			document.getElementById("showChatCreatedAt").innerText = chatCreatedAt;
+			document.getElementById("showChatCreatedAt").innerText = sendTime;
 			document.getElementById("chatExit").innerHTML = "<button class='exitChatBtn' onclick='exitChat(this)'>Chat Exit</button>";
 		},
 		error: function(){
 			alert("실패");
 		}
 	});
-	
-	
 }
-
 function enterChat(element) {
 	const chatRoomId = element.id;
 	
@@ -127,9 +114,11 @@ function enterChat(element) {
 		alert("해당 채팅방을 찾을 수 없습니다.");
 		return;
 	}
-	location.href = "chatRoom/"+ chatRoomId +".do";
+	
+	const teamChatWindow = window.open("teamChating/"+ chatRoomId + ".do", "chatteam", "resizable");
+	teamChatWindow.resizeTo(600,900);
+	
 }
-
 function exitChat(element) { // 자신을 제거
 	const toExitChatRoomId = document.getElementById("showChatId").innerText;
 	const chatRoomInfo = document.getElementById(toExitChatRoomId);
@@ -160,9 +149,6 @@ function exitChat(element) { // 자신을 제거
 		}
 	});
 }
-
-
-
 </script>
 </head>
 <body>
@@ -267,12 +253,8 @@ function exitChat(element) { // 자신을 제거
 		</div>
 	</div>
 <script>
-
-
 const modalWindow = document.getElementById("modal");
-
 const chatForAllBtn = document.getElementById("chatForAll");
-
 const clickOpenModal = () => {
 	document.getElementById("roomId").value = "";
 	document.getElementById("title").value = "";
@@ -280,22 +262,15 @@ const clickOpenModal = () => {
 	document.getElementById("member").value = "";
 	if (!modalWindow.classList.contains("show")) modalWindow.classList.add("show");
 }
-
 const clickCloseModal = () => {
 	if (modalWindow.classList.contains("show")) modalWindow.classList.remove("show");
 }
-
 const createChat = () => {
 	
 	const roomId = document.getElementById("roomId").value;
 	const title = document.getElementById("title").value;
 	const description = document.getElementById("description").value;
 	const member = document.getElementById("member").value;
-	
-	console.log(roomId);
-	console.log(title);
-	console.log(description);
-	console.log(member);
 	
 	$.ajax({
 		url: "createChat.do",
@@ -308,8 +283,7 @@ const createChat = () => {
 			},
 		dataType: "text",
 		success: function(data){
-			alert(data);
-			if (data == null) {
+			if (data == null || data == "" || data == undefined) {
 				alert("이미 존재하는 Chat ID 입니다.");
 				document.getElementById("roomId").value = "";
 				document.getElementById("roomId").focus();
@@ -332,11 +306,10 @@ const createChat = () => {
 		},
 	});
 }
-
 const chatForAll = () =>{
-	window.open("chating.do", "chatAll", "width=500,height=600");
+	const allChatWindow = window.open("allChating.do", "chatAll", "resizable");
+	allChatWindow.resizeTo(600,900);
 }
-
 </script>
 </body>
 </html>

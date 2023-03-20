@@ -78,3 +78,6 @@ font-size: 18px;
   position: relative;
   z-index: 2000;
 }
+table{
+	width: 100%;	
+}

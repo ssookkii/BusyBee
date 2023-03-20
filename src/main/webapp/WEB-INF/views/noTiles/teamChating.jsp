@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
     
 <% 
-String User = (String)session.getAttribute("login");
+String User = (String)request.getAttribute("User");
 ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 %>
 <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
@@ -20,10 +20,19 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+body {
+	height: 1000px;
+}
 #sendOption{
 	margin-top: 10px;
 	text-align: middle;
-	height: 50px;
+	height: 20px;
+}
+#teamChatContainer {
+	height: 100%;
+	background-color: #fff7e1;
+	margin: 0;
+	padding-top: 50px;
 }
 .chatHeader {
 	text-align: center;
@@ -42,6 +51,7 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 	width: 500px;
 	height: 700px;
 	overflow: scroll;
+	background-color: white;
 }
 .chat-me {
 	display: inline-flex;
@@ -70,7 +80,7 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 }
 </style>
 
-<div class="item-center">
+<div id="teamChatContainer" class="item-center">
 	<div>
 		<div class="chatHeader">
 			<h1>[ <%=chatRoomInfo.getTitle() %> ]</h1>
@@ -85,24 +95,27 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 			</div>
 		</div>
 		<div class="item-center" id="sendOption">
+			
+			<!-- 
 			<div>
 				<select id="chatOption" class="form-select" onchange="toChatWho()">
 					<option value="toAll">--전체--</option>
 					<option value="toOne">--귓속말--</option>
 				</select>
 				<select id="sendToMember" class="form-select">
-				<%
-				String[] members = chatRoomInfo.getMembers().split(",");
-				for (String member : members) {
-				%>
-					<option><%=member %></option>
-				<%
-				}
-				%>
 				</select>
 			</div>
-			<input type="text" class="form-control" size="50" required style="width: 300px; height:45px; font-size:35px;"/>
+			 -->
+			
+			<input type="text" class="form-control" size="50" required style="width: 300px; height:45px; font-size:15px;"/>
 			<input type="button" class="btn btn-warning" value="전송" onclick="send()" style="width:80px; height: 45px;" />
 		</div>
 	</div>
 </div>
+
+<script>
+function resizeWindowSize() {
+	window.resizeTo(600,900);
+}
+window.addEventListener("resize", resizeWindowSize);
+</script>

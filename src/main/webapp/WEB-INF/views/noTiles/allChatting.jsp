@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
     
 <% 
-String User = (String)session.getAttribute("login");
+String User = (String)request.getAttribute("User");
 %>
 <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,19 @@ String User = (String)session.getAttribute("login");
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+body {
+	height: 900px;
+}
 #sendOption{
 	margin-top: 10px;
 	text-align: middle;
 	height: 50px;
+}
+#allChatContainer {
+	height: 100%;
+	background-color: #fff7e1;
+	margin: 0;
+	padding-top: 20px;
 }
 .item-center {
 	display:flex;
@@ -38,6 +47,7 @@ String User = (String)session.getAttribute("login");
 	width: 500px;
 	height: 700px;
 	overflow: scroll;
+	background-color: white;
 }
 .chat-me {
 	display: flex;
@@ -79,7 +89,7 @@ String User = (String)session.getAttribute("login");
 }
 </style>
 
-<div>	
+<div id="allChatContainer">	
 	<h1 style="text-align: center;">전체채팅방</h1>
 	<div class="item-center">
 		<div class="chat-contents-container">
@@ -98,8 +108,6 @@ String User = (String)session.getAttribute("login");
 		<input type="text" id="message" class="form-control" size="50" required style="width: 300px; height:45px; font-size:15px;"/>
 		<input type="button" class="btn btn-warning" value="전송" onclick="send()" style="width:80px; height: 45px;" />
 	</div>
-	<input type="button" id="enterBtn" value="입장" onclick="connect()" />
-	<input type="button" id="exitBtn" value="나가기" onclick="disconnect()" />
 </div>
 <script>
 var wsocket;
@@ -135,8 +143,6 @@ function onOpen(evt) {
 }
 // 메시지 수신이 되었을 때
 function onMessage(evt) {
-	console.log(evt); // 서버에서 온 데이터 확인
-	console.log("server message send");
 	let data = evt.data;
 	appendMessage( data );
 }
@@ -146,7 +152,7 @@ function onClose(evt) {
 }
 // 메시지 송신
 function send() {
-	const writer = "임의 유저"; //"<%=User%>"
+	const writer = "<%=User%>";
 	const message = document.getElementById("message").value;
 	const recipient = document.getElementById("recipient").value; // 모두에게 보낼때 "to All" 귓속말일때 "user name"
 	let sendTime = new Date();
@@ -177,10 +183,12 @@ function send() {
 			"recipient" : recipient,
 		},
 		dataType: "text",
-		success: function(){
+		success: function(msg){
+			if (msg === "Success") console.log("채팅내용 저장성공");
+			else console.log("채팅내용 저장실패");
 		},
 		error: function(){
-			alert("실패");
+			alert("메세지 전달에 실패하였습니다.");
 		}
 	});
 }
@@ -208,7 +216,7 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 		chatBox.appendChild(chatContent);
 	}
 	// 자신이 보낸 귓속말 메세지인경우
-	else if (writer == recipient && recipient != "to All"){
+	else if (writer == "<%=User %>" && recipient != "to All"){
 		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>[" + recipient + "]에게 귓속말 | " + message + "</p><br/>" +
@@ -257,4 +265,9 @@ function toChatWho() {
 		recipient.value = "";
 	}
 }
+function resizeWindowSize() {
+	window.resizeTo(600,900);
+}
+window.addEventListener("resize", resizeWindowSize);
+connect();
 </script>
