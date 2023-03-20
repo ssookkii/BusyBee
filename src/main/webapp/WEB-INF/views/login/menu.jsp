@@ -156,7 +156,7 @@
     
 }
 .item:target .subMenu{
-    max-height: 10em;
+    max-height: 30em;
 }
 
 </style>
@@ -197,12 +197,11 @@
 			async:false,
 			success:function(data) {
 				//alert(data);
-
+				console.log(data);
 				if(data!=null && data!="") {
 					var submenu = '';
 					$.each(data, function(i){
 					submenu += "<a href='groupMainPage.do?group_code="+data[i].group_code+"&group_name="+data[i].group_name+"'>"+data[i].group_name+"</a>";
-						 
 					});
 					$("#subMenu").append(submenu);
 					group1 = true;
