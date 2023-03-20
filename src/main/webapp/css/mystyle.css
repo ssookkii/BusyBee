@@ -1,0 +1,80 @@
+.body{
+font-family: 'Black Han Sans', sans-serif;
+font-family: 'Dongle', sans-serif;
+font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+font-size: 15px;
+}
+#calendar {
+	width: 100%;
+	color: "#f8e6bc";
+}
+
+#event-info {
+	width: 100%;
+	border: 1px solid #ccc;
+	padding: 5px;
+	overflow-y: auto;
+}
+
+.flex-item {
+	margin: 15px;
+	width: 600px;
+	text-align: center;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-form {
+	width: 100%;
+	padding: 5px;
+	overflow-y: auto;
+	text-align: center;
+
+}
+
+.event-table {
+	width: 100%;
+	border-collapse: collapse;
+	height: 1em;
+	font-size: 14px;
+}
+
+.event-table td {
+	padding: 5px;
+}
+
+form {
+	text-align: left;
+}
+
+.datepicker {
+	width: 300px;
+	padding: 0.5em;
+	margin-top: 0.5em;
+	font-size: 0.875em;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.modal-body {
+height:500px;
+font-size: 15px;
+}
+
+.modal-title {
+height:50px;
+font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    font-weight: bold;
+}
+.modal {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  z-index: 2000;
+}

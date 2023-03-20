@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+
+<!-- No tiles -->
+<!-- 로그인 -->
+<definition name="loginMain" template="/WEB-INF/views/noTiles/loginMain.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<definition name="idandpwd" template="/WEB-INF/views/noTiles/idandpwd.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- 메세지 -->
+<definition name="message" template="/WEB-INF/views/message.jsp">
+	<put-attribute name="noTemplate" value=""/>
+</definition>
+
+<!-- Tiles -->
+<!-- 첫 화면 -->
+<definition name="login" template="/WEB-INF/views/layout-tiles.jsp">
+	<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+	<put-attribute name="menu" value="/WEB-INF/views/login/menu.jsp"/>
+	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
+	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+</definition>
+
+<definition name="goUserinfo" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/login/userinfo.jsp"/>
+</definition>
+
+<!-- 그룹 메인페이지 이동 -->
+<definition name="groupMainPage" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/main/groupMainPage.jsp"/>
+</definition>
+
+<!-- 일정관리 이동 -->
+<definition name="calendar" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/calendar/calendar.jsp"/>
+</definition>
+
+<!-- 메인메뉴 이동 -->
+<definition name="main" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/login/main.jsp"/>
+</definition>
+<!-- 고객센터 이동 -->
+<definition name="customer" extends="login">
+<put-attribute name="content" value="/WEB-INF/views/customer/customer.jsp" />
+</definition>
+
+<!-- 글 작성 -->
+<definition name="customerWrite" extends="customer">
+<put-attribute name="content" value="/WEB-INF/views/customer/customerWrite.jsp" />
+</definition>
+
+<definition name="message" template="/WEB-INF/views/message.jsp">
+<put-attribute name="body" value="" />
+</definition>
+
+<definition name="customerDetail" extends="customer">
+<put-attribute name="content" value="/WEB-INF/views/customer/customerDetail.jsp" />
+</definition>
+
+<definition name="customerUpdate" extends="customer">
+<put-attribute name="content" value="/WEB-INF/views/customer/customerUpdate.jsp" />
+</definition>
+
+<definition name="customerAnswer" extends="customer">
+<put-attribute name="content" value="/WEB-INF/views/customer/customerAnswer.jsp" />
+</definition>
+
+<!-- 관리자 페이지로 이동 -->
+<definition name="admin" template="/WEB-INF/views/admin/layout-tiles_admin.jsp">
+	<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+	<put-attribute name="content" value="/WEB-INF/views/admin/admin.jsp"/>
+	<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+</definition>
+
+<!-- 신고관리 -->
+<definition name="reportList" extends="admin">
+<put-attribute name="content" value="/WEB-INF/views/admin/reportList.jsp" />
+</definition>
+
+<!-- 회원관리 -->
+<definition name="userList" extends="admin">
+<put-attribute name="content" value="/WEB-INF/views/admin/userList.jsp" />
+</definition>
+
+<!-- 그룹 생성 이동 -->
+<definition name="goAddgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/addgroup.jsp"/>
+</definition>
+
+<!-- 나의 그룹 이동 -->
+<definition name="goMygroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/mygroup.jsp"/>
+</definition>
+
+<!-- 그룹 검색 이동 -->
+<definition name="goSearchgroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/searchgroup.jsp"/>
+</definition>
+
+<!-- 그룹 알림 이동 -->
+<definition name="goNoti" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/noti.jsp"/>
+</definition>
+
+<!-- 그룹 알림 이동 -->
+<definition name="goManagegroup" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/group/managegroup.jsp"/>
+</definition>
+
+
+<!-- 그룹 메인 페이지 이동 -->
+<definition name="groupMainPage" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/main/groupMainPage.jsp"/>
+</definition>
+
+<!-- 일정관리 이동 -->
+<definition name="goCalendar" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/calendar/calendar.jsp"/>
+</definition>
+
+<!-- bbslist 이동 -->
+<definition name="bbslist" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/bbslist.jsp"/>
+</definition>
+
+<!-- bbswrite 이동 -->
+<definition name="bbswrite" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/bbswrite.jsp"/>
+</definition>
+
+
+<!-- bbsdetail 이동 -->
+<definition name="bbsdetail" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/bbsdetail.jsp"/>
+</definition>
+
+<!-- bbsupdate 이동 -->
+<definition name="bbsupdate" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/bbsupdate.jsp"/>
+</definition>
+
+<!-- 채팅 이동 -->
+<definition name="chatHome" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/chat/chatHome.jsp"/>
+</definition>
+
+<!-- 전체채팅 이동 -->
+<definition name="chating" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/chat/chating.jsp"/>
+</definition>
+
+<!-- 전체채팅 이동 -->
+<definition name="chatRoom" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/chat/chatRoom.jsp"/>
+</definition>
+
+</tiles-definitions>
+
+
+
+
+
