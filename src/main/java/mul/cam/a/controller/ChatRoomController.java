@@ -49,6 +49,7 @@ public class ChatRoomController {
 		
 		String createdBy = (String)session.getAttribute("User"); // ㄹ그인 정보
 		ChatRoomDto dto = new ChatRoomDto(roomId, title, descriptions, members, createdBy);
+		System.out.println(dto.getCreatedAt());
 		Boolean isSuccess = chatRoomService.createChatRoom(dto);
 		if (!isSuccess) { 
 			return null;
@@ -56,11 +57,12 @@ public class ChatRoomController {
 		return dto;
 	}
 	
-	@GetMapping(value="chatRoom/{chatRoomId}.do")
-	public String enterChatRoom(@PathVariable("chatRoomId")String chatRoomId, Model model) {
+	@GetMapping(value="teamChating/{chatRoomId}.do")
+	public String enterChatRoom(@PathVariable("chatRoomId")String chatRoomId, Model model, HttpSession session) {
 		ChatRoomDto dto = chatRoomService.chatRoomInfo(chatRoomId);
 		model.addAttribute("chatRoomInfo", dto);
-		return "chatRoom";
+		model.addAttribute("User", session.getAttribute("User"));
+		return "teamChating";
 	}
 	
 	//AJAX
