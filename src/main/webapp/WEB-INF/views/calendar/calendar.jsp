@@ -180,7 +180,6 @@ function initTimepicker() {
 		        $.each(data, function(i){
 		        	if( data[i].group_code === '<%=myGroup%>') { 
 		        		myGroupName = data[i].group_name ;
-			        console.log(myGroupName);
 		        	} });
 		    
 		        group1 = true;
@@ -203,7 +202,6 @@ function initTimepicker() {
 		        $.each(data, function(i){
 		        	if( data[i].group_code === '<%=myGroup%>') { 
 		        		myGroupName = data[i].group_name ;
-			        	console.log(myGroupName);
 		        	}   });
 		   
 		        group2 = true;
@@ -974,7 +972,6 @@ $(document).ready(function() {
 					$('#all-day-update').on('change', function() {
 					    // 체크박스가 체크되면 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 비활성화
 					    if (this.checked) {
-					        console.log('checked');
 					        // 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 비활성화
 					        $('#edit-start-time, #edit-end-date, #edit-end-time').prop('disabled', true);
 					        // 시작일정의 시간을 '00:00'으로 변경
@@ -1095,9 +1092,6 @@ $(document).ready(function() {
         for (var i = 0; i < data.length; i++) {
           var eventStart = data[i].startDate.split(" ")[0];
           var eventEnd = data[i].endDate.split(" ")[0];
-          console.log(eventStart);
-          console.log(eventEnd);
-          console.log("today"+today);
           
           if (eventStart <= today && today <= eventEnd) {
             todayEventList.push(data[i]);
@@ -1138,7 +1132,6 @@ $('#share-event-btn').click(function() {
         for (var i = 0; i < data.length; i++) {
             
             var shareid = data[i];
-            //console.log(shareid);
             // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
             if (data[i] === '<%= id %>') {
                 continue;
@@ -1164,7 +1157,6 @@ $('#share-event-btn').click(function() {
 	          	    groupCode : groupCode
 	          	    };
 	          	  
-          	    console.log(eventData);
           	    
           	 $.ajax({
 			      url: 'eventwriteAf.do' ,
@@ -1204,7 +1196,6 @@ $('#share-event-btn').click(function() {
 	    success: function(data) {
 	            
 	            var shareid = data.leader_id;
-	            console.log(shareid);
 	            // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
             if (id !== shareid) {
 	          	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
@@ -1225,7 +1216,6 @@ $('#share-event-btn').click(function() {
 		          	    description : description,
 		          	    groupCode : groupCode
 		          	    };
-	          	    console.log(eventData);
 	          	    
 	          	 $.ajax({
 				      url: 'eventwriteAf.do' ,
