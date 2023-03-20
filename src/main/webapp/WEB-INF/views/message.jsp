@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%
 
+String group_code = (String)session.getAttribute("group_code");
 String org = (String)session.getAttribute("org");
 
 %>
 <input type="hidden" id="org" value="<%=org %>">
+<input type="hidden" id="group_code" value="<%=group_code %>">
 
 <%
 
@@ -381,7 +383,7 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 	String updGroup_Msg = (String) request.getAttribute("updGroup_Msg");
 	if(updGroup_Msg!=null && updGroup_Msg!="") {
 		if(updGroup_Msg=="updGroup_SUCCESS") {
-			String group_code = (String) request.getAttribute("group_code");
+			group_code = (String) request.getAttribute("group_code");
 			%>
 			<script>
 			alert('그룹 정보를 수정했습니다.');
@@ -389,7 +391,7 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 			</script>
 			<%
 		} else {
-			String group_code = (String) request.getAttribute("group_code");
+			group_code = (String) request.getAttribute("group_code");
 			%>
 			<script>
 			alert('그룹 정보 수정에 실패했습니다. 다시 확인해주세요.');
@@ -477,28 +479,33 @@ if(bbswrite != null && !bbswrite.equals("")){
 	if(bbswrite.equals("bbswrite_YES")){
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("성공적으로 작성되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
 	else{
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("다시 작성해 주십시오");
-		location.href = "bbswrite.do";
+		location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
 }
-
 String bbsupdate = (String)request.getAttribute("bbsupdate");
 if(bbsupdate != null && !bbsupdate.equals("")){
 	if(bbsupdate.equals("bbsupdate_YES")){
 		%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("성공적으로 수정되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 		<%
 	}
@@ -513,14 +520,15 @@ if(bbsupdate != null && !bbsupdate.equals("")){
 		<%
 	}	
 }
-
 String bbsdelete = (String)request.getAttribute("bbsdelete");
 if(bbsdelete != null && !bbsdelete.equals("")){
 	if(bbsdelete.equals("bbsdelete_YES")){
 	%>
 		<script type="text/javascript">
+		let group_code = document.getElementById("group_code").value;
+		let org = document.getElementById("org").value;
 		alert("삭제되었습니다");
-		location.href = "bbslist.do";
+		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 		</script>
 	<% 
 } else{	
@@ -535,7 +543,6 @@ if(bbsdelete != null && !bbsdelete.equals("")){
 	<%
 	}
 }
-
 String bbscomment = (String) request.getAttribute("bbscomment");
 if(bbscomment != null && bbscomment != "") {
 	if(bbscomment == "bbscomment_YES") {
@@ -559,7 +566,6 @@ if(bbscomment != null && bbscomment != "") {
 	<%
 	}
 }
-
 String deleteBbscomment = (String) request.getAttribute("deleteBbscomment");
 if(deleteBbscomment != null && deleteBbscomment != "") {
 	if(deleteBbscomment == "deleteBbscomment_YES") {
@@ -583,7 +589,6 @@ if(deleteBbscomment != null && deleteBbscomment != "") {
 	<%
 	}
 }
-
 %>
 
 

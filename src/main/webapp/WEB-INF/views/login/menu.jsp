@@ -75,7 +75,7 @@
     margin-right: 10px;
 }
 .subMenu{
-    background: #273057;
+    background: #ffe6b1;
     overflow: hidden;
     transition: max-height 0.7s;
     max-height: 0;
@@ -85,7 +85,7 @@
 .subMenu a{
     display: block;
     padding: 15px 20px;
-    color: #fff;
+    color: #8c5a0b;
     font-size: 14px;
     border-bottom: 1px solid #394c7f;
     position: relative;
@@ -142,11 +142,11 @@
     
 }
 .subMenu a:hover{
-    background: #273057;
-    background: -moz-linear-gradient(top, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
-    background: -webkit-linear-gradient(top, #273057 0%,#273057 50%,#394c7f 51%,#394c7f 100%);
-    background: linear-gradient(to bottom, #273057 0%,#273057 50%,#394c7f 51%,#394c7f 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#273057', endColorstr='#394c7f',GradientType=0 );
+    background: #ebc87f;
+    background: -moz-linear-gradient(top, #ebc87f 0%, #ebc87f 50%, #ffdf9c 51%, #ffdf9c 100%);
+    background: -webkit-linear-gradient(top, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
+    background: linear-gradient(to bottom, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebc87f', endColorstr='#ffdf9c',GradientType=0 );
     transition: all 0.3s;
     border-bottom: 1px solid #394c7f;
     text-decoration: none;
@@ -174,7 +174,7 @@
     <div class="wrapper">
         <ul class="mainMenu">
             <li class="item" id="account">
-                <a style="color:black;" href="#account" class="subMenuBtn"><i class="fas fa-user-circle"></i>나의 그룹</a>
+                <a style="color:#8c5a0b;" href="#account" class="subMenuBtn"><img src = "./images/mark2.png" width="50px" height="45px" style="float: left; "/>나의 그룹</a>
                  <div id="subMenu" class="subMenu" >
                                               
                </div>

@@ -18,7 +18,7 @@
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.8.3/dist/umd/popper.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 <!-- jQuery -->
@@ -106,38 +106,40 @@ td {
 
 		<table class="tilestable">
 
-			<!-- header -->
-			<tr align="center" style="background-color: #fff7e1; color: gray;">
-				<td><header>
-						<img src="images/logo.png" width="250px" height="40px"
-							style="float: left; margin: 20px;">
-					</header></td>
+		<!-- header -->
+            <tr align="center" style="background-color: #fff7e1; color: gray;">
+                <td><header>
+                <a href="login.do">
+                        <img src="images/logo.png" width="250px" height="40px"
+                            style="float: left; margin: 20px;">
+                            </a>
+                    </header></td>
 
-				<td style="height: 5%">
-					<div style="float: right; margin-right: 30px; margin-top: 15px">
-					
-						<!-- user Name 받아오기     
-    					 <span>${user.name}</span> -->
-						<!--  user 상태 메시지
-						<span style="color: gray;">${user.status}</span> -->
+                <td style="height: 5%">
+                    <div style="float: right; margin-right: 30px; margin-top: 15px">
 
-						<!-- 임시 -->
-						<span style="font-size: 15px;"><%=login.getName()%>(<%=login.getId() %>)</span> <br /> 
-						<span style="color: #938046; font-size: 13px;"><%=login.getProfMsg() %></span>
+                        <!-- user Name 받아오기
+                         <span>${user.name}</span> -->
+                        <!--  user 상태 메시지
+                        <span style="color: gray;">${user.status}</span> -->
 
-						<!-- 로그아웃 , 회원정보 수정-->
-						<br /> 
-						<a style="float: right; margin-right: 5px;"	href="${logoutUrl}">로그아웃</a> 
-						<a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
-					</div>
-					 	<!-- user image -->
-					<div style="float: right; margin: 5px; margin-right: 30px;">
-						<img src="/busyBeeImg/<%=login.getProfPic_Server() %>" width="70px" height="70px"
-							style="border-radius: 50%;">
-					</div>
-				</td>
-				
-		</tr>
+                        <!-- 임시 -->
+                        <span style="font-size: 15px;"><%=login.getName()%>(<%=login.getId() %>)</span> <br /> 
+                        <span style="color: #938046; font-size: 13px;"><%=login.getProfMsg() %></span>
+
+                        <!-- 로그아웃 , 회원정보 수정-->
+                        <br /> 
+                        <a style="float: right; margin-right: 5px;"    href="${logoutUrl}">로그아웃</a> 
+                        <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
+                    </div>
+                         <!-- user image -->
+                    <div style="float: right; margin: 5px; margin-right: 30px;">
+                        <img src="/busyBeeImg/<%=login.getProfPic_Server() %>" width="70px" height="70px"
+                            style="border-radius: 50%;">
+                    </div>
+                </td>
+
+        </tr>
 		
 		<!-- 메뉴 이동 네비게이션 -->
 		<tr>

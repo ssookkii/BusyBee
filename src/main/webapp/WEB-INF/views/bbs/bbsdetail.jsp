@@ -359,7 +359,7 @@ function filedown(seq, newfilename, filename){
 <script type="text/javascript">
 $(document).ready(function(){
 	$.ajax({
-		url:"./commentList.do",
+		url:"commentList.do",
 		type:"get",
 		data:{ "seq":<%=dto.getSeq() %> },
 		success:function(list){

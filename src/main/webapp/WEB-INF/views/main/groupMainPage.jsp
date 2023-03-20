@@ -25,8 +25,6 @@
 
 
 
-
-
 .flex-container {
   display: flex;
   justify-content: center;
@@ -47,6 +45,7 @@
 	width : 500px;
   height: 500px;
   font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
 }
 
@@ -58,13 +57,22 @@
   margin-top:40px;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
 
 }
 
 .card-header{
 font-size: 15px;
 
+}
+th {
+  text-align: center;
+}
+.nav-link.active {
+  text-shadow: 2px 2px 5px #f8ebcc;
+}
+.nav-link.active1 {
+  text-shadow: 2px 2px 5px #ffdab6;
 }
 </style>
 
@@ -74,16 +82,16 @@ font-size: 15px;
 
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
-<h1 style="font-weight: bold; font-size: 48px;">&nbsp;&nbsp;&nbsp;<%=group_name %></h1>
+<h1 style="font-weight: bold; font-size: 48px; color:#aa9a89">&nbsp;&nbsp;&nbsp;<%=group_name %></h1>
 <br><br>
 <hr>
 
 <div class="flex-container" >
 
-<div class="card text-white bg-warning mb-3" >
+<div class="card border-warning mb-3 rounded" style="text-align: center; ">
   <div class="card-header" >
   
-  <a class="nav-link active" style="font-size: 40px; color:black"
+  <a class="nav-link active" style="font-size: 35px; color:#b7750d; font-weight: bold;"
   href="goBbslist.do?group_code=<%=group_code %>&group_name=<%=group_name %>">그룹 게시판</a>
   </div>
 
@@ -91,8 +99,8 @@ font-size: 15px;
 <table class="table table-hover">
     <thead>
     <tr>
-        <th style="font-size: 20px; color:black">제목</th>
-        <th style="font-size: 20px; color:black">작성자</th>
+        <th style="font-size: 20px;">제목</th>
+        <th style="font-size: 20px; ">작성자</th>
     </tr>
     </thead>
     <tbody id="bbsBody">
@@ -100,18 +108,18 @@ font-size: 15px;
 </table>
   </div>
 </div>
-
-<div class="card text-white bg-danger mb-3">
+&nbsp;&nbsp;
+<div class="card border-warning mb-3 rounded" style="text-align: center;">
   <div class="card-header">
-  <a class="nav-link active" style="font-size: 40px; color:black;"
-  href="goCalendar.do?group_code=<%=group_code %>&group_name=<%=group_name %>">일정관리</a></div>
+  <a class="nav-link active1" style="font-size: 35px; color:#c83a12; font-weight: bold;"
+  href="goCalendar.do?group_code=<%=group_code %>&group_name=<%=group_name %>">일정 관리</a></div>
   <div class="card-body">
 <table class="table table-hover">
     <thead>
     <tr>
-        <th style="font-size: 20px;  color:black;">제목</th>
-        <th style="font-size: 20px; color:black;">시작일</th>
-        <th style="font-size: 20px; color:black;">종료일</th>
+        <th style="font-size: 20px;  ">제목</th>
+        <th style="font-size: 20px; ">시작일</th>
+        <th style="font-size: 20px; ">종료일</th>
     </tr>
     </thead>
     <tbody id="calBody">
@@ -143,11 +151,11 @@ $.ajax({
                 	
                if(data[i].title.length > 10){
                	
-               tableTd += '<td style="font-size: 20px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title.substr(0, 10)+'...' + '</a></td>';
+               tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title.substr(0, 10)+'...' + '</a></td>';
                }else{
-               	tableTd += '<td style="font-size: 20px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title + '</td>';
+               	tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title + '</td>';
                }
-               tableTd += '<td style="font-size: 20px; font-weight: 300; color:black;">' + data[i].id + '</td>'
+               tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;">' + data[i].id + '</td>'
                           + '</tr>';
                   $("#bbsBody").append(tableTd);
                   
@@ -155,7 +163,7 @@ $.ajax({
            }
          }else{
        	  tableTd += '<tr>' 
-        	  + '<td style="font-size: 20px; font-weight: 300; color:black;">게시글이 없습니다</td>'
+        	  + '<td colspan="2" style="font-size: 15px; font-weight: 300; color:black; ">게시글이 없습니다</td><td></td>'
         	  +'</tr>';
               $("#bbsBody").append(tableTd);
 
@@ -182,18 +190,18 @@ $.ajax({
                 tableTd = '<tr>';
                if(data[i].title.length > 7){
                	
-               tableTd += '<td style="font-size: 20px; font-weight: 300; color:black;">' + data[i].title.substr(0, 6)+'...' + '</td>';
+               tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;">' + data[i].title.substr(0, 6)+'...' + '</td>';
                }else{
-               	tableTd += '<td style="font-size: 20px; font-weight: 300;   color:black;">' + data[i].title + '</td>';
+               	tableTd += '<td style="font-size: 15px; font-weight: 300;   color:black;">' + data[i].title + '</td>';
                }
-               tableTd += '<td style="font-size: 20px; font-weight: 300;  color:black;">' + data[i].startDate + '</td>'
-                       + '<td style="font-size: 20px; font-weight: 300;  color:black;">' + data[i].endDate + '</td>'
+               tableTd += '<td style="font-size: 15px; font-weight: 300;  color:black;">' + data[i].startDate + '</td>'
+                       + '<td style="font-size: 15px; font-weight: 300;  color:black;">' + data[i].endDate + '</td>'
                           + '</tr>';
                   $("#calBody").append(tableTd);
            }
          }else{
           	  tableTd += '<tr>' 
-            	  + '<td style="font-size: 20px; font-weight: 300;   color:black;">일정이 없습니다</td>'
+            	  + '<td style="font-size: 15px; font-weight: 300;   color:black;">일정이 없습니다</td>'
             	  +'</tr>';
                   $("#calBody").append(tableTd);
 

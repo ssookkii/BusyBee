@@ -80,9 +80,11 @@ public class MenuController {
 	
 	/*그룹 메인 페이지 이동*/
 	@GetMapping(value = "groupMainPage.do")
-	public String groupMainPage(Model model, String group_code) {
+	public String groupMainPage(Model model, String group_code,String group_name) {
 		
 		model.addAttribute("group_code", group_code);
+		model.addAttribute("group_name", group_name);
+
 		return "groupMainPage";
 	}
 	
@@ -101,7 +103,9 @@ public class MenuController {
 	public String bbslist(Model model, String group_code, String group_name) {
 		
 		model.addAttribute("group_code", group_code);
-		model.addAttribute("group_name", group_name);
+		model.addAttribute("org", group_name);
+		System.out.println(group_name);
+		System.out.println(group_code);
 
 		return "redirect:/bbslist.do";
 	}

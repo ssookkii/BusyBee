@@ -310,7 +310,7 @@ $(document).ready(function(){
 	
 	// Leader
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/selectGroup1.do",
+		url:"selectGroup1.do",
 		type:"get",
 		data:{"id":$("#id").val()},
 		async:false,
@@ -335,7 +335,7 @@ $(document).ready(function(){
 	});
 	// Member
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/selectGroup2.do",
+		url:"selectGroup2.do",
 		type:"get",
 		data:{"id":$("#id").val()},
 		success:function(data) {
