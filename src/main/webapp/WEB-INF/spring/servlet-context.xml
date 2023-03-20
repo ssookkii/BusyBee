@@ -32,6 +32,10 @@
 		<property name="requestContextAttribute" value="requestContext"/>
  		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
 	</bean>
+		<bean id="chatviewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/noTiles/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean> 
 	 
 	
 	<!-- 공통 팩키지(경로) -->

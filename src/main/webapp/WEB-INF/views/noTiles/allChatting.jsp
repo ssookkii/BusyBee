@@ -121,12 +121,10 @@ function connect() {
 	
 	// Web Socket 생성
 	
-	if( $("#name").val() == "abc" ){
-		wsocket = new WebSocket("ws://localhost:8080/busyBee/echo.do");
-	}
-	else{
-		wsocket = new WebSocket("ws://localhost:8080/busyBee/echo.do");		
-	}
+
+		wsocket = new WebSocket("ws://localhost:8080/BusyBee/echo.do");
+
+
 	
 	wsocket.onopen = onOpen;
 	wsocket.onmessage = onMessage;

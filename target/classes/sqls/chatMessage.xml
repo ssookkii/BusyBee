@@ -3,7 +3,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--
 chatRoom 먼저 만들어주세요!
-
 create table chatMessage(
 	roomId varchar(45) not null,
     writer varchar(45) not null,
@@ -14,8 +13,6 @@ create table chatMessage(
 ALTER TABLE chatMessage
 ADD FOREIGN KEY(roomId) 
 REFERENCES chatRoom(roomId);
-
-
 -->
 <mapper namespace="ChatMessage">
 	<insert id="saveChatMessage" parameterType="mul.cam.a.dto.ChatMessageDto">

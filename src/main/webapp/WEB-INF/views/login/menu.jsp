@@ -15,11 +15,8 @@
 <meta charset="UTF-8">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
-	
-	
-
 <style>
+
 /* 메뉴 CSS */
 
 
@@ -63,7 +60,7 @@
     height: 0;
     border-left: 8px solid transparent;
     border-right:8px solid transparent;
-    border-top:10px solid #FFCE67;
+    border-top:10px solid #ffe5a7;
     right: 15px;
     bottom: -10px;
     z-index: 9;
@@ -87,7 +84,7 @@
     padding: 15px 20px;
     color: #8c5a0b;
     font-size: 14px;
-    border-bottom: 1px solid #394c7f;
+    border-bottom: 1px solid #ffe5a7;
     position: relative;
         text-decoration: none;
     
@@ -112,7 +109,7 @@
     opacity: 1;
     /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-left: 11px solid #fff7e1;
+    border-left: 11px solid #ffe5a7;
     border-bottom: 24px solid transparent;
         text-decoration: none;
     
@@ -135,20 +132,20 @@
     opacity: 1;
     /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-right: 11px solid #fff7e1;
+    border-right: 11px solid #FFCE67;
     border-bottom: 24px solid transparent;
         text-decoration: none;
     
     
 }
 .subMenu a:hover{
-    background: #ebc87f;
+    background: #FFCE67;
     background: -moz-linear-gradient(top, #ebc87f 0%, #ebc87f 50%, #ffdf9c 51%, #ffdf9c 100%);
     background: -webkit-linear-gradient(top, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
     background: linear-gradient(to bottom, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebc87f', endColorstr='#ffdf9c',GradientType=0 );
     transition: all 0.3s;
-    border-bottom: 1px solid #394c7f;
+    border-bottom: 1px solid #ffe5a7;
     text-decoration: none;
     
     

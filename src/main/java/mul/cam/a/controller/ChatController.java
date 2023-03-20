@@ -23,10 +23,10 @@ public class ChatController {
 	ChatMessageService chatMessageService;
 
 	// 전체 채팅방 
-	@GetMapping("allChating.do")
+	@GetMapping("allChatting.do")
 	public String chating(Model model, HttpSession session) {
 		model.addAttribute("User", session.getAttribute("User"));
-		return "allChating";
+		return "allChatting";
 	}
 
 	// 채팅내용 저장
@@ -44,4 +44,6 @@ public class ChatController {
 		if (saveSuccess) resultMessage = "Success";
 		return resultMessage;
 	};
+	
+	
 }

@@ -121,7 +121,7 @@ String org = (String)request.getAttribute("org");
 				<option value="writer">작성자</option>
 			</select>
 	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
-	        <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="searchBtn()" class="btn btn-warning">검색</button>
+	        <button class="btn btn-warning my-2 my-sm-0" type="button" onclick="searchBtn()" class="btn btn-warning">검색</button>
       </div>
     </div>
   </div>

@@ -58,12 +58,12 @@ public class ChatRoomController {
 		return dto;
 	}
 	
-	@GetMapping(value="teamChating/{chatRoomId}.do")
+	@GetMapping(value="teamChatting/{chatRoomId}.do")
 	public String enterChatRoom(@PathVariable("chatRoomId")String chatRoomId, Model model, HttpSession session) {
 		ChatRoomDto dto = chatRoomService.chatRoomInfo(chatRoomId);
 		model.addAttribute("chatRoomInfo", dto);
 		model.addAttribute("User", session.getAttribute("User"));
-		return "teamChating";
+		return "teamChatting";
 	}
 	
 	//AJAX
