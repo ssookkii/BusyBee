@@ -2,6 +2,7 @@ package mul.cam.a.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import mul.cam.a.dto.BbsComment;
 import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
+import mul.cam.a.dto.MyBbsParam;
 import mul.cam.a.dto.UserDto;
 import mul.cam.a.dto.starDto;
 import mul.cam.a.service.BbsService;
@@ -60,6 +62,10 @@ public class BbsController {
 			pageBbs = pageBbs + 1;
 		}
 		
+		if(param.getCategory() == null || param.getCategory().equals("")) {
+			param.setCategory("");
+		}
+		
 		if(param.getChoice() == null || param.getChoice().equals("")
 				|| param.getSearch() == null || param.getSearch() == ("")) {
 			param.setChoice("검색");
@@ -74,25 +80,31 @@ public class BbsController {
 		model.addAttribute("category", param.getCategory());	// 카테고리
 		model.addAttribute("login", login);
 		model.addAttribute("starlist", star);
+		model.addAttribute("group_code", param.getGroup_code());
+		model.addAttribute("org", param.getOrg());
 		
 		return "bbslist";
 	}
 	
 	@GetMapping(value = "bbswrite.do")
-	public String bbswrite() {
+	public String bbswrite(Model model, String group_code, String org) {
 		System.out.println("bbswrite" + new Date());
+		
+		System.out.println("org : " + org);
+		model.addAttribute("group_code", group_code);
+		model.addAttribute("org", org);
 		
 		return "bbswrite";
 	}
 	
-	@PostMapping(value = "bbswriteAf.do")
+	@PostMapping(value = "bbswriteAf.do")	
 	public String bbswriteAf(Model model, BbsDto dto, 
 							@RequestParam(value = "fileload", required = false)
 							MultipartFile fileload,
 							HttpServletRequest req) {
 		System.out.println("bbswriteAfcontroller" + new Date());
 		
-	//	System.out.println(dto.toString());
+		System.out.println(dto.toString());
 		System.out.println(fileload);
 		
 		// filename 취득
@@ -131,6 +143,8 @@ public class BbsController {
 					bbswrite = "bbswrite_NO";
 				}
 				model.addAttribute("bbswrite", bbswrite);
+				model.addAttribute("group_code", dto.getGroup_code());
+				model.addAttribute("org", dto.getOrg());
 					
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -141,6 +155,11 @@ public class BbsController {
 			boolean isS = service.writeBbs(dto);
 			
 			String bbswrite = "";
+			filename = "";
+			String newfilename = "";
+			
+			System.out.println(filename);
+			System.out.println(newfilename);
 			
 			if(isS) {
 			//	System.out.println("bbswrite_YES");
@@ -149,10 +168,14 @@ public class BbsController {
 				bbswrite = "bbswrite_NO";
 			}
 			model.addAttribute("bbswrite", bbswrite);
+			model.addAttribute("group_code", dto.getGroup_code());
+			model.addAttribute("org", dto.getOrg());
 		}
-		
+
 		return "message";
 	}
+	
+	
 	
 	@GetMapping(value = "bbsdetail.do")
 	public String bbsdetail(Model model, int seq) {
@@ -166,7 +189,11 @@ public class BbsController {
 	
 	@GetMapping(value = "bbsupdate.do")
 	public String bbsupdate(Model model, int seq) {
+		System.out.println("bbsupdatecontroller" + new Date());
+		
 		BbsDto dto = service.getBbs(seq);
+		System.out.println(dto.toString());
+		
 		model.addAttribute("bbsdto", dto);
 		
 		return "bbsupdate";
@@ -214,6 +241,8 @@ public class BbsController {
 					bbsupdate = "bbsupdate_NO";
 				}
 				model.addAttribute("bbsupdate", bbsupdate);
+				model.addAttribute("group_code", dto.getGroup_code());
+				model.addAttribute("org", dto.getOrg());
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -237,6 +266,8 @@ public class BbsController {
 			System.out.println(isS);
 			
 			model.addAttribute("bbsupdate", bbsupdate);
+			model.addAttribute("group_code", dto.getGroup_code());
+			model.addAttribute("org", dto.getOrg());
 			
 			
 		}
@@ -350,7 +381,170 @@ public class BbsController {
 			staradd = "success";
 		}
 		return staradd;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "stardelete.do")
+	public String stardelete(Model model, starDto star) {
+		System.out.println("stardelete controller" + new Date());
 		
+	//	System.out.println("staradd: " + star.getSeq());
+	//	System.out.println("id: " + star.getId());
+		
+		boolean isS = service.stardelete(star);
+		
+		String stardelete = "";
+		if(isS) {
+			stardelete = "success";
+		}
+		return stardelete;
+	}
+	
+	@GetMapping(value = "mybbslist.do")
+	public String mybbslist(MyBbsParam param, Model model, HttpSession session) {
+		System.out.println("mybbslist controller" + new Date());
+		
+		UserDto login = (UserDto)session.getAttribute("login");
+		String id = login.getId();
+		
+		param.setId(id);
+		
+		System.out.println(param.toString());
+		
+		// 글의 시작과 끝
+		int pn = param.getPageNumber();  // 0 1 2 3 4
+		int start = 1 + (pn * 10);	// 1  11
+		int end = (pn + 1) * 10;	// 10 20 
+		
+		param.setStart(start);
+		param.setEnd(end);
+		
+		List<BbsDto> list = service.mybbslist(param);
+		int len = service.getMyBbs(param);
+		
+		System.out.println("len: " + len);
+		
+		int pageBbs = len / 10;		// 25 / 10 -> 2
+		if((len % 10) > 0) {
+			pageBbs = pageBbs + 1;
+		}
+		
+		if(param.getCategory() == null || param.getCategory().equals("")) {
+			param.setCategory("");
+		}
+		
+		if(param.getChoice() == null || param.getChoice().equals("")
+				|| param.getSearch() == null || param.getSearch() == ("")) {
+			param.setChoice("검색");
+			param.setSearch("");
+		}
+		
+		model.addAttribute("bbslist", list);	// 게시판 리스트
+		model.addAttribute("pageBbs", pageBbs);	// 총 페이지수
+		model.addAttribute("pageNumber", param.getPageNumber()); // 현재 페이지
+		model.addAttribute("choice", param.getChoice());	// 검색 초이스
+		model.addAttribute("search", param.getSearch());	// 검색어	
+		model.addAttribute("category", param.getCategory());	// 카테고리
+		model.addAttribute("login", login);
+		
+		return "mybbslist";
+	}
+	
+	@GetMapping(value = "mystarlist.do")
+	public String mystarlist(MyBbsParam param, Model model, HttpSession session) {
+		System.out.println("mybbslist controller" + new Date());
+		
+		UserDto login = (UserDto)session.getAttribute("login");
+		String id = login.getId();
+		
+		param.setId(id);
+		System.out.println(param.toString());
+		
+		// 글의 시작과 끝
+		int pn = param.getPageNumber();  // 0 1 2 3 4
+		int start = 1 + (pn * 10);	// 1  11
+		int end = (pn + 1) * 10;	// 10 20 
+		
+		param.setStart(start);
+		param.setEnd(end);
+		
+		List<starDto> star = service.starlist(id);
+		List<BbsDto> list = service.mystarlist(param);
+		int len = service.getMystarBbs(param);
+		
+		System.out.println("len: " + len);
+		
+		int pageBbs = len / 10;		// 25 / 10 -> 2
+		if((len % 10) > 0) {
+			pageBbs = pageBbs + 1;
+		}
+		
+		if(param.getCategory() == null || param.getCategory().equals("")) {
+			param.setCategory("");
+		}
+		
+		if(param.getChoice() == null || param.getChoice().equals("")
+				|| param.getSearch() == null || param.getSearch() == ("")) {
+			param.setChoice("검색");
+			param.setSearch("");
+		}
+		
+		model.addAttribute("starlist", star);
+		model.addAttribute("bbslist", list);	// 게시판 리스트
+		model.addAttribute("pageBbs", pageBbs);	// 총 페이지수
+		model.addAttribute("pageNumber", param.getPageNumber()); // 현재 페이지
+		model.addAttribute("choice", param.getChoice());	// 검색 초이스
+		model.addAttribute("search", param.getSearch());	// 검색어	
+		model.addAttribute("category", param.getCategory());	// 카테고리
+		model.addAttribute("login", login);
+		
+		return "mystarlist";
+	}
+	
+	@GetMapping(value = "bbssession.do")
+	public String bbssession(HttpServletRequest req, Model model, BbsParam param, HttpSession session)throws Exception {
+		System.out.println("BbsController bbssession " + new Date());
+
+		req.getSession().setAttribute("group_code", param.getGroup_code());
+		req.getSession().setAttribute("org", param.getOrg());
+
+//		session.setAttribute("login", login);
+		
+		return "redirect:/bbslist.do?group_code=" + param.getGroup_code() + "&org=" + URLEncoder.encode(param.getOrg(), "UTF-8");
 		
 	}
+	
+    // 신고하기 기능
+//	@GetMapping(value = "reportBbs.do")
+//	public String reportBbs(Model model, int seq) {
+//		System.out.println("bbswrite" + new Date());
+//		
+//		return "bbswrite";
+//	}
+//	
+//	
+//	@GetMapping(value = "categorysession.do")
+//	public String categorysession(HttpServletRequest req, Model model, BbsParam param, HttpSession session) {
+//
+//		String group_code = (String)session.getAttribute("group_code");
+//		String org = (String)session.getAttribute("org");
+//		req.getSession().setAttribute("category", param.getCategory());
+//		String category = (String)session.getAttribute("category");
+//		
+//		System.out.println(group_code);
+//		System.out.println(org);
+//		System.out.println(category);
+//		
+////		session.setAttribute("login", login);
+//		
+//		return "redirect:/bbslist.do?group_code=" + group_code + "&org=" + org;
+//	}
+	
+	// 게시판 미리보기
+		@GetMapping(value = "preBbsList.do", produces = "application/json")
+		@ResponseBody
+		public List<BbsDto> preBbsList(@RequestParam String group_code) {
+			List<BbsDto> list = service.preBbsList(group_code);
+			return list;
+		}
 }

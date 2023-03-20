@@ -5,7 +5,8 @@
         
 <%
 	UserDto login = (UserDto)session.getAttribute("login");
-	
+	String group_code = (String)request.getAttribute("group_code");
+	String org = (String)request.getAttribute("org");
 %>      
     
     
@@ -17,7 +18,11 @@
 </head>
 <body>
 
-<h1>글쓰기</h1>
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;글쓰기</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;자유롭게 작성하세요.</small>
+<br><br>
 
 <div id="app" class="container">
 
@@ -26,12 +31,14 @@
 <!-- 나중에 파일 추가할때 필요함 -->
 <form id="frm" action="bbswriteAf.do" method="post" enctype="multipart/form-data">
 
+<input type="hidden" id="group_code" name="group_code" class="form-control form-control-lg" value="<%=group_code%>" readonly="readonly">
+
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 <tr>
 	<th>모임명</th>
 	<td>
-		<input type="text" id="org" name="org" class="form-control form-control-lg">
+		<input type="text" id="org" name="org" class="form-control form-control-lg" value="<%=org%>" readonly="readonly">
 	</td>
 </tr>
 <tr>
@@ -49,7 +56,13 @@
 <tr>
 	<th>파일</th>
 	<td>
-		<input id="fileload" type="file" name="fileload">
+		<input id="fileload" type="file" name="fileload" onchange="readURL(this);">
+	</td>
+</tr>
+<tr>
+	<th>미리보기</th>
+	<td>
+		<img id="preview" />
 	</td>
 </tr>
 <tr>
@@ -71,8 +84,9 @@
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 20px">
-		<!-- <input class="btn btn-primary" type="submit" value="글작성완료"> -->
-		<button type="button">글쓰기</button>
+		<!-- <input class="btn btn-warning" type="submit" value="글작성완료"> -->
+		<button class="btn btn-warning" onclick="bbslist()" type="button">게시판으로</button>
+		<button class="btn btn-warning" onclick="bbswrite()" type="button">글쓰기</button>
 	</td>
 </tr>
 
@@ -81,27 +95,40 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
+let group_code = document.getElementById("group_code").value;
+let org = document.getElementById("org").value;
+
+function bbswrite(){
 	
-	$("button").click(function() {
-//		alert("작동합니다");
-		
-		if($("#title").val().trim() == "" ){
-			alert("제목을 기입해 주십시오");
-			return;
-		}else if($("#content").val().trim() == "" ){
-			alert("내용을 기입해 주십시오");
-			return;
-		}else if($("#category").val() == "아래에서 선택" ){
-			alert("카테고리를 선택해주세요");
-			return;
-		}else{
-			$("#frm").submit();
-		}		
-	});	
+	if($("#title").val().trim() == "" ){
+		alert("제목을 기입해 주십시오");
+		return;
+	}else if($("#content").val().trim() == "" ){
+		alert("내용을 기입해 주십시오");
+		return;
+	}else if($("#category").val() == "아래에서 선택" ){
+		alert("카테고리를 선택해주세요");
+		return;
+	}else{
+		$("#frm").submit();
+	}		
+}
 
-});
+function bbslist(){
+	location.href= "bbslist.do?group_code=" + group_code + "&org=" + org;
+}
 
+function readURL(input) {
+	  if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview').src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	  } else {
+	    document.getElementById('preview').src = "";
+	 }
+}
 
 </script>
 

@@ -73,8 +73,6 @@ int pageNumber = (Integer)request.getAttribute("pageNumber");
 String choice = (String)request.getAttribute("choice");
 String search = (String)request.getAttribute("search");
 String category = (String)request.getAttribute("category");
-String group_code = (String)request.getAttribute("group_code");
-String org = (String)request.getAttribute("org");
 %>
 
 <br>
@@ -96,6 +94,12 @@ String org = (String)request.getAttribute("org");
         </li>
         <li class="nav-item">
           <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
+        </li>
+       <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">그룹 선택</a>
+          <div id="groupdrop" class="dropdown-menu">
+         	<h3 id="nogroup"></h3>
+          </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
@@ -127,8 +131,6 @@ String org = (String)request.getAttribute("org");
 
 
 <input type="hidden" id="id" value='<%=login.getId()%>'>
-<input type="hidden" id="org" value="<%=org %>">
-<input type="hidden" id="group_code" value="<%=group_code %>">
 <input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
 
@@ -314,39 +316,11 @@ function bbslist(){
 	location.href="login.do";
 }
 
-function categorybtn() {
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
-}
 
-function categorybtn1() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn1").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=공지사항" + "&org=" + org;
-}
 
-function categorybtn2() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn2").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=일반게시글" + "&org=" + org;
-}
 
-function categorybtn3() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn3").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=자료게시글" + "&org=" + org;
-}
 
-function categorybtn4() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn4").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=회의록" + "&org=" + org;
-}
+
 
 function mybbslist(){
 //	alert("mybbslist작동합니다");
@@ -357,12 +331,6 @@ function mystarlist(){
 	location.href="mystarlist.do";
 }
 
-function bbswrite() {
-//	alert("작동합니다")
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
-}
 
 
 let search = "<%=search %>";
@@ -377,19 +345,14 @@ function goPage( pageNumber ) {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	let category = document.getElementById('category').value;
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
 	
-	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber + "&category=" + category + "&org=" + org;	
+	location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber;	
 }
 
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
-	let category = document.getElementById('category').value;
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	
+
 //	alert(category);
 	
 	/* if(choice == ""){
@@ -454,7 +417,7 @@ $('#staradd').click(function() {
 	
 
 	$.ajax({
-		url:"staradd.do",
+		url:"http://localhost:8090/busyBee/staradd.do",
 		type:"get",
 		async:false,
 		data:{ "seq": seq, "id":id },
@@ -482,7 +445,7 @@ $('#stardelete').click(function() {
 	let pageNumber = <%=pageNumber%>;
 
 	$.ajax({
-		url:"stardelete.do",
+		url:"http://localhost:8090/busyBee/stardelete.do",
 		type:"get",
 		async:false,
 		data:{ "seq": seq, "id":id },
@@ -530,7 +493,7 @@ $(document).ready(function(){
 	
 	// Leader
 	$.ajax({
-		url:"selectGroup1.do",
+		url:"http://localhost:8090/BusyBee/selectGroup1.do",
 		type:"get",
 		data:{"id":$("#id").val()},
 		async:false,
@@ -555,7 +518,7 @@ $(document).ready(function(){
 	});
 	// Member
 	$.ajax({
-		url:"selectGroup2.do",
+		url:"http://localhost:8090/BusyBee/selectGroup2.do",
 		type:"get",
 		data:{"id":$("#id").val()},
 		success:function(data) {

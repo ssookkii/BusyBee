@@ -12,5 +12,8 @@ public interface ReportDao {
 	
 	int getAllReport(BbsParam param);
 	
+	int reportSubmit(ReportDto dto);
+	
+	int countUp(ReportDto dto);
 	
 }

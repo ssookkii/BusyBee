@@ -28,4 +28,11 @@ public class ReportServiceImpl implements ReportService{
 		return dao.getAllReport(param);
 	}
 
+	@Override
+	public boolean reportSubmit(ReportDto dto) {
+		dao.countUp(dto);
+		int count = dao.reportSubmit(dto);
+		return count>0?true:false;
+	}
+
 }

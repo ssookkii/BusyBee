@@ -1,11 +1,14 @@
 
+<%@page import="mul.cam.a.dto.UserDto"%>
 <%@page import="mul.cam.a.dto.ChatRoomDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
-String User = (String)session.getAttribute("User");
+UserDto userInfo = (UserDto)session.getAttribute("login");
+String User = userInfo.getId();
+session.setAttribute("User", User);
 List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChatRoom");
 %>
 <!DOCTYPE html>

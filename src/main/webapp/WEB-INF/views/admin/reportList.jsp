@@ -28,28 +28,96 @@ String search = (String)request.getAttribute("search");
 
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 
+<style type="text/css">
+
+.d-flex{
+font-size: 14px;
+float: right;
+padding-right: 100px;
+}
+
+.btn{
+	height : 30px;
+	width: 50px;
+	
+}
+
+body{
+font-size: 14px;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: 5px;
+  border: 1px solid #FFCE67;
+  padding: 5px 10px;
+  background-color: #FFCE67;
+  border-radius: 3px;
+}
+
+.pagination li.active {
+  background-color: #FFCE67;
+  border-color: #FFCE67;
+  color: #FFCE67;
+}
+
+.pagination li:hover {
+  background-color: #FFCE67;
+  cursor: pointer;
+}
+
+</style>
+
 </head>
 <body>
 
-<h1>신고 관리</h1>
-
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold; font-size: 48px;">&nbsp;&nbsp;&nbsp;신고관리</h1>
+<br><br>
 <hr>
+
+
+
+<div align="right">
+<nav style="width: 1000px; text-align: right; padding-left: 300px;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <div class="d-flex" >
+	      	<select id="choice" style="color:black;">
+				<option value="reported_id" selected="selected">ID</option>
+				<option value="report_type">신고유형</option>
+			</select>
+  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
+				<button type="button" class="btn btn-secondary my-2 my-sm-0" onclick="searchBtn()">검색</button>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
 
 <div align="center">
 
 
 <br>
-<table class="table table-hover table-sm" style="width: 2000px">
+<table class="table table-hover" style="width: 1700px;, font-size: 20px;">
 <col width="50">
 <col width="100"><col width="100"><col width="150"><col width="100">
 <col width="100"><col width="200"><col width="600"><col width="200">
 <col width="100">
 
 <thead>
-<tr class="bg-primary" style="color: white;">
-	<th>번호</th><th>신고자</th><th>피신고자</th><th>피신고자 상태</th>
-	<th>신고누적횟수</th><th>신고글 번호</th><th>신고글 유형</th><th>신고사유</th>
-	<th>신고일시</th><th>신고글 관리</th>
+<tr class="table-warning" style="color: black;">
+	<th scope="row">번호</th><th scope="row">신고자</th><th scope="row">피신고자</th>
+	<th scope="row">신고누적횟수</th><th scope="row">신고글 번호</th><th scope="row">신고글 유형</th><th>신고사유</th>
+	<th scope="row">신고일시</th><th scope="row">신고글 관리</th>
 </tr>
 </thead>
 <tbody style="text-align: left;">
@@ -73,9 +141,6 @@ if(list == null || list.size() == 0){
 			<td>
 			<%=dto.getReported_id() %>
 			</td>
-						<td>
-			<%=dto.getAuth() %>
-			</td>
 			<td>
 			<%=dto.getReport_count() %>
 			</td>
@@ -95,7 +160,7 @@ if(list == null || list.size() == 0){
 			</td>
 			
 			<td>
-			<input type="button" onclick="goBbs(<%=dto.getReport_seq() %>)" value="신고글 이동">
+			<input style="font-size: 14px; width: 100px; height: 50px;" type="button" class="btn btn-warning" onclick="goBbs(<%=dto.getReport_seq() %>)" value="신고글 이동">
 			</td>
 
 
@@ -109,39 +174,23 @@ if(list == null || list.size() == 0){
 </table>
 <br><br>
 
-<div class="container">
+<div>
     <nav aria-label="Page navigation">
         <ul class="pagination" id="pagination" style="justify-content:center"></ul>
     </nav>
 </div>
 
+
 <br><br>
 
-<table style="margin-left: auto; margin-right: auto; margin-top: 3px; margin-bottom: 3px">
-	<tr>
-		<td style="padding-left: 5px">
-			<select class="custom-select" id="choice" name="choice">
-				<option selected value="reported_id">ID</option>
-				<option value="report_type">신고유형</option>
-				<option value="auth">회원상태</option>
-			</select>
-		</td>
-		<td style="padding-left: 5px" class="align-middle">
-			<input type="text" class="form-control" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-		<td style="padding-left: 5px">
-			<span>
-				<button type="button" class="btn btn-primary" onclick="searchBtn()">검색</button>
-			</span>
-		</td>
-	</tr>
-</table>
+
 
 </div>
 
 <script type="text/javascript">
 
 function goBbs(seq) {
-	location.href="bbsDetail.do?seq="+seq;
+	location.href="goReportPage.do?seq="+seq;
 }
 
 let search = "<%=search %>";

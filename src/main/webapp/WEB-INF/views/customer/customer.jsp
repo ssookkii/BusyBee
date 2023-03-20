@@ -29,48 +29,25 @@
 
 <style>
 
-body{
-font-family: 'Black Han Sans', sans-serif;
-font-family: 'Dongle', sans-serif;
-font-family: 'Jua', sans-serif;
+.btn{
+	height : 30px;
+	width: 50px;
+	
 }
 
-.flex-container {
-  display: flex;
-  justify-content: center;
-  
-}
-
-.flex-item {
-  margin: 15px;
-  width: 400px;
-  margin: 15px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.table{
+font-size: 14px;
 
 }
-
-.card-body {
-  height: 500px;
-  font-size: 14px;
+.d-flex{
+font-size: 14px;
+float: right;
+padding-right: 450px;
 }
 
-#notice{
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 15px;
-  margin-top:40px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 }
 
-.card-header{
-font-size: 15px;
-
-}
 </style>
 
 <!-- 부트스트랩 CSS -->
@@ -89,18 +66,42 @@ String choice = (String)request.getAttribute("choice");
 String search = (String)request.getAttribute("search");
 %>
 
-<h1>고객센터</h1>
-
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;고객센터</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;무엇이든 물어보세요</small>
+<br><br>
 <hr>
 
-<div align="center">
 
+<div align="right">
+<nav style="width: 1000px; text-align: right;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <div class="d-flex" >
+	      	<select id="choice" style="color:black;">
+				<option value="" selected="selected">검색</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
+				<button type="button" class="btn btn-secondary my-2 my-sm-0" onclick="searchBtn()">검색</button>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
 
 <br>
-<table class="table table-hover table-sm" style="width: 1000px">
+<div align="center">
+<table class="table table-hover" style="width: 1000px">
 <col width="70"><col width="600"><col width="100"><col width="150">
 <thead>
-<tr class="bg-primary" style="color: white;">
+<tr class="table-warning" style="color: white;">
 	<th>번호</th><th>제목</th><th>작성자</th>
 </tr>
 </thead>
@@ -178,39 +179,24 @@ if(list == null || list.size() == 0){
 
 <div class="container">
     <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination" style="justify-content:center"></ul>
+        <ul class="pagination" id="pagination" style="justify-content:center;"></ul>
     </nav>
 </div>
 
 <br>
-<a href="customerWrite.do">문의하기</a>
+<button class="btn btn-warning" onclick="customerWrite()">문의하기</button>
 
 <br><br>
-
-<table style="margin-left: auto; margin-right: auto; margin-top: 3px; margin-bottom: 3px">
-	<tr>
-		<td style="padding-left: 5px">
-			<select class="custom-select" id="choice" name="choice">
-				<option selected value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="writer">작성자</option>
-			</select>
-		</td>
-		<td style="padding-left: 5px" class="align-middle">
-			<input type="text" class="form-control" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-		<td style="padding-left: 5px">
-			<span>
-				<button type="button" class="btn btn-primary" onclick="searchBtn()">검색</button>
-			</span>
-		</td>
-	</tr>
-</table>
 
 
 
 </div>
 
 <script type="text/javascript">
+
+function customerWrite() {
+	location.href="customerWrite.do";
+}
 
 let search = "<%=search %>";
 console.log("search = " + search);

@@ -11,4 +11,7 @@ public interface ReportService {
 	
 	int getAllReport(BbsParam param);
 
+	boolean reportSubmit(ReportDto dto);
+	
+
 }

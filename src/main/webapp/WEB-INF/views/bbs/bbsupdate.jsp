@@ -25,7 +25,10 @@ BbsDto dto = (BbsDto)request.getAttribute("bbsdto");
 String cate = dto.getCategory();
 %>
 
-<h1>글수정하기</h1>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;글 수정하기</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;자유롭게 작성하세요.</small>
+<br><br>
 
 <div id="app" class="container">
 
@@ -34,13 +37,14 @@ String cate = dto.getCategory();
 <!-- 나중에 파일 추가할때 필요함 -->
 <form id="frm" action="bbsupdateAf.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+<input type="hidden" name="group_code" value="<%=dto.getGroup_code() %>">
 
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 <tr>
 	<th>모임명</th>
 	<td>
-		<input value="<%=dto.getOrg() %>" type="text" id="org" name="org" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getOrg()%>" type="text" id="org" name="org" class="form-control form-control-lg" readonly="readonly">
 	</td>
 </tr>
 <tr>
@@ -83,8 +87,9 @@ String cate = dto.getCategory();
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 20px">
-		<!-- <input class="btn btn-primary" type="submit" value="글작성완료"> -->
-		<button type="button">수정하기</button>
+		<!-- <input class="btn btn-warning" type="submit" value="글작성완료"> -->
+		<button class="btn btn-warning" onclick="bbsdetail()" type="button">이전으로</button>
+		<button class="btn btn-warning" onclick="bbsupdate()" >수정하기</button>
 	</td>
 </tr>
 
@@ -93,30 +98,36 @@ String cate = dto.getCategory();
 </div>
 
 <script type="text/javascript">
+
+
 $(document).ready(function() {
 	
 	$("#category").val("<%=dto.getCategory() %>").prop("selected", true);
 
-	$("button").click(function() {
-		
-//		alert("작동합니다");
-
-		if($("#title").val().trim() == "" ){
-			alert("제목을 기입해 주십시오");
-			return;
-		}else if($("#content").val().trim() == "" ){
-			alert("내용을 기입해 주십시오");
-			return;
-		}else if($("#category").val() == "아래에서 선택" ){
-			alert("카테고리를 선택해주세요");
-			return;
-		}else{
-			$("#frm").submit();
-		}
-		
-	});	
-
 });
+
+function bbsdetail() {
+	location.href = "bbsdetail.do?seq=" + <%=seq%>;
+}
+
+function bbsupdate() {
+	
+//	alert("작동합니다");
+
+	if($("#title").val().trim() == "" ){
+		alert("제목을 기입해 주십시오");
+		return;
+	}else if($("#content").val().trim() == "" ){
+		alert("내용을 기입해 주십시오");
+		return;
+	}else if($("#category").val() == "아래에서 선택" ){
+		alert("카테고리를 선택해주세요");
+		return;
+	}else{
+		$("#frm").submit();
+	}
+	
+}
 </script>
 
 </body>

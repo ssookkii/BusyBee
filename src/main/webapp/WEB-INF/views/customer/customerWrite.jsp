@@ -88,15 +88,14 @@ font-size: 15px;
 
 <form action="customerWriteAf.do" id="frm" method="post" enctype="multipart/form-data">
 
+<input type="hidden" name="id" value="<%=login.getId()%>">
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 
-<tr>
-	<th>아이디</th>
-	<td>		
-		<input type="hidden" name="id" value="<%=login.getId()%>">
-	</td>
-</tr>
+
+	
+
+
 <tr>
 	<th class="align-middle">제목</th>
 	<td>

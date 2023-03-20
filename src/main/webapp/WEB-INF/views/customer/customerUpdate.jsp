@@ -32,48 +32,8 @@ CustomerDto dto = (CustomerDto)request.getAttribute("dto");
 
 <style>
 
-body{
-font-family: 'Black Han Sans', sans-serif;
-font-family: 'Dongle', sans-serif;
-font-family: 'Jua', sans-serif;
-}
 
-.flex-container {
-  display: flex;
-  justify-content: center;
-  
-}
 
-.flex-item {
-  margin: 15px;
-  width: 400px;
-  margin: 15px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-}
-
-.card-body {
-  height: 500px;
-  font-size: 14px;
-}
-
-#notice{
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 15px;
-  margin-top:40px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-}
-
-.card-header{
-font-size: 15px;
-
-}
 </style>
 </head>
 <body>
@@ -87,24 +47,24 @@ font-size: 15px;
 <form action="customerUpdateAf.do" id="frm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="seq" value="<%=dto.getSeq() %>" >
 
-<table class="table table-sm">
+<table class="table table-hover">
 <col width="100px"><col width="500px">
 
 <tr>
-	<th>아이디</th>
+	<th scope="col">아이디</th>
 	<td>		
 		<%=dto.getId() %>
 		<input type="hidden" id="id" name="id" value="<%=dto.getId() %>">		
 	</td>
 </tr>
 <tr>
-	<th class="align-middle">제목</th>
+	<th scope="col">제목</th>
 	<td>
 		<input type="text" id="title" name="title" size="50px" class="form-control form-control-lg" value='<%=dto.getTitle() %>'>
 	</td>
 </tr>
 <tr>
-	<th>첨부파일</th>
+	<th scope="col">첨부파일</th>
 	<td>
 		<%=dto.getFilename() %>
 		<input type="hidden" name="filename" value="<%=dto.getFilename() %>">
@@ -113,7 +73,7 @@ font-size: 15px;
 	</td>
 </tr>
 <tr>
-<th>수정할 파일</th>
+<th scope="col">수정할 파일</th>
 <td>
 <input type="file" name="fileload">
 </td>
@@ -125,7 +85,7 @@ font-size: 15px;
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 20px">
-		<button type="button" class="btn btn-primary">글수정 완료</button>
+		<button style="font-size: 20px; font-weight: 500" type="button" class="btn btn-warning">글수정 완료</button>
 	</td>
 </tr>
 

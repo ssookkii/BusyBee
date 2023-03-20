@@ -30,4 +30,16 @@ public class ReportDaoImpl implements ReportDao{
 		return session.selectOne(ns + "getAllReport", param);
 	}
 
+	@Override
+	public int reportSubmit(ReportDto dto) {
+		// TODO Auto-generated method stub
+		return session.insert(ns + "reportSubmit", dto);
+	}
+
+	@Override
+	public int countUp(ReportDto dto) {
+		// TODO Auto-generated method stub
+		return session.update(ns+"countUp", dto);
+	}
+
 }

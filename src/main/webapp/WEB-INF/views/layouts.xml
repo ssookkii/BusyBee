@@ -147,6 +147,16 @@
 	<put-attribute name="content" value="/WEB-INF/views/bbs/bbsupdate.jsp"/>
 </definition>
 
+<!-- mybbslist 이동 -->
+<definition name="mybbslist" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/mybbslist.jsp"/>
+</definition>
+
+<!-- mystarlist 이동 -->
+<definition name="mystarlist" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/bbs/mystarlist.jsp"/>
+</definition>
+
 <!-- 채팅 이동 -->
 <definition name="chatHome" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/chat/chatHome.jsp"/>

@@ -88,22 +88,22 @@ body {
 
 	<div id="app" class="container">
 
-		<table class="table table-striped table-sm">
+		<table class="table table-hover">
 			<colgroup>
 				<col style="width: 150px" />
 				<col style="width: 500px" />
 			</colgroup>
 
-			<tr>
+			<tr class="table-light">
 				<th>작성자</th>
 				<td><%=dto.getId()%></td>
 			</tr>
 
-			<tr>
+			<tr class="table-light">
 				<th>작성일</th>
 				<td><%=dto.getWdate()%></td>
 			</tr>
-			<tr>
+			<tr class="table-light">
 				<th>첨부파일</th>
 				<%
 				if (!dto.getFilename().equals("") && dto.getFilename() != null) {
@@ -117,10 +117,10 @@ body {
 				%>
 
 			</tr>
-			<tr>
+			<tr class="table-light">
 				<td colspan="2" style="font-size: 22px; font-weight: bold;"><%=dto.getTitle()%></td>
 			</tr>
-			<tr>
+			<tr class="table-light">
 				<td colspan="2" style="background-color: white;"><pre
 						style="font-size: 20px; font-family: 고딕, arial; background-color: white"><%=dto.getContent()%></pre>
 				</td>
@@ -134,47 +134,47 @@ body {
 			<input type="hidden" name="seq" value="<%=dto.getSeq()%>">
 
 
-			<table class="table table-sm">
+			<table class="table table-hover">
 				<col width="100px">
 				<col width="500px">
 
-				<tr>
+				<tr class="table-light">
 					<th class="align-middle">아이디</th>
 					<td><input class="form-control form-control-lg" type="text"
 						name="id" value="관리자" readonly="readonly"></td>
-				</tr>
-				<tr>
+				</tr >
+				<tr class="table-light">
 					<th>첨부파일</th>
 					<td><input type="file" name="fileload" value=""></td>
 				</tr>
-				<tr>
+				<tr class="table-light">
 					<th class="align-middle">제목</th>
 					<td><input type="text" id="title" name="title" size="50px"
 						class="form-control form-control-lg" placeholder="제목기입"></td>
 				</tr>
-				<tr>
+				<tr class="table-light">
 					<td colspan="2"><textarea rows="18" id="content"
 							name="content" class="form-control" placeholder="내용기입"></textarea>
 					</td>
 				</tr>
-				<tr>
+				<tr class="table-light">
 					<th>비밀글</th>
 					<td class="form-inline"><input type="checkbox" name="secret"
 						id="secret" checked="checked"></td>
 
 				</tr>
 
-				<tr>
+				<tr class="table-light">
 
 
 
 					<td colspan="2" align="right" style="padding-top: 20px">
 
-						<button type="button" class="btn btn-primary"
+						<button type="button" class="btn btn-danger"
 							onclick="location.href='customer.do'">글목록</button>
 
 
-						<button type="button" id="writeBtn" class="btn btn-primary">답변하기</button>
+						<button type="button" id="writeBtn" class="btn btn-warning">답변하기</button>
 					</td>
 				</tr>
 

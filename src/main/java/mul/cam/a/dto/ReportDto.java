@@ -95,4 +95,13 @@ public class ReportDto {
 	}
 
 
+	@Override
+	public String toString() {
+		return "ReportDto [report_id=" + report_id + ", reporter_id=" + reporter_id + ", reported_id=" + reported_id
+				+ ", report_content=" + report_content + ", report_seq=" + report_seq + ", report_type=" + report_type
+				+ ", report_date=" + report_date + ", auth=" + auth + ", report_count=" + report_count + "]";
+	}
+
+	
+
 }

@@ -47,9 +47,10 @@ font-family: 'Jua', sans-serif;
 
 }
 
-.card-body {
+.btn {
   height: 500px;
-  font-size: 14px;
+
+	width: 650px;
   
 }
 
@@ -65,13 +66,6 @@ font-family: 'Jua', sans-serif;
 
 }
 
-.card-header{
-font-size: 15px;
-}
-
-.card-button{
-padding: 200px 100px;
-}
 
 </style>
 
@@ -83,27 +77,16 @@ padding: 200px 100px;
 
 <div class="flex-container" >
 
-<div class="flex-item card border-light mb-3" >
-  <div class="card-header" ></div>
-    <div class="card-body">
-    <button class="card-button" onclick="userList()">회원 관리</button>
-  </div>
-</div>
 
-<div class="flex-item card border-light mb-3">
-  <div class="card-header"></div>
-  <div class="card-body">
-    <button class="card-button" onclick="boardList()">게시글 관리</button>
-  </div>
-</div>
+    <button style="font-size: 50px;" class="btn btn-warning" onclick="userList()">회원 관리</button>
 
-<div class="flex-item card border-light mb-3">
-  <div class="card-header"></div>
-  <div class="card-body">
-    <button class="card-button" onclick="reportList()">신고 관리</button>
-  </div>
-</div>
 
+
+
+    <button style="font-size: 50px;" class="btn btn-danger" onclick="boardList()">게시글 관리</button>
+
+
+    <button style="font-size: 50px;" class="btn btn-warning" onclick="reportList()">신고 관리</button>
 </div>
 
 <script type="text/javascript">
@@ -113,7 +96,7 @@ function userList() {
 }
 
 function boardList() {
-	location.href="boardList.do";
+	location.href="allbbslist.do";
 }
 
 function reportList() {

@@ -52,8 +52,3 @@ public class DownloadView extends AbstractView{
 	
 }
 
-
-
-
-
-

@@ -29,24 +29,70 @@ String search = (String)request.getAttribute("search");
 
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 
+
+<style type="text/css">
+
+.d-flex{
+font-size: 14px;
+float: right;
+}
+
+body{
+font-size: 14px;
+
+
+}
+
+.table{
+margin-left:auto; 
+margin-right:auto;
+}
+
+table, td, th {
+    border-collapse : collapse;
+};
+</style>
 </head>
 <body>
 
-<h1>회원 관리</h1>
-
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold; font-size: 48px;">&nbsp;&nbsp;&nbsp;회원관리</h1>
+<br><br>
 <hr>
+
+<div align="right">
+<nav style="width: 1000px; text-align: right;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <div class="d-flex" >
+	      	<select id="choice" style="color:black;">
+				<option value="id" selected="selected">ID</option>
+				<option value="report_type">신고유형</option>
+			</select>
+  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
+				<button type="button" class="btn btn-secondary my-2 my-sm-0" onclick="searchBtn()">검색</button>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
+
 
 <div align="center">
 
 
 <br>
-<table class="table table-hover table-sm" style="width: 1000px">
+<table class="table table-hover" >
 <col width="50">
 <col width="100"><col width="100"><col width="100"><col width="300">
 <col width="300"><col width="100">
 
 <thead>
-<tr class="bg-primary" style="color: white;">
+<tr class="table-warning" style="color: black;">
 	<th>번호</th><th>회원ID</th><th>회원상태</th><th>신고누적</th>
 	<th>가입일</th><th>이메일</th><th>회원관리</th>
 </tr>
@@ -99,12 +145,12 @@ if(list == null || list.size() == 0){
 			<td>
 			<%if(dto.getAuth()==1){
 				%>
-			<button type="button" class="btn btn-primary"
+			<button style="font-size: 20px;" type="button" class="btn btn-warning"
 			onclick="userBan('<%=dto.getId()%>')">이용정지</button>				
 				<% 
 			}else if(dto.getAuth()==2){
 				%>
-			<button type="button" class="btn btn-primary"
+			<button style="font-size: 20px;" type="button" class="btn btn-warning"
 			onclick="userIn('<%=dto.getId()%>')">정지해제</button>		
 				<% 	
 			}
@@ -131,24 +177,7 @@ if(list == null || list.size() == 0){
 
 <br><br>
 
-<table style="margin-left: auto; margin-right: auto; margin-top: 3px; margin-bottom: 3px">
-	<tr>
-		<td style="padding-left: 5px">
-			<select class="custom-select" id="choice" name="choice">
-				<option selected value="id">ID</option>
-				<option value="report_count">신고대상</option>
-				<option value="auth">회원상태</option>
-			</select>
-		</td>
-		<td style="padding-left: 5px" class="align-middle">
-			<input type="text" class="form-control" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-		<td style="padding-left: 5px">
-			<span>
-				<button type="button" class="btn btn-primary" onclick="searchBtn()">검색</button>
-			</span>
-		</td>
-	</tr>
-</table>
+
 </div>
 
 <script type="text/javascript">

@@ -1,21 +1,22 @@
 package mul.cam.a.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
-import mul.cam.a.dto.CustomerDto;
-import mul.cam.a.dto.MemberDto;
 import mul.cam.a.dto.ReportDto;
 import mul.cam.a.dto.UserDto;
-import mul.cam.a.service.MemberService;
+import mul.cam.a.service.BbsService;
 import mul.cam.a.service.ReportService;
 import mul.cam.a.service.UserService;
 
@@ -26,6 +27,8 @@ public class AdminController {
 	ReportService reportService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	BbsService bbsService;
 	
 	// 관리자 페이지로 이동
 	@PostMapping(value = "admin.do")
@@ -73,6 +76,25 @@ System.out.println("신고 관리 진입 " + new Date());
 	return "reportList";
 	
 	
+	}
+
+
+	// 게시글 관리 이동
+	@GetMapping(value = "allbbslist.do")
+	public String bbslist(BbsParam param) {
+	
+		return "redirect:/bbslist.do";
+	}
+	
+	
+	
+	// 신고글 이동
+	@GetMapping(value = "goReportPage.do")
+	public String goReportPage(int seq, Model model) {
+		BbsDto dto = bbsService.getBbs(seq);
+		
+		model.addAttribute("bbsdto", dto);
+		return "redirect:/bbsdetail.do?seq="+seq;
 	}
 	
 	// 회원 관리
@@ -151,6 +173,19 @@ System.out.println("신고 관리 진입 " + new Date());
 			
 			return "message";
 		}
+		
+		@PostMapping(value = "reportSubmit.do")
+		@ResponseBody
+		public Map<String, Object> reportSubmit(ReportDto dto) {
+			reportService.reportSubmit(dto);
+			System.out.println(dto.toString());
+	        Map<String, Object> submit = new HashMap<>();
+	        submit.put("success", true); // JSON 데이터 생성
+	        return submit;
+			
+		}
+		
+		
 	
 	
 

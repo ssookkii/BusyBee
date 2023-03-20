@@ -5,7 +5,6 @@
 <mapper namespace="Customer">
 
 <!-- create table customer(
-
 	seq int auto_increment primary key,
 	id varchar(50) not null,
 	
@@ -20,7 +19,6 @@
 	wdate timestamp not null,
 	secret tinyint(1) not null
 	
-
 ); -->
 
 <select id="customer" parameterType="mul.cam.a.dto.BbsParam"

@@ -10,28 +10,25 @@
 	report_seq 해당 신고글 -->
 	
 <!--
- 	create table report(
-
-	report_id int not null primary key,
+ 	 	create table report(
+	report_id int auto_increment primary key,
 	reporter_id varchar(45) not null,
 	reported_id varchar(45) not null,
 	report_content varchar(200) not null,
 	report_seq int not null,
 	report_type varchar(45) not null,
 	report_date timestamp not null,
-	auth int not null,
-	report_count decimal(8)
-
-); -->
+	report_count decimal(8) );
+	 -->
 	
 	
 	<select id="reportList" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.ReportDto">
 	select report_id, reporter_id, reported_id, report_content,
-	report_seq, report_type, report_date, auth, report_count
+	report_seq, report_type, report_date, report_count
 	from
-			(select row_number()over(order by report_count desc) as rnum,
-			report_id, reporter_id, reported_id, report_content, report_seq, report_type, report_date, auth, report_count
+			(select row_number()over(order by report_date desc) as rnum,
+			report_id, reporter_id, reported_id, report_content, report_seq, report_type, report_date, report_count
 	from report
 	where 1=1 
 		 <if test="choice != null and choice != '' and search != null and search != '' ">
@@ -45,7 +42,7 @@
 		 		and auth=#{search} 
 		 	</if>
 		 </if>		 
-		 order by report_count desc) a
+		 order by report_date desc ) a
 	where rnum between ${start} and ${end}
 	</select>
 	
@@ -60,10 +57,22 @@
 	 	<if test="choice == 'report_type'">
 	 		where report_type like concat('%', #{search}, '%') 
 	 	</if>
-	 	<if test="choice == 'auth'">
-	 		where auth=#{search}
-	 	</if>
 	 </if>
 </select>
+
+<insert id="reportSubmit" parameterType="mul.cam.a.dto.ReportDto">
+	insert into report(reporter_id, reported_id, report_content,
+	report_seq, report_type, report_date, report_count )
+	values(#{reporter_id}, #{reported_id}, #{report_content},
+	#{report_seq}, #{report_type}, now(), 0 )
+
+</insert>
+
+<update id="countUp" parameterType="mul.cam.a.dto.ReportDto">
+
+	update user
+	set report_count = report_count+1
+
+</update>
 	
 	</mapper>

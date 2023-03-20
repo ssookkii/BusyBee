@@ -2,35 +2,36 @@ package mul.cam.a.dto;
 
 import java.io.Serializable;
 
-public class BbsParam implements Serializable{
+public class MyBbsParam implements Serializable{
 
 	private String choice;	// 제목/내용/작성자
 	private String search;	// 검색어
 	private String category;	// 분류
 	private int pageNumber; // [1][2][3]
+	private String id;
 	private String group_code;	// 코드
 	private String org;
 	
 	private int start;
 	private int end;
 	
-	public BbsParam() {
+	public MyBbsParam() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public BbsParam(String choice, String search, String category, int pageNumber, String group_code, String org,
-			int start, int end) {
+	public MyBbsParam(String choice, String search, String category, int pageNumber, String id, String group_code,
+			String org, int start, int end) {
 		super();
 		this.choice = choice;
 		this.search = search;
 		this.category = category;
 		this.pageNumber = pageNumber;
+		this.id = id;
 		this.group_code = group_code;
 		this.org = org;
 		this.start = start;
 		this.end = end;
 	}
-
-
 
 	public String getChoice() {
 		return choice;
@@ -62,6 +63,14 @@ public class BbsParam implements Serializable{
 
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getGroup_code() {
@@ -98,15 +107,13 @@ public class BbsParam implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BbsParam [choice=" + choice + ", search=" + search + ", category=" + category + ", pageNumber="
-				+ pageNumber + ", group_code=" + group_code + ", org=" + org + ", start=" + start + ", end=" + end
-				+ "]";
+		return "MyBbsParam [choice=" + choice + ", search=" + search + ", category=" + category + ", pageNumber="
+				+ pageNumber + ", id=" + id + ", group_code=" + group_code + ", org=" + org + ", start=" + start
+				+ ", end=" + end + "]";
 	}
 
 	
-
 	
-
 	
 	
 }
