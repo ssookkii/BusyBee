@@ -44,5 +44,6 @@ public interface BbsService {
 	
 	List<BbsDto> allbbslist(BbsParam bbs);
 
+	int adminAllBbs(BbsParam bbs);
 
 }

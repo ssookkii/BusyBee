@@ -162,6 +162,11 @@
 	<put-attribute name="content" value="/WEB-INF/views/chat/chatHome.jsp"/>
 </definition>
 
+<!-- allbbslist 이동 -->
+<definition name="allbbslist" extends="login">
+	<put-attribute name="content" value="/WEB-INF/views/admin/allbbslist.jsp"/>
+</definition>
+
 <!-- 전체채팅 이동 
 <definition name="chating" extends="login">
 	<put-attribute name="content" value="/WEB-INF/views/chat/chating.jsp"/>

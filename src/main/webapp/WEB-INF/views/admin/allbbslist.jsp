@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
@@ -53,6 +52,37 @@
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+.nav nav-tabs{
+margin-left: 1000px;
+}
+.d-flex{
+font-size: 14px;
+float: right;
+padding-right: 300px;
+}
+.pagination .page-link {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.pagination .page-item.active .page-link {
+  background-color: #FFCE67;
+  border-color: #FFCE67;
+}
+.pagination .page-link:focus,
+.pagination .page-link:hover {
+  color: #FFCE67;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
 </style>
 
 <!-- 드롭다운 -->
@@ -65,7 +95,6 @@
 <body>
 
 <%
-List<starDto> starlist = (List<starDto>)request.getAttribute("starlist");
 UserDto login = (UserDto)session.getAttribute("login");
 List<BbsDto> list = (List<BbsDto>)request.getAttribute("bbslist");
 int pageBbs = (Integer)request.getAttribute("pageBbs");
@@ -73,77 +102,51 @@ int pageNumber = (Integer)request.getAttribute("pageNumber");
 String choice = (String)request.getAttribute("choice");
 String search = (String)request.getAttribute("search");
 String category = (String)request.getAttribute("category");
-String group_code = (String)request.getAttribute("group_code");
-String org = (String)request.getAttribute("org");
 %>
 
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
-<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;게시판</h1>
-<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;자유롭게 작성하세요.</small>
+<h1 style="font-weight: bold; font-size: 48px;">&nbsp;&nbsp;&nbsp;전체글</h1>
 <br><br>
 
-<div align="center">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width: 1000px">
+
+    <div align="right">
+<nav style="width: 1000px; text-align: right;">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" onclick="mybbslist()" style="font-size: 15px">내가 작성한 글</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
-        </li>
-       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">그룹 선택</a>
-          <div id="groupdrop" class="dropdown-menu">
-         	<h3 id="nogroup"></h3>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" onclick="categorybtn()">전체글</a>
-            <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
-            <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
-            <a class="dropdown-item" onclick="categorybtn3()">자료게시글</a>
-            <a class="dropdown-item" onclick="categorybtn4()">회의록</a>
-          </div>
-        </li>
-      </ul>
       <div class="d-flex" >
-	      	<select id="choice" style="color:black">
+	      	<select id="choice" style="color:black;">
 				<option value="" selected="selected">검색</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
-	        <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="searchBtn()" class="btn btn-warning">검색</button>
+  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
+				<button type="button" class="btn btn-danger" onclick="searchBtn()">검색</button>
       </div>
     </div>
   </div>
 </nav>
 </div>
 
+
+
+
 <div align="center">
 
 
 <input type="hidden" id="id" value='<%=login.getId()%>'>
-<input type="hidden" id="org" value="<%=org %>">
-<input type="hidden" id="group_code" value="<%=group_code %>">
-<input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
 
 
-<table id="bbs" class="table table-hover" style="width: 1000px; font-size: 12px " >
+<table id="bbs" class="table table-hover" style="width: 1500px; font-size: 12px; text-align: center;" >
 <col width="100"><col width="150"><col width="70"><col width="600"><col width="100"><col width="150"><col width="100">
 <thead class="table-warning">
 <tr>
-	<th>즐겨찾기</th><th>분류</th><th>번호</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
+<th>번호</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
 </tr>
 </thead>
 <tbody>
@@ -160,87 +163,18 @@ if(list == null || list.size() == 0){
 	for(int i = 0;i < list.size(); i++)
 	{
 		BbsDto dto = list.get(i);
-		boolean starcheck = false;
 		%>
 		<tr>
-			<%
-			if(dto.getDel() == 0){
 
-				if(starlist != null){
-					for(int j = 0; j < starlist.size(); j++)
-					{
-						starDto stardto = starlist.get(j);
-						
-						if(dto.getSeq() == stardto.getSeq()){
-							starcheck = true;
-						}
-						
-						if(starcheck){	
-							%>
-							<th>
-							<a href="#pop_info_2" class="btn_open">
-								<button onclick="star2(<%=dto.getSeq() %>)" class="btn btn-danger">
-									<i class="fa fa-star"></i>
-								</button>
-							</a>
-							</th>
-							<%
-							break;
-						}
-					}
-					if(starcheck == false){	
-					%>
-					<th>
-					<a href="#pop_info_1" class="btn_open">
-						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning">
-							<i class="fa fa-star-o"></i>
-						</button>
-					</a>
-					</th>
-					<%
-					}
-				} else{
-					%>
-					<th>
-					<a href="#pop_info_1" class="btn_open">
-						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning">
-							<i class="fa fa-star-o"></i>
-						</button>
-					</a>
-					</th>
-					<%
-				}
-			}else if(dto.getDel() == 1){
-				%>
-				<th></th>
-				<%
-			}
-			starcheck = false;
-			%>
-			
-			<th style="vertical-align: middle"><%=dto.getCategory()%></th>
 			<th style="vertical-align: middle"><%=i + 1 + (pageNumber * 10) %></th>
-
-			<%
-			if(dto.getDel() == 0){
-				%>			
+			
 				<td style="text-align: left;">
 					<%=Utility.arrow(dto.getDepth()) %>
 					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
 						<%=dto.getTitle() %>
 					</a>
 				</td>			
-				<%
-			}else if(dto.getDel() == 1){
-				%>
-				<td>
-					<%=Utility.arrow(dto.getDepth()) %>
-					<font color="#ff0000">*** 이 글은 작성자에 의해서 삭제되었습니다 ***</font>	
-				</td>
-				<%
-			}	
-			%>
-			
+
 			<td style="vertical-align: middle"><%=dto.getReadcount() %></td>
 			<td style="vertical-align: middle"><%=dto.getId() %></td>
 			
@@ -292,85 +226,10 @@ for(int i = 0;i < pageBbs; i++){
     </nav>
 </div>
 
-
-
-<button class="btn btn-warning" onclick="bbswrite()">글쓰기</button>
-
 </div>
 
-<div id="pop_info_1" class="pop_wrap" style="display:none;">
-  <div class="pop_inner">
-    <p class="dsc">즐겨찾기에 추가하시겠습니까?</p>
-    <button id="staradd" type="button" class="btn btn-warning btn_close">예</button>
-    <button type="button" class="btn btn-warning btn_close">아니오</button>
-  </div>
-</div>
-
-<div id="pop_info_2" class="pop_wrap" style="display:none;">
-  <div class="pop_inner">
-    <p class="dsc">즐겨찾기를 삭제하시겠습니까?</p>
-    <button id="stardelete" type="button" class="btn btn-warning btn_close">예</button>
-    <button type="button" class="btn btn-warning btn_close">아니오</button>
-  </div>
-</div>
   
 <script type="text/javascript">
-function bbslist(){
-//	alert("bbslist작동합니다");
-	location.href="login.do";
-}
-
-function categorybtn() {
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
-}
-
-function categorybtn1() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn1").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=공지사항" + "&org=" + org;
-}
-
-function categorybtn2() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn2").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=일반게시글" + "&org=" + org;
-}
-
-function categorybtn3() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn3").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=자료게시글" + "&org=" + org;
-}
-
-function categorybtn4() {
-	let group_code = document.getElementById("group_code").value;
-//	let category = document.getElementById("categorybtn4").value;
-	let org = document.getElementById("org").value;
-	location.href="bbslist.do?group_code=" + group_code + "&category=회의록" + "&org=" + org;
-}
-
-function mybbslist(){
-//	alert("mybbslist작동합니다");
-	location.href="mybbslist.do";
-}
-
-function mystarlist(){
-	location.href="mystarlist.do";
-}
-
-function bbswrite() {
-//	alert("작동합니다")
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
-}
-
-
 let search = "<%=search %>";
 console.log("search = " + search);
 if(search != ""){
@@ -378,17 +237,11 @@ if(search != ""){
 	obj.value = "<%=choice %>";
 	obj.setAttribute("selected", "selected");
 }
-
 function goPage( pageNumber ) {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
-	let category = document.getElementById('category').value;
-	let group_code = document.getElementById("group_code").value;
-	let org = document.getElementById("org").value;
-	
-	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber + "&category=" + category + "&org=" + org;	
+	location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber;	
 }
-
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
@@ -408,10 +261,8 @@ function searchBtn() {
 		return;
 	} */
 	
-	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&category=" + category + "&org=" + org;
+	location.href = "bbslist.do?choice=" + choice + "&search=" + search;
 }
-
-
 $('#pagination').twbsPagination({
 	startPage:<%=pageNumber+1 %>,
     totalPages: <%=pageBbs %>,
@@ -424,193 +275,12 @@ $('#pagination').twbsPagination({
     onPageClick: function (event, page) {
     	let choice = document.getElementById('choice').value;
     	let search = document.getElementById('search').value;
-    	let category = document.getElementById('category').value;
-    	let group_code = document.getElementById("group_code").value;
-    	let org = document.getElementById("org").value;
     	
-    	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + (page-1) + "&org=" + org;
+    	location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
     //	location.href = "bbslist.do?choice=null&search=null" + "&category=" + category + "&pageNumber=" + (page-1);
     }
 })
-
-function star(seq) {
-	let star = seq
-	$('#staradd').val(star);
-//	alert("add작동합니다");
-}
-
-function star2(seq) {
-	let star2 = seq
-	$('#stardelete').val(star2);
-//	alert("delete작동합니다");
-}
-
-// 즐겨찾기 추가
-$('#staradd').click(function() {
-	let seq = document.getElementById('staradd').value;
-//	alert(staradd);
-	
-	let group_code = document.getElementById("group_code").value;
-	let choice = document.getElementById('choice').value;
-	let search = document.getElementById('search').value;
-	let category = document.getElementById('category').value;
-	let id = document.getElementById('login').value;
-	let org = document.getElementById("org").value;
-	let pageNumber = <%=pageNumber%>;
-	
-
-	$.ajax({
-		url:"http://localhost:8090/busyBee/staradd.do",
-		type:"get",
-		async:false,
-		data:{ "seq": seq, "id":id },
-		success:function(msg){
-//			alert("ajax 작동");
-			location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber + "&org=" + org;
-		},
-		error:function(){
-			alert('error');	
-		}		
-	});	
-});
-	
-// 즐겨찾기 삭제
-$('#stardelete').click(function() {
-	let seq = document.getElementById('stardelete').value;
-//	alert(stardelete);
-	
-	let group_code = document.getElementById("group_code").value;
-	let choice = document.getElementById('choice').value;
-	let search = document.getElementById('search').value;
-	let category = document.getElementById('category').value;
-	let id = document.getElementById('login').value;
-	let org = document.getElementById("org").value;
-	let pageNumber = <%=pageNumber%>;
-
-	$.ajax({
-		url:"http://localhost:8090/busyBee/stardelete.do",
-		type:"get",
-		async:false,
-		data:{ "seq": seq, "id":id },
-		success:function(msg){
-//			alert("ajax 작동");
-			location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search  + "&category=" + category + "&pageNumber=" + pageNumber + "&org=" + org;
-		},
-		error:function(){
-			alert('error');	
-		}		
-	});	
-});
-//	location.href = "staradd.do?seq=" + seq + "&id=" + id;
-	
-
-
 </script>
-
-<!-- 팝업 -->
-<script type="text/javascript">
-var target = document.querySelectorAll('.btn_open');
-var btnPopClose = document.querySelectorAll('.pop_wrap .btn_close');
-var targetID;
-
-for(var i = 0; i < target.length; i++){
-  target[i].addEventListener('click', function(){
-    targetID = this.getAttribute('href');
-    document.querySelector(targetID).style.display = 'block';
-  });
-}
-
-for(var j = 0; j < target.length; j++){
-  btnPopClose[j].addEventListener('click', function(){
-    this.parentNode.parentNode.style.display = 'none';
-  });
-}
-</script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-
-	var group1;
-	var group2;
-	var count = 1;
-	
-	// Leader
-	$.ajax({
-		url:"http://localhost:8090/BusyBee/selectGroup1.do",
-		type:"get",
-		data:{"id":$("#id").val()},
-		async:false,
-		success:function(data) {
-			if(data!=null && data!="") {
-				var groupdrop = '';
-				$.each(data, function(i){
-					groupdrop += "<a class='dropdown-item' onclick=\"golist('"+ data[i].group_code + "', '" + data[i].group_name + "')\">" + data[i].group_name + "</a>"
-					count++;
-				});
-				$("#groupdrop").append(groupdrop);
-				group1 = true;
-				groupCheck();
-			} else if (data==null || data=="") {
-				group1 = false;
-				groupCheck();
-			}
-		},	
-		error:function(){
-			alert('error');
-		}
-	});
-	// Member
-	$.ajax({
-		url:"http://localhost:8090/BusyBee/selectGroup2.do",
-		type:"get",
-		data:{"id":$("#id").val()},
-		success:function(data) {
-			if(data!=null && data!="") {
-				var groupdrop = '';
-				$.each(data, function(i){
-					groupdrop += "<a class='dropdown-item' onclick=\"golist('"+ data[i].group_code + "', '" + data[i].group_name + "')\">" + data[i].group_name + "</a>"
-					count++;
-				});
-				$("#groupdrop").append(groupdrop);
-				group2 = true;
-				groupCheck();
-			} else if (data==null || data=="") {
-				group2 = false;
-				groupCheck();
-			}
-		},
-		error:function(){
-			alert('error');
-		}
-	});
-	
-	function groupCheck(){
-		
-/* 		alert("group1 =" + group1);
-		alert("group2 =" + group2);
-		 */
-		if(group1=="undefined" || group2=="undefined") {
-			return;
-		}
-		
-		if(group1==false && group2==false) {
-/* 			alert("group1* =" + group1);
-			alert("group2* =" + group2); */
-			$("#nogroup").text('가입한 그룹이 없습니다.');	
-		}
-	}
-	
-
-	
-});
-
-function golist(group_code, group_name) {
-//	alert('golist');
-	location.href='bbssession.do?group_code=' + group_code + '&org=' + group_name;
-}
-</script>
-
-<!-- 드롭다운 -->
 
 
 </body>

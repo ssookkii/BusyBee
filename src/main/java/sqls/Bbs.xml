@@ -61,8 +61,6 @@ DROP FOREIGN KEY FK_busybee_star_id_busybee_bbs_id;
 
  -->	
 	
-	
-	
 <mapper namespace="Bbs">
 
 
@@ -310,10 +308,10 @@ VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title},
 	<select id="allbbslist" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.BbsDto">
 
-	select seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+	select seq, ref, step, depth, id, title, content, wdate, readcount, filename, newfilename, category
 	from
 		(select row_number()over(order by ref desc, step asc) as rnum,
-			seq, ref, step, depth, id, title, content, wdate, readcount, org, filename, newfilename, category, del
+			seq, ref, step, depth, id, title, content, wdate, readcount, filename, newfilename, category
 		 from busybee_bbs
 		 where 1=1
 		 <if test="category != null and category != ''">
@@ -321,18 +319,38 @@ VALUES((select ifnull(max(ref), 0)+1 from busybee_bbs b), 0, 0, #{id}, #{title},
 		 </if>
 		 <if test="choice != null and choice != '' and search != null and search != '' ">
 		 	<if test="choice == 'title'">
-		 		and title like concat('%', #{search}, '%') and del=0
+		 		and title like concat('%', #{search}, '%')
 		 	</if>
 		 	<if test="choice == 'content'">
-		 		and content like concat('%', #{search}, '%') and del=0
+		 		and content like concat('%', #{search}, '%')
 		 	</if>
 		 	<if test="choice == 'writer'">
-		 		and id=#{search} and del=0
+		 		and id=#{search}
 		 	</if>
 		 </if>	 
 		 order by ref desc, step asc) a
 	where rnum between ${start} and ${end}
 </select>
+
+<select id="adminAllBbs" parameterType="mul.cam.a.dto.BbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from busybee_bbs
+	where 1=1
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		and title like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		and content like concat('%', #{search}, '%')
+	 	</if>
+	 	<if test="choice == 'writer'">
+	 		and id=#{search}
+	 	</if>
+	 </if>
+</select>
+
+
 	
 
 

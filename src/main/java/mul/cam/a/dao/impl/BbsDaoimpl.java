@@ -131,6 +131,12 @@ public class BbsDaoimpl implements BbsDao {
 		// TODO Auto-generated method stub
 		return session.selectList(ns + "allbbslist", bbs);
 	}
+
+	@Override
+	public int adminAllBbs(BbsParam bbs) {
+		// TODO Auto-generated method stub
+		return session.selectOne(ns + "adminAllBbs", bbs);
+	}
 	
 	
 	

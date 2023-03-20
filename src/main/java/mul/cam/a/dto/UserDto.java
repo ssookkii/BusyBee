@@ -16,7 +16,7 @@ public class UserDto implements Serializable {
 	String profPic_Origin;
 	String profPic_Server;
 	String regidate;
-	int reported_count;
+	int report_count;
 	
 	public UserDto() {
 	}
@@ -26,7 +26,7 @@ public class UserDto implements Serializable {
 
 	public UserDto(String id, String password, String name, String birth, String email, String phone,
 			String phone_public, int auth, String profMsg, String profPic_Origin, String profPic_Server,
-			String regidate, int reported_count, int seq) {
+			String regidate, int report_count, int seq) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -40,7 +40,7 @@ public class UserDto implements Serializable {
 		this.profPic_Origin = profPic_Origin;
 		this.profPic_Server = profPic_Server;
 		this.regidate = regidate;
-		this.reported_count = reported_count;
+		this.report_count = report_count;
 	}
 
 
@@ -131,14 +131,14 @@ public class UserDto implements Serializable {
 
 
 
-	public int getReported_count() {
-		return reported_count;
+	public int getReport_count() {
+		return report_count;
 	}
 
 
 
-	public void setReported_count(int reported_count) {
-		this.reported_count = reported_count;
+	public void setReport_count(int reported_count) {
+		this.report_count = reported_count;
 	}
 
 	

@@ -113,7 +113,7 @@ input[type=text] {
 <br><br>
 <input type="hidden" id="fChange">
 <input type="hidden" id="bChange">
-<button type="button" class="btn btn-warning" style='font-size:12pt; padding: 10px 20px; margin-left: 340px;' onclick="location.href='newPassword.do'">비밀번호 재설정</button>
+<button type="button" class="btn btn-warning" style='font-size:12pt; padding: 10px 20px; margin-left: 340px;' onclick="location.href='idandpwd.do'">비밀번호 재설정</button>
 <button type="button" class="btn btn-warning" style='font-size:12pt; padding: 10px 20px; ' id="updUser" onclick="go_updUser()">정보 수정하기</button>
 <br><br><br>
 <hr>

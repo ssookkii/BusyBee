@@ -101,7 +101,8 @@ public class BbsController {
 	public String bbswriteAf(Model model, BbsDto dto, 
 							@RequestParam(value = "fileload", required = false)
 							MultipartFile fileload,
-							HttpServletRequest req) {
+							HttpServletRequest req
+							) {
 		System.out.println("bbswriteAfcontroller" + new Date());
 		
 		System.out.println(dto.toString());
@@ -539,6 +540,9 @@ public class BbsController {
 //		
 //		return "redirect:/bbslist.do?group_code=" + group_code + "&org=" + org;
 //	}
+	
+	
+	
 	
 	// 게시판 미리보기
 		@GetMapping(value = "preBbsList.do", produces = "application/json")

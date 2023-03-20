@@ -73,11 +73,11 @@ body {
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 5px 10px;
 	margin: 5px 5px;
-	background-color: rgb(255,165,0);
+	background-color: #fae2c2;
 }
 .whisper {
 	display: flex;
-	justifty-content: flex-end;
+	justify-content: flex-end;
 }
 .whisper p {
 	border: 2px solid black;
@@ -85,7 +85,7 @@ body {
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 5px 10px;
 	margin: 5px 5px;
-	background-color: rgb(238,130,238);
+	background-color: #ffd0f9;
 }
 </style>
 
@@ -240,7 +240,7 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 		chatContent.className = "whisper";
 		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+
 									"<p>" + message + " |  <귓속말>[" + writer + "]</p>";
-		chatContent.innerHTML = plusElemenOtherChat;
+		chatContent.innerHTML = plusElementOtherChat;
 		chatBox.appendChild(chatContent);
 	}
 		// 스크롤을 위로 이동 시킨다

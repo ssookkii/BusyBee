@@ -123,4 +123,10 @@ public class BbsServiceimpl implements BbsService {
 		// TODO Auto-generated method stub
 		return dao.allbbslist(bbs);
 	}
+
+	@Override
+	public int adminAllBbs(BbsParam bbs) {
+		// TODO Auto-generated method stub
+		return dao.adminAllBbs(bbs);
+	}
 }

@@ -5,7 +5,6 @@
     pageEncoding="UTF-8"%>
     
     <%
-
 List<UserDto> list = (List<UserDto>)request.getAttribute("userList");
 UserDto dto = (UserDto)request.getAttribute("dto");
 int pageBbs = (Integer)request.getAttribute("pageBbs");
@@ -31,26 +30,43 @@ String search = (String)request.getAttribute("search");
 
 
 <style type="text/css">
-
 .d-flex{
 font-size: 14px;
 float: right;
 }
-
 body{
 font-size: 14px;
-
-
 }
-
 .table{
 margin-left:auto; 
 margin-right:auto;
 }
-
 table, td, th {
     border-collapse : collapse;
-};
+}
+.pagination .page-link {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.pagination .page-item.active .page-link {
+  background-color: #FFCE67;
+  border-color: #FFCE67;
+}
+.pagination .page-link:focus,
+.pagination .page-link:hover {
+  color: #FFCE67;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
 </style>
 </head>
 <body>
@@ -134,7 +150,7 @@ if(list == null || list.size() == 0){
 			
 			</td>
 						<td>
-			<%=dto.getReported_count()%>
+			<%=dto.getReport_count()%>
 			</td>
 			<td>
 			<%=dto.getRegidate() %>
@@ -181,15 +197,12 @@ if(list == null || list.size() == 0){
 </div>
 
 <script type="text/javascript">
-
 function userBan(id) {
 	location.href="userBan.do?id="+id;
 }
-
 function userIn(id) {
 	location.href="userIn.do?id="+id;
 }
-
 let search = "<%=search %>";
 console.log("search = " + search);
 if(search != ""){
@@ -197,23 +210,18 @@ if(search != ""){
 	obj.value = "<%=choice %>";
 	obj.setAttribute("selected", "selected");
 }
-
 function enterKeyEvent() {
 	if(window.event.keyCode==13){
 		searchBtn();
 	}
 }
-
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	
-
 	
 	location.href = "userList.do?choice=" + choice + "&search=" + search;
 }
-
-
 $('#pagination').twbsPagination({
 	startPage: <%=pageNumber+1 %>, 
     totalPages: <%=pageBbs %>,
@@ -230,11 +238,6 @@ $('#pagination').twbsPagination({
     	location.href = "reportList.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
     }
 });
-
-
-
-
-
 </script>
 
 </body>

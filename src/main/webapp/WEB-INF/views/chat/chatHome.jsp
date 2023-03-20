@@ -24,12 +24,7 @@ List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChat
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
-*{
-	font-family: 'Black Han Sans', sans-serif;
-	font-family: 'Dongle', sans-serif;
-	font-family: 'Jua', sans-serif;
-	font-family: 'Noto Sans KR', sans-serif;
-}
+
 #modal {
 	display: none;
 	top: 100px;
@@ -195,7 +190,7 @@ function exitChat(element) { // 자신을 제거
 				%>
 				<div>
 					<div class="card text-white bg-warning mb-3" id="<%=chatRoom.getRoomId() %>" onclick="showChatInfo(this)" ondblclick="enterChat(this)" style="width: 150px; height: 150px; margin:15px;">
-					  <div class="card-header" style="background-color: yellow; color: black;">[ 채팅이름 ] <%=chatRoom.getTitle() %></div>
+					  <div class="card-header" style="background-color: #ffefb4; color: black; font-size:14px;">[ 채팅이름 ] <%=chatRoom.getTitle() %></div>
 					  <div class="card-body">
 					    <p class="card-text"><%=chatRoom.getDescriptions() %></p>
 					  </div>

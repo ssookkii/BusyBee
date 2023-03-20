@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,10 +82,53 @@ System.out.println("신고 관리 진입 " + new Date());
 
 
 	// 게시글 관리 이동
+
+	// 모든 게시글
 	@GetMapping(value = "allbbslist.do")
-	public String bbslist(BbsParam param) {
-	
-		return "redirect:/bbslist.do";
+	public String allbbslist(BbsParam param, Model model, HttpSession session) {
+		System.out.println("allbbslist" + new Date());
+		
+		UserDto login = (UserDto)session.getAttribute("login");
+		
+		// 글의 시작과 끝
+		int pn = param.getPageNumber();  // 0 1 2 3 4
+		int start = 1 + (pn * 10);	// 1  11
+		int end = (pn + 1) * 10;	// 10 20 
+		
+		param.setStart(start);
+		param.setEnd(end);
+		
+		System.out.println(param.toString());
+		
+		List<BbsDto> list = bbsService.allbbslist(param);
+		int len = bbsService.adminAllBbs(param);
+		
+		System.out.println("len: " + len);
+		
+		int pageBbs = len / 10;		// 25 / 10 -> 2
+		if((len % 10) > 0) {
+			pageBbs = pageBbs + 1;
+		}
+		
+		if(param.getCategory() == null || param.getCategory().equals("")) {
+			param.setCategory("");
+		}
+		
+		if(param.getChoice() == null || param.getChoice().equals("")
+				|| param.getSearch() == null || param.getSearch() == ("")) {
+			param.setChoice("검색");
+			param.setSearch("");
+		}
+		
+		model.addAttribute("bbslist", list);	// 게시판 리스트
+		model.addAttribute("pageBbs", pageBbs);	// 총 페이지수
+		model.addAttribute("pageNumber", param.getPageNumber()); // 현재 페이지
+		model.addAttribute("choice", param.getChoice());	// 검색 초이스
+		model.addAttribute("search", param.getSearch());	// 검색어	
+
+
+		
+		return "allbbslist";
 	}
 	
 	

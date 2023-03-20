@@ -23,37 +23,28 @@
 
 
 <style>
-
 body{
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
  justify-content: center;
-
 }
-
 .flex-container {
   display: flex;
   justify-content: center;
-
 }
-
 .flex-item {
   margin: 15px;
   width: 400px;
   margin: 15px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
 .btn {
   height: 500px;
-
 	width: 650px;
   
 }
-
 #notice{
   display: flex;
   justify-content: center;
@@ -63,10 +54,7 @@ font-family: 'Jua', sans-serif;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
-
 </style>
 
 <!-- 부트스트랩 CSS -->
@@ -90,20 +78,15 @@ font-family: 'Jua', sans-serif;
 </div>
 
 <script type="text/javascript">
-
 function userList() {
 	location.href="userList.do";
 }
-
 function boardList() {
 	location.href="allbbslist.do";
 }
-
 function reportList() {
 	location.href="reportList.do";
 }
-
-
 </script>
 
 

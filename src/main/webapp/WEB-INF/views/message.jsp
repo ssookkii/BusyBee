@@ -2,16 +2,14 @@
     pageEncoding="UTF-8"%>
 <%
 
-String group_code = (String)session.getAttribute("group_code");
-String org = (String)session.getAttribute("org");
+String group_code = (String)request.getAttribute("group_code");
+String org = (String)request.getAttribute("org");
 
 %>
-<input type="hidden" id="org" value="<%=org %>">
-<input type="hidden" id="group_code" value="<%=group_code %>">
 
 <%
 
-// 고객센터 글 작성
+//고객센터 글 작성
 String customerWrite = (String)request.getAttribute("customerWrite");
 if(customerWrite != null && !customerWrite.equals("")){
 	if(customerWrite.equals("CUS_ADD_OK")){
@@ -31,9 +29,7 @@ if(customerWrite != null && !customerWrite.equals("")){
 		<%
 	}
 }
-
 //고객센터 글 삭제
-
 String customerDelete = (String)request.getAttribute("customerDelete");
 if(customerDelete != null && !customerDelete.equals("")){
 	if(customerDelete.equals("CUS_DEL_OK")){
@@ -53,9 +49,7 @@ if(customerDelete != null && !customerDelete.equals("")){
 		<%
 	}
 }
-
 //고객센터 글 수정
-
 String customerUpdate = (String)request.getAttribute("customerUpdate");
 if(customerUpdate != null && !customerUpdate.equals("")){
 	if(customerUpdate.equals("CUS_UPDATE_OK")){
@@ -75,9 +69,7 @@ if(customerUpdate != null && !customerUpdate.equals("")){
 		<%
 	}
 }
-
 //고객센터 답글 작성
-
 String customerAnswer = (String)request.getAttribute("customerAnswer");
 if(customerAnswer != null && !customerAnswer.equals("")){
 	if(customerAnswer.equals("CUS_ANSWER_OK")){
@@ -97,9 +89,7 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 		<%
 	}
 }
-
-
-// 회원가입
+//회원가입
 	String addUser_Msg = (String) request.getAttribute("addUser_Msg");
 	if(addUser_Msg!=null && addUser_Msg!="") {
 		if(addUser_Msg=="addUser_SUCCESS") {
@@ -121,7 +111,6 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 	
 	
 	// 로그인
-
 	String loginCheck_Msg = (String) request.getAttribute("loginCheck_Msg");
 	if(loginCheck_Msg!=null && loginCheck_Msg!="") {
 		if(loginCheck_Msg=="loginCheck_SUCCESS") {
@@ -447,7 +436,6 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 			<%
 		}
 	}
-
 	String inId = (String)request.getAttribute("inId");
 	String userIn = (String)request.getAttribute("userIn");
 	if(userIn != null && !userIn.equals("")){
@@ -479,20 +467,16 @@ if(bbswrite != null && !bbswrite.equals("")){
 	if(bbswrite.equals("bbswrite_YES")){
 		%>
 		<script type="text/javascript">
-		let group_code = document.getElementById("group_code").value;
-		let org = document.getElementById("org").value;
 		alert("성공적으로 작성되었습니다");
-		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
+		location.href = "bbslist.do?group_code="+'<%=group_code%>'+"&org="+'<%=org%>';
 		</script>
 		<%
 	}
 	else{
 		%>
 		<script type="text/javascript">
-		let group_code = document.getElementById("group_code").value;
-		let org = document.getElementById("org").value;
 		alert("다시 작성해 주십시오");
-		location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
+		location.href = "bbswrite.do";
 		</script>
 		<%
 	}
@@ -502,10 +486,8 @@ if(bbsupdate != null && !bbsupdate.equals("")){
 	if(bbsupdate.equals("bbsupdate_YES")){
 		%>
 		<script type="text/javascript">
-		let group_code = document.getElementById("group_code").value;
-		let org = document.getElementById("org").value;
 		alert("성공적으로 수정되었습니다");
-		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
+		location.href = "bbslist.do?group_code="+group_code+"&org="+org;
 		</script>
 		<%
 	}
@@ -525,10 +507,8 @@ if(bbsdelete != null && !bbsdelete.equals("")){
 	if(bbsdelete.equals("bbsdelete_YES")){
 	%>
 		<script type="text/javascript">
-		let group_code = document.getElementById("group_code").value;
-		let org = document.getElementById("org").value;
 		alert("삭제되었습니다");
-		location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
+		location.href = "bbslist.do?group_code="+group_code+"&org="+org;
 		</script>
 	<% 
 } else{	
@@ -590,5 +570,9 @@ if(deleteBbscomment != null && deleteBbscomment != "") {
 	}
 }
 %>
+
+
+
+
 
 

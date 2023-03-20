@@ -10,7 +10,6 @@
 	GroupDto dto = (GroupDto)request.getAttribute("dto");
 	String group_code = (String) request.getAttribute("group_code");
 	String group_name = (String) request.getAttribute("group_name");
-
     %>
 
 <!DOCTYPE html>
@@ -33,34 +32,31 @@
 
 
 <style>
-
+.mainLogo{
+text-align: center;
+}
 body{
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
 font-family: 'Noto Sans KR', sans-serif;
 }
-
 .flex-container {
   display: flex;
   justify-content: center;
   
 }
-
 .flex-item {
   margin: 15px;
   width: 400px;
   margin: 15px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
 .card-body {
   height: 500px;
   font-size: 14px;
 }
-
 #notice{
   display: flex;
   justify-content: center;
@@ -70,19 +66,18 @@ font-family: 'Noto Sans KR', sans-serif;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
 .card-header{
 font-size: 15px;
-
 }
 </style>
 
+<body>
 
-
-
-<h1 style=" text-align: center;"><- 그룹을 선택하세요</h1>
+<div class="mainLogo">
+<br><br><br>
+<img src="images/mainLogo.jpg" style="width: 600px; height: 600px;background-size: cover; al">
+</div>
 
 </body>
 </html>

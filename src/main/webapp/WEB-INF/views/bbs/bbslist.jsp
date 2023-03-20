@@ -14,7 +14,7 @@
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.8.3/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 
@@ -53,11 +53,37 @@
 	font-family: 'Jua', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
-
-
-
-
+.nav{
+text-align: center;
+}
+.d-flex{
+font-size: 14px;
+float: right;
+padding-right: 300px;
+}
+.pagination .page-link {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.pagination .page-item.active .page-link {
+  background-color: #FFCE67;
+  border-color: #FFCE67;
+}
+.pagination .page-link:focus,
+.pagination .page-link:hover {
+  color: #FFCE67;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
 </style>
 
 <!-- 드롭다운 -->
@@ -88,45 +114,52 @@ String org = (String)request.getAttribute("org");
 <small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;자유롭게 작성하세요.</small>
 <br><br>
 
-<div align="center">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width: 1000px">
+
+    <div align="right">
+<nav style="width: 1000px; text-align: right;">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" onclick="mybbslist()" style="font-size: 15px">내가 작성한 글</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" onclick="categorybtn()">전체글</a>
-            <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
-            <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
-            <a class="dropdown-item" onclick="categorybtn3()">자료게시글</a>
-            <a class="dropdown-item" onclick="categorybtn4()">회의록</a>
-          </div>
-        </li>
-      </ul>
       <div class="d-flex" >
-	      	<select id="choice" style="color:black">
+	      	<select id="choice" style="color:black;">
 				<option value="" selected="selected">검색</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
-	        <button class="btn btn-warning my-2 my-sm-0" type="button" onclick="searchBtn()" class="btn btn-warning">검색</button>
+  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
+				<button type="button" class="btn btn-danger" onclick="searchBtn()">검색</button>
       </div>
     </div>
   </div>
 </nav>
 </div>
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a style="margin-left: 300px;" class="nav-link active" onclick="mybbslist()" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">내가 작성한 글</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" data-bs-toggle="tab" onclick="mystarlist()" href="#profile" aria-selected="false" tabindex="-1" role="tab">즐겨찾기 한 글</a>
+  </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
+    <div class="dropdown-menu" style="">
+            <a class="dropdown-item" onclick="categorybtn()">전체글</a>
+            <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
+            <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
+            <a class="dropdown-item" onclick="categorybtn3()">자료게시글</a>
+            <a class="dropdown-item" onclick="categorybtn4()">회의록</a>
+    </div>
+    
+
+  </li>
+</ul>
+
+
 
 <div align="center">
 
@@ -164,7 +197,6 @@ if(list == null || list.size() == 0){
 		<tr>
 			<%
 			if(dto.getDel() == 0){
-
 				if(starlist != null){
 					for(int j = 0; j < starlist.size(); j++)
 					{
@@ -318,58 +350,48 @@ function bbslist(){
 //	alert("bbslist작동합니다");
 	location.href="login.do";
 }
-
 function categorybtn() {
 	let group_code = document.getElementById("group_code").value;
 	let org = document.getElementById("org").value;
 	location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
 }
-
 function categorybtn1() {
 	let group_code = document.getElementById("group_code").value;
 //	let category = document.getElementById("categorybtn1").value;
 	let org = document.getElementById("org").value;
 	location.href="bbslist.do?group_code=" + group_code + "&category=공지사항" + "&org=" + org;
 }
-
 function categorybtn2() {
 	let group_code = document.getElementById("group_code").value;
 //	let category = document.getElementById("categorybtn2").value;
 	let org = document.getElementById("org").value;
 	location.href="bbslist.do?group_code=" + group_code + "&category=일반게시글" + "&org=" + org;
 }
-
 function categorybtn3() {
 	let group_code = document.getElementById("group_code").value;
 //	let category = document.getElementById("categorybtn3").value;
 	let org = document.getElementById("org").value;
 	location.href="bbslist.do?group_code=" + group_code + "&category=자료게시글" + "&org=" + org;
 }
-
 function categorybtn4() {
 	let group_code = document.getElementById("group_code").value;
 //	let category = document.getElementById("categorybtn4").value;
 	let org = document.getElementById("org").value;
 	location.href="bbslist.do?group_code=" + group_code + "&category=회의록" + "&org=" + org;
 }
-
 function mybbslist(){
 //	alert("mybbslist작동합니다");
 	location.href="mybbslist.do";
 }
-
 function mystarlist(){
 	location.href="mystarlist.do";
 }
-
 function bbswrite() {
 //	alert("작동합니다")
 	let group_code = document.getElementById("group_code").value;
 	let org = document.getElementById("org").value;
 	location.href = "bbswrite.do?group_code=" + group_code + "&org=" + org;
 }
-
-
 let search = "<%=search %>";
 console.log("search = " + search);
 if(search != ""){
@@ -377,7 +399,6 @@ if(search != ""){
 	obj.value = "<%=choice %>";
 	obj.setAttribute("selected", "selected");
 }
-
 function goPage( pageNumber ) {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
@@ -387,7 +408,6 @@ function goPage( pageNumber ) {
 	
 	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber + "&category=" + category + "&org=" + org;	
 }
-
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
@@ -409,8 +429,6 @@ function searchBtn() {
 	
 	location.href = "bbslist.do?group_code=" + group_code + "&choice=" + choice + "&search=" + search + "&category=" + category + "&org=" + org;
 }
-
-
 $('#pagination').twbsPagination({
 	startPage:<%=pageNumber+1 %>,
     totalPages: <%=pageBbs %>,
@@ -431,19 +449,16 @@ $('#pagination').twbsPagination({
     //	location.href = "bbslist.do?choice=null&search=null" + "&category=" + category + "&pageNumber=" + (page-1);
     }
 })
-
 function star(seq) {
 	let star = seq
 	$('#staradd').val(star);
 //	alert("add작동합니다");
 }
-
 function star2(seq) {
 	let star2 = seq
 	$('#stardelete').val(star2);
 //	alert("delete작동합니다");
 }
-
 // 즐겨찾기 추가
 $('#staradd').click(function() {
 	let seq = document.getElementById('staradd').value;
@@ -457,7 +472,6 @@ $('#staradd').click(function() {
 	let org = document.getElementById("org").value;
 	let pageNumber = <%=pageNumber%>;
 	
-
 	$.ajax({
 		url:"staradd.do",
 		type:"get",
@@ -485,7 +499,6 @@ $('#stardelete').click(function() {
 	let id = document.getElementById('login').value;
 	let org = document.getElementById("org").value;
 	let pageNumber = <%=pageNumber%>;
-
 	$.ajax({
 		url:"stardelete.do",
 		type:"get",
@@ -502,8 +515,6 @@ $('#stardelete').click(function() {
 });
 //	location.href = "staradd.do?seq=" + seq + "&id=" + id;
 	
-
-
 </script>
 
 <!-- 팝업 -->
@@ -511,14 +522,12 @@ $('#stardelete').click(function() {
 var target = document.querySelectorAll('.btn_open');
 var btnPopClose = document.querySelectorAll('.pop_wrap .btn_close');
 var targetID;
-
 for(var i = 0; i < target.length; i++){
   target[i].addEventListener('click', function(){
     targetID = this.getAttribute('href');
     document.querySelector(targetID).style.display = 'block';
   });
 }
-
 for(var j = 0; j < target.length; j++){
   btnPopClose[j].addEventListener('click', function(){
     this.parentNode.parentNode.style.display = 'none';
@@ -528,7 +537,6 @@ for(var j = 0; j < target.length; j++){
 
 <script type="text/javascript">
 $(document).ready(function(){
-
 	var group1;
 	var group2;
 	var count = 1;
@@ -599,10 +607,8 @@ $(document).ready(function(){
 		}
 	}
 	
-
 	
 });
-
 function golist(group_code, group_name) {
 //	alert('golist');
 	location.href='bbssession.do?group_code=' + group_code + '&org=' + group_name;

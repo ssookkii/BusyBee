@@ -46,6 +46,9 @@ public interface BbsDao {
 	
 	// 모든 게시글
 	List<BbsDto> allbbslist(BbsParam bbs);
+	
+	int adminAllBbs(BbsParam bbs);
+
 
 
 }
