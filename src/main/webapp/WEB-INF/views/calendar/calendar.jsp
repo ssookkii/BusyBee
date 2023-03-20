@@ -55,6 +55,13 @@ textarea {
 textarea:focus {
   border-color: #d9c38f; /* focus 상태일 때 border 색상 */
 }
+
+.form-check-input {
+  transform: scale(1.5);
+}
+input[type="checkbox"]:checked {
+  background-color: #f8eac7;
+}
 </style>
 <meta charset="UTF-8">
 <title>일정 관리</title>
@@ -331,7 +338,7 @@ function initTimepicker() {
 	        } else {
 	            var html = '<form>';
 	            $.each(events, function(index, event) {
-	                html += '<div id="delete-message"></div><li style="display: block;"><input type="checkbox" name="eventIds[]" value="' + event.scheduleId + '"> ' + event.title + '</li> <br/>';
+	                html += '<div id="delete-message"></div><li style="display: block;"><input class="form-check-input" type="checkbox" name="eventIds[]" style="outline:none; transform:scale(1);" value="' + event.scheduleId + '"> ' + "> " + event.title + '</li> <br/>';
 	            });
 	            html += '</form> ';
 	            $('#deleteConfirmModal .modal-title').html('삭제할 일정을 선택하세요.');
@@ -568,14 +575,16 @@ function initTimepicker() {
     <div class="modal-content" >
       <div class="modal-header bg-warning text-white" style="font-size:17px; font-weight: 700;">
       </div>
-      <div class="modal-body" style="height: 100px; display: flex; align-items: center; justify-content: center;">
+      <div class="modal-body" style="height: 200px; overflow-y: auto; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal" id="alarmCancel" style=" font-size: 13px; font-weight: 700;" >확인</button>
       </div>
     </div>
   </div>
-</div>
+</div> 
+
+
 <!-- 다중 삭제 모달 -->
 <div class="modal" id="deleteConfirmModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -583,7 +592,7 @@ function initTimepicker() {
       <div class="modal-header bg-warning text-white" >
         <h8 class="modal-title" ></h8>
       </div>
-      <div class="modal-body" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+      <div class="modal-body" style="height: 270px; display: flex; align-items: center; justify-content: center;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
@@ -698,18 +707,23 @@ function initTimepicker() {
 						    <label for="event-start-date" style = "font-size: 14px;">일정</label>
 						    <div class="input-group date">
 						    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-						        <input type="text" class="form-control datetimepicker-input" id="event-start-date" data-target="#event-start-date" placeholder="시작일" style = "font-size: 14px;" autocomplete="off">
-						        <input type="text" class="form-control datetimepicker-input" id="event-start-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
-						        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-						        <input type="text" class="form-control datetimepicker-input" id="event-end-date" data-target="#event-start-date" placeholder="종료일" style = "font-size: 14px;" autocomplete="off">
-						        <input type="text" class="form-control datetimepicker-input" id="event-end-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
-						        <div class="input-group-append" data-target="#event-start-date">
-						        <div class="input-group-text">
-						        <input type="checkbox" id="all-day" aria-label="all-day" style="margin-top: 1px;">
-						        <label for="all-day" style="margin-bottom: 0; font-size: 14px; margin-left: 5px;">종일</label>
-						      </div>
+						    <input type="text" class="form-control datetimepicker-input" id="event-start-date" data-target="#event-start-date" placeholder="시작일" style = "font-size: 14px;" autocomplete="off">
+						    <input type="text" class="form-control datetimepicker-input" id="event-start-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
+						    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						    <input type="text" class="form-control datetimepicker-input" id="event-end-date" data-target="#event-start-date" placeholder="종료일" style = "font-size: 14px;" autocomplete="off">
+						    <input type="text" class="form-control datetimepicker-input" id="event-end-time" data-target="#event-start-date" placeholder="시간" style = "font-size: 14px;" autocomplete="off">
+						  
+						    </div>
+						  <div class="form-group mt-2" style="text-align:right">
+					        <div class="form-check form-switch">
+					        <input class="form-check-input" type="checkbox" id="all-day" aria-label="all-day" style="outline:none;">
+					        <label class="form-check-label" for="all-day" style="font-size:14px">종일</label>
+					      </div>
+
+
+						       
 						            
-						        </div>
+				
 						        
 						        
 						    </div>
@@ -947,14 +961,15 @@ $(document).ready(function() {
 						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-date" value="' + event.end.format('YYYY-MM-DD') + '" style="font-size: 14px;" autocomplete="off"> ' +
 						    '<input type="text" class="form-control datetimepicker-input" id="edit-end-time" value="' + event.end.format('HH:mm') + '" style="font-size: 14px;" autocomplete="off">' +
 						    '<div class="input-group-append" data-target="#edit-start-date">' +
-						    '<div class="input-group-text">' +
-						    '<input type="checkbox" id="all-day-update" name="all-day-update" aria-label="all-day-update" style="margin-top: 1px;">'+
-						    '<label for="all-day-update" style="margin-bottom: 0; font-size: 14px; margin-left: 5px;">종일</label>'+
+						    
+						    '</div>' +
+						    
+						    '</div>' +
+						    '<div class="form-check form-switch" style="margin:2px; text-align:right">' +
+						    '<input class="form-check-input" type="checkbox" id="all-day-update" name="all-day-update" aria-label="all-day-update" style="outline:none; transform:scale(1);">'+
+						    '<label for="all-day-update" style=" font-size: 14px; margin-left: 5px;">종일</label>'+
 
 						    '</div>' +
-						    '</div>' +
-						    '</div>' +
-
 						    '</form>');
 					$('#all-day-update').on('change', function() {
 					    // 체크박스가 체크되면 시작일정의 시간 인풋과 종료일정의 날짜 시간 인풋을 비활성화
@@ -1060,6 +1075,7 @@ $(document).ready(function() {
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
   var yyyy = today.getFullYear();
+
   if (dd < 10) {
     dd = '0' + dd;
   }
@@ -1079,6 +1095,10 @@ $(document).ready(function() {
         for (var i = 0; i < data.length; i++) {
           var eventStart = data[i].startDate.split(" ")[0];
           var eventEnd = data[i].endDate.split(" ")[0];
+          console.log(eventStart);
+          console.log(eventEnd);
+          console.log("today"+today);
+          
           if (eventStart <= today && today <= eventEnd) {
             todayEventList.push(data[i]);
           }
