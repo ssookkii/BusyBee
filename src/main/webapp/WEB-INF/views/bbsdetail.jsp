@@ -14,6 +14,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css"> 
 
 
 
@@ -24,7 +25,9 @@
 	BbsDto dto = (BbsDto)request.getAttribute("bbsdto");
 %> 
 
-<h1>상세 글보기</h1>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;상세글 보기</h1>
+<br><br>
 
 <hr>
 
@@ -54,10 +57,19 @@
 <tr>
 	<th>파일</th>
 	<td>
-		<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<% 	if(dto.getFilename() != null){ %>
+				<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<%	}else{ %>
+				<input value="" type="text" class="form-control form-control-lg" readonly="readonly">
+		<%	} %>
 		<br>
-		<input type="button" value="파일 다운로드" class="btn btn-primary"
-		onclick="filedown(<%=dto.getSeq() %>, '<%=dto.getNewfilename() %>', '<%=dto.getFilename() %>')">
+		<% 	if(dto.getFilename() != null){ %>
+				<input type="button" value="파일 다운로드" class="btn btn-warning"
+				onclick="filedown(<%=dto.getSeq() %>, '<%=dto.getNewfilename() %>', '<%=dto.getFilename() %>')">
+		<%	}else{ %>
+				
+		<%	} %>
+		
 	</td>
 </tr>
 <tr>
@@ -77,7 +89,7 @@
 
 <br>
 
-<button type="button" class="btn btn-primary" onclick="bbslist()">글목록</button>
+
 
 <input type="hidden" id="org" value="<%=dto.getOrg() %>">
 <input type="hidden" id="group_code" value="<%=dto.getGroup_code() %>">
@@ -87,13 +99,17 @@
 UserDto login = (UserDto)session.getAttribute("login");
 if(dto.getId().equals(login.getId())){
 	%>
-	<button type="button" class="btn btn-primary" onclick="updateBbs(<%=dto.getSeq() %>)">수정</button>
-	
-	<button type="button" class="btn btn-primary" onclick="deleteBbs(<%=dto.getSeq() %>)">삭제</button>
+	<div>
+	<button type="button" class="btn btn-outline-warning" onclick="bbslist()">글목록</button>
+	<button type="button" class="btn btn-warning" onclick="updateBbs(<%=dto.getSeq() %>)">수정</button>
+	<button type="button" class="btn btn-danger" onclick="deleteBbs(<%=dto.getSeq() %>)">삭제</button>
+	</div>
 	
 	<br>
 	
-	<button type="button" class="btn btn-primary" onclick="reportBbs(<%=dto.getSeq() %>)">신고하기</button>
+	<div>
+	<button type="button" class="btn btn-danger" onclick="reportBbs(<%=dto.getSeq() %>)">신고하기</button>
+	</div>
 	<%
 }
 %>
@@ -159,7 +175,7 @@ function filedown(seq, newfilename, filename){
 		<textarea rows="3" class="form-control" name="content"></textarea>
 	</td>
 	<td style="paddng-left: 30px">
-		<button type="submit" class="btn btn-primary btn-block p-4">완료</button>
+		<button type="submit" class="btn btn-warning btn-block p-4">완료</button>
 	</td>
 </tr>
 </table>
@@ -167,7 +183,7 @@ function filedown(seq, newfilename, filename){
 
 <br><br>
 
-<table class="table">
+<table class="table table-hover">
 <col width="500"><col width="500"><col width="100">
 <tbody id="tbody">
 
@@ -191,12 +207,12 @@ $(document).ready(function(){
 			$("#tbody").html("");
 			
 			$.each(list, function(index, item){
-				let str = "<tr class='table-info'>" 
+				let str = "<tr class='table-warning'>" 
 					+ "<td>작성자:" + item.id + "</td>"
 					+ "<td>작성일:" + item.wdate + "</td>";
 				if(item.id == "<%=login.getId()%>") {
 					str += "<td>"
-						+ "<button type='button' class='btn btn-primary' onclick='deleteBbscomment(" + item.seq + "," + item.anseq + ")'>삭제</button>"
+						+ "<button type='button' class='btn btn-danger' onclick='deleteBbscomment(" + item.seq + "," + item.anseq + ")'>삭제</button>"
 						+"</td>";
 				}
 				str += '</tr>'

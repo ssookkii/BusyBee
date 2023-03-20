@@ -2,6 +2,7 @@ package mul.cam.a.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -154,6 +155,11 @@ public class BbsController {
 			boolean isS = service.writeBbs(dto);
 			
 			String bbswrite = "";
+			filename = "";
+			String newfilename = "";
+			
+			System.out.println(filename);
+			System.out.println(newfilename);
 			
 			if(isS) {
 			//	System.out.println("bbswrite_YES");
@@ -496,14 +502,16 @@ public class BbsController {
 	}
 	
 	@GetMapping(value = "bbssession.do")
-	public String bbssession(HttpServletRequest req, Model model, BbsParam param, HttpSession session) {
+	public String bbssession(HttpServletRequest req, Model model, BbsParam param, HttpSession session)throws Exception {
+		System.out.println("BbsController bbssession " + new Date());
 
 		req.getSession().setAttribute("group_code", param.getGroup_code());
 		req.getSession().setAttribute("org", param.getOrg());
 
 //		session.setAttribute("login", login);
 		
-		return "redirect:/bbslist.do?group_code=" + param.getGroup_code() + "&org=" + param.getOrg();
+		return "redirect:/bbslist.do?group_code=" + param.getGroup_code() + "&org=" + URLEncoder.encode(param.getOrg(), "UTF-8");
+		
 	}
 	
     // 신고하기 기능

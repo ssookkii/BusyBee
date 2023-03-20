@@ -97,7 +97,6 @@ notice
   <div class="card-header" >게시판 영역</div>
   <div class="card-body">
      
-    <a href="bbslist.do">게시판</a>
     <table border="1">
 	<thead>
 	<tr>
@@ -135,6 +134,7 @@ notice
   </div>
 </div>
 
+
 </div>
 
 
@@ -144,7 +144,6 @@ notice
 
 $(document).ready(function(){
 
-	
 	var group1;
 	var group2;
 	var count = 1;
@@ -164,8 +163,9 @@ $(document).ready(function(){
 								+ '<td>' + data[i].group_code + '</td>'
 								+ '<td>' + data[i].group_name + '</td>'
 								+ '<td>' + data[i].group_info + '</td>'
-								+ "<td><button type='button' onclick="+ "location.href='bbssession.do?group_code="
-									+ data[i].group_code + "&org=" + data[i].group_name + "'>"
+							//	+ "<td><button type='button' onclick="+ "location.href='bbssession.do?group_code="
+							//		+ data[i].group_code + "&org=" + data[i].group_name + "'>"
+								+ "<td><button type='button' onclick=\"golist('"+ data[i].group_code + "', '" + data[i].group_name + "')\">"
 									+ "게시판으로</button>"
 								+ "</td>"
 							 + '</tr>';
@@ -192,7 +192,7 @@ $(document).ready(function(){
 			if(data!=null && data!="") {
 				var tableTd = '';
 				$.each(data, function(i){
-					var group_code = data[i].group_code;
+
 					tableTd += '<tr>'
 								+ '<td>' + count + '</td>'
 								+ '<td>' + data[i].group_code + '</td>'
@@ -234,7 +234,14 @@ $(document).ready(function(){
 		}
 	}
 	
+
+	
 });
+
+function golist(group_code, group_name) {
+//	alert('golist');
+	location.href='bbssession.do?group_code=' + group_code + '&org=' + group_name;
+}
 
 </script>
 </body>

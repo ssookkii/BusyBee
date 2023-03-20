@@ -14,7 +14,6 @@
 	</bean>
 	
 	<!-- download -->
-
 	<bean id="downloadView" class="mul.cam.a.util.DownloadView"></bean>
 	<!-- DownloadView downloadView = new DownloadView(); -->
 	

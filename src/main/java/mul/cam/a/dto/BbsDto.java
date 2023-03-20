@@ -9,21 +9,21 @@ import java.io.Serializable;
 -- 테이블 생성 SQL - busybee_bbs
 CREATE TABLE busybee_bbs
 (
-    `seq`         INT              NOT NULL    AUTO_INCREMENT COMMENT '글번호. 글번호', 
-    `ref`         DECIMAL(8)       NOT NULL    COMMENT '그룹번호. 그룹번호', 
-    `step`        DECIMAL(8)       NOT NULL    COMMENT '행번호. 행번호', 
-    `depth`       DECIMAL(8)       NOT NULL    COMMENT '깊이번호. 깊이번호', 
-    `id`          VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
-    `title`       VARCHAR(200)     NOT NULL    COMMENT '제목. 제목', 
-    `content`     VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
-    `wdate`       TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
-    `readcount`   DECIMAL(8)       NOT NULL    COMMENT '조회수. 조회수', 
-    `org`         VARCHAR(50)      NOT NULL    COMMENT '조직명. 조직명', 
-    `filename`    VARCHAR(50)      NOT NULL    COMMENT '파일명. 파일명', 
-    `newfname`    VARCHAR(50)      NOT NULL    COMMENT '시스템파일명. 시스템파일명', 
-    `category`    VARCHAR(50)      NOT NULL    COMMENT '카테고리', 
-    `del`         INT              NOT NULL    COMMENT '삭제', 
-    `group_code`  varchar(15)      NOT NULL    COMMENT '그룹코드', 
+    `seq`          INT              NOT NULL    AUTO_INCREMENT COMMENT '글번호. 글번호', 
+    `ref`          DECIMAL(8)       NOT NULL    COMMENT '그룹번호. 그룹번호', 
+    `step`         DECIMAL(8)       NOT NULL    COMMENT '행번호. 행번호', 
+    `depth`        DECIMAL(8)       NOT NULL    COMMENT '깊이번호. 깊이번호', 
+    `id`           VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
+    `title`        VARCHAR(200)     NOT NULL    COMMENT '제목. 제목', 
+    `content`      VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
+    `wdate`        TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
+    `readcount`    DECIMAL(8)       NOT NULL    COMMENT '조회수. 조회수', 
+    `org`          VARCHAR(50)      NOT NULL    COMMENT '조직명. 조직명', 
+    `filename`     VARCHAR(50)        COMMENT '파일명. 파일명', 
+    `newfilename`  VARCHAR(50)        COMMENT '시스템파일명. 시스템파일명', 
+    `category`     VARCHAR(50)      NOT NULL    COMMENT '카테고리', 
+    `del`          INT              NOT NULL    COMMENT '삭제', 
+    `group_code`   varchar(15)      NOT NULL    COMMENT '그룹코드', 
      PRIMARY KEY (seq, id)
 );
 
@@ -66,6 +66,8 @@ ALTER TABLE busybee_star
 -- Foreign Key 삭제 SQL - busybee_star(id)
 -- ALTER TABLE busybee_star
 -- DROP FOREIGN KEY FK_busybee_star_id_busybee_bbs_id;
+
+
 
 
 */

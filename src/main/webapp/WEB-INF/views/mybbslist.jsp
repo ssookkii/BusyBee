@@ -11,12 +11,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 부트스트랩 JavaScript 및 의존성 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -39,6 +46,13 @@
 	text-align: center;
 	vertical-align: bo;
 }
+.body{
+font-family: 'Black Han Sans', sans-serif;
+font-family: 'Dongle', sans-serif;
+font-family: 'Jua', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
+} 
+
 </style>
 
 <style type="text/css">
@@ -61,38 +75,63 @@ String group_code = (String)session.getAttribute("group_code");
 String org = (String)session.getAttribute("org");
 %>
 
-<h1>내가 쓴 글</h1>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;내가쓴 글</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;작성하신 글입니다.</small>
 <br><br>
 
 <div align="center">
-
-<div class="panel-body">
-  	<div class="form-inline" >
-	    <input type="button" id="bbslist"  onclick="bbslist()" value="그룹선택" class="btn btn-primary"/>
-  	</div>
-  	<br>
-  	
-    <div class="form-inline" >
-  		<input type="button" id="categorybtn"  onclick="categorybtn()" value="전체글" class="btn btn-primary"/>
-        <input type="button" id="categorybtn1"  onclick="categorybtn1()" value="공지사항" class="btn btn-primary"/>
-        <input type="button" id="categorybtn2"  onclick="categorybtn2()" value="일반게시글" class="btn btn-primary"/>
-        <input type="button" id="categorybtn3"  onclick="categorybtn3()" value="자료게시글" class="btn btn-primary"/>
-        <input type="button" id="categorybtn4"  onclick="categorybtn4()" value="회의록" class="btn btn-primary"/>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width: 1000px">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" onclick="beforelist()" style="font-size: 15px">게시판으로</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
+        </li>
+       <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">그룹 선택</a>
+          <div id="groupdrop" class="dropdown-menu">
+         	<h3 id="nogroup"></h3>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" onclick="categorybtn()">전체글</a>
+            <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
+            <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
+            <a class="dropdown-item" onclick="categorybtn3()">자료게시글</a>
+            <a class="dropdown-item" onclick="categorybtn4()">회의록</a>
+          </div>
+        </li>
+      </ul>
+       <div class="d-flex" >
+	      	<select id="choice" style="color:black">
+				<option value="" selected="selected">검색</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
+	        <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="searchBtn()" class="btn btn-warning">검색</button>
+      </div>
     </div>
-    <br>
-    
-    <div class="form-inline">
-      	<input type="button" id="bbslist"  onclick="beforelist()" value="게시판으로" class="btn btn-primary"/>
-        <input type="button" id="mystarlist"  onclick="mystarlist()" value="즐겨찾기한글" class="btn btn-primary"/>
-    </div>
-    <br><br>
+  </div>
+</nav>
 </div>
+<div align="center">
 
 <input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
-<table id="bbs" class="table table-hover table-sm" style="width: 1000px">
+<table id="bbs" class="table table-hover" style="width: 1000px">
 <col width="150"><col width="70"><col width="150"><col width="600"><col width="100"><col width="150"><col width="70">
-<thead class="thead-dark">
+<thead class="table-warning">
 <tr>
 	<th>분류</th><th>번호</th><th>그룹명</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
 </tr>
@@ -103,7 +142,7 @@ String org = (String)session.getAttribute("org");
 if(list == null || list.size() == 0){
 	%>
 	<tr>
-		<td colspan="4">작성한 글이 없습니다</td>
+		<td colspan="7">작성한 글이 없습니다</td>
 	</tr>
 	<%
 }else{
@@ -134,12 +173,8 @@ if(list == null || list.size() == 0){
 			 %>
 				<td><i class="fa fa-file"></i></td>
 			<%
-			}else{
-			%>
-				<td><i class="fa fa-file-o"></i></td>
-			<%
 			}
-			 %>
+			%>
 		</tr>
 		<%
 		}
@@ -160,26 +195,11 @@ if(list == null || list.size() == 0){
 </div>
 
 
-<br><br>
-<div class="form-row align-items-center d-flex justify-content-center align-items-center container">
-<select id="choice">
-	<option value="">검색</option>
-	<option value="title">제목</option>
-	<option value="content">내용</option>
-	<option value="org">그룹</option>
-</select>
-
-<div class="col-sm-2 my-1">
-	<input type="text" id="search" class="form-control"  value="<%=search %>">
-</div>
-
-<button type="button" onclick="searchBtn()" class="btn btn-primary">검색</button>
-</div>
-
+<input type="hidden" id="id" value='<%=login.getId()%>'>
 <input type="hidden" id="org" value="<%=org %>">
 <input type="hidden" id="group_code" value="<%=group_code %>">
 
-<button onclick="bbswrite()">글쓰기</button>
+<button class="btn btn-warning" onclick="bbswrite()">글쓰기</button>
 
 </div>
 
@@ -197,23 +217,19 @@ function categorybtn() {
 }
 
 function categorybtn1() {
-	let category = document.getElementById("categorybtn1").value;
-	location.href="mybbslist.do?category=" + category;
+	location.href="mybbslist.do?category=공지사항";
 }
 
 function categorybtn2() {
-	let category = document.getElementById("categorybtn2").value;
-	location.href="mybbslist.do?category=" + category;
+	location.href="mybbslist.do?category=일반게시글";
 }
 
 function categorybtn3() {
-	let category = document.getElementById("categorybtn3").value;
-	location.href="mybbslist.do?category=" + category;
+	location.href="mybbslist.do?category=자료게시글";
 }
 
 function categorybtn4() {
-	let category = document.getElementById("categorybtn4").value;
-	location.href="mybbslist.do?category=" + category;
+	location.href="mybbslist.do?category=회의록";
 }
 
 function bbslist(){
@@ -290,7 +306,88 @@ $('#pagination').twbsPagination({
 
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
 
+	var group1;
+	var group2;
+	var count = 1;
+	
+	// Leader
+	$.ajax({
+		url:"http://localhost:8090/busyBee/selectGroup1.do",
+		type:"get",
+		data:{"id":$("#id").val()},
+		async:false,
+		success:function(data) {
+			if(data!=null && data!="") {
+				var groupdrop = '';
+				$.each(data, function(i){
+					groupdrop += "<a class='dropdown-item' onclick=\"golist('"+ data[i].group_code + "', '" + data[i].group_name + "')\">" + data[i].group_name + "</a>"
+					count++;
+				});
+				$("#groupdrop").append(groupdrop);
+				group1 = true;
+				groupCheck();
+			} else if (data==null || data=="") {
+				group1 = false;
+				groupCheck();
+			}
+		},	
+		error:function(){
+			alert('error');
+		}
+	});
+	// Member
+	$.ajax({
+		url:"http://localhost:8090/busyBee/selectGroup2.do",
+		type:"get",
+		data:{"id":$("#id").val()},
+		success:function(data) {
+			if(data!=null && data!="") {
+				var groupdrop = '';
+				$.each(data, function(i){
+					groupdrop += "<a class='dropdown-item' onclick=\"golist('"+ data[i].group_code + "', '" + data[i].group_name + "')\">" + data[i].group_name + "</a>"
+					count++;
+				});
+				$("#groupdrop").append(groupdrop);
+				group2 = true;
+				groupCheck();
+			} else if (data==null || data=="") {
+				group2 = false;
+				groupCheck();
+			}
+		},
+		error:function(){
+			alert('error');
+		}
+	});
+	
+	function groupCheck(){
+		
+/* 		alert("group1 =" + group1);
+		alert("group2 =" + group2);
+		 */
+		if(group1=="undefined" || group2=="undefined") {
+			return;
+		}
+		
+		if(group1==false && group2==false) {
+/* 			alert("group1* =" + group1);
+			alert("group2* =" + group2); */
+			$("#nogroup").text('가입한 그룹이 없습니다.');	
+		}
+	}
+	
+
+	
+});
+
+function golist(group_code, group_name) {
+//	alert('golist');
+	location.href='bbssession.do?group_code=' + group_code + '&org=' + group_name;
+}
+</script>
 
 
 </body>
