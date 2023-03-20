@@ -42,8 +42,12 @@ String User = (String)session.getAttribute("login");
 }
 
 .chat-me {
-	display: inline-flex;
+	display: flex;
 	justify-content: flex-start;
+	
+}
+
+.chat-me p {
 	border: 2px solid black;
 	border-radius: 5px;
 	box-shadow: 0px 5px 2px 1px gray;
@@ -52,20 +56,32 @@ String User = (String)session.getAttribute("login");
 }
 
 .chat-other {
-	display: inline-flex;
-	position: relative;
-	right: 5px;
+	display: flex;
+	justify-content: flex-end;
+	
+}
+.chat-other p {
+ 	margin-left: auto;
 	border: 2px solid black;
 	border-radius: 5px;
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 5px 10px;
 	margin: 5px 5px;
-	background-color: gray;
+	background-color: rgb(255,165,0);
 }
+
 .whisper {
-	background-color: purple;
-	color: white;
-	font-weight: bold;
+	display: flex;
+	justifty-content: flex-end;
+}
+
+.whisper p {
+	border: 2px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 5px 2px 1px gray;
+	padding: 5px 10px;
+	margin: 5px 5px;
+	background-color: rgb(238,130,238);
 }
 
 </style>
@@ -86,7 +102,7 @@ String User = (String)session.getAttribute("login");
 			</select>
 			<input type="text" id="recipient" class="form-control-sm" disabled placeholder="send to" value="to All"/>
 		</div>
-		<input type="text" class="form-control" size="50" required style="width: 300px; height:45px; font-size:35px;"/>
+		<input type="text" id="message" class="form-control" size="50" required style="width: 300px; height:45px; font-size:15px;"/>
 		<input type="button" class="btn btn-warning" value="전송" onclick="send()" style="width:80px; height: 45px;" />
 	</div>
 	<input type="button" id="enterBtn" value="입장" onclick="connect()" />
@@ -201,28 +217,41 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	
 	// 자신이 보낸 메세지일경우
 	if (writer == "<%=User%>" && recipient == "to All") { 
-		const plusElementMyChat = "<p class='chat-me'>" +
-										 "나 | " + message +
-							      "</p><span>" + sendTime + "</span>";
+		const chatContent = document.createElement("div");
+		chatContent.className = "chat-me";
+		const plusElementMyChat = "<p>" + "나 | " + message + "</p><br/>" +
+								"<span>" + sendTime + "</span>";
 		
 		chatContent.innerHTML = plusElementMyChat;
 		chatBox.appendChild(chatContent);
-	
+	}
+	// 자신이 보낸 귓속말 메세지인경우
+	else if (writer == recipient && recipient != "to All"){
+		const chatContent = document.createElement("div");
+		chatContent.className = "chat-me";
+		const plusElementMyChat = "<p>[" + recipient + "]에게 귓속말 | " + message + "</p><br/>" +
+								"<span>" + sendTime + "</span>";
+		
+		chatContent.innerHTML = plusElementMyChat;
+		chatBox.appendChild(chatContent);
 	}
 	// 다른사람이 보낸 전체메세지 일경우
 	else if (writer != "<%=User%>" && recipient == "to All") {
-		const plusElementOtherChat = "<p class='chat-other'>" +
-										 + message + " | " + writer +
-									  "</p>";
+		const chatContent = document.createElement("div");
+		chatContent.className = "chat-other";
+		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+ 
+									"<p>"+ message + " [" + writer + "]</p>";
+;
 		chatContent.innerHTML = plusElementOtherChat;
 		chatBox.appendChild(chatContent);
 	}
 	
 	// 다른사람이 보낸 귓속말 일경우
 	else if(writer != "<%=User%>" && recipient == "<%=User%>"){ 
-		const plusElementOtherChat = "<p class='chat-other whisper'>" +
-										 + message + " |  <귓속말>" + writer +
-								     "</p>";
+		const chatContent = document.createElement("div");
+		chatContent.className = "whisper";
+		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+
+									"<p>" + message + " |  <귓속말>[" + writer + "]</p>";
 		chatContent.innerHTML = plusElemenOtherChat;
 		chatBox.appendChild(chatContent);
 	}

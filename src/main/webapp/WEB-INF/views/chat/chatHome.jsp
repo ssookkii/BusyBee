@@ -169,7 +169,7 @@ function exitChat(element) { // 자신을 제거
 	<div id="ChatContainer">
 		<div class="flexible">
 			<div>
-				<button onclick="clickOpenModal()" class="btn btn-danger" style="width: 200px; height: 80px; font-size: 15px;">Create Chat!</button>
+				<button onclick="clickOpenModal()" class="btn btn-danger" style="width: 200px; height: 80px; font-size: 15px;">새 채팅방 만들기</button>
 			</div>
 		</div>
 		
@@ -177,20 +177,20 @@ function exitChat(element) { // 자신을 제거
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h3>Create Your Chat!</h3>
+		        <h3>채팅방 생성</h3>
 		        <button type="button" id="closeModal" class="btn-close" onclick="clickCloseModal()" data-bs-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true" ></span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
-				<input class="form-control" id="roomId" name="roomId" type="text" placeholder="Chat ID" maxLength="20" required /><br/>
-				<input class="form-control" id="title" name="title" type="text" placeholder="Chat Name(20자)" maxLength="20" required/><br/>
-				<textarea class="form-control" id="description" name="description" placeholder="description (200자)" maxLength="200" rows="10" required/></textarea><br/>
-				<input class="form-control" id="member" name="member" type="text" placeholder="member(콤마로 구분해주세요)" maxLength="200"/><br/>
+				<input class="form-control" id="roomId" name="roomId" type="text" placeholder="채팅방 ID" maxLength="20" required /><br/>
+				<input class="form-control" id="title" name="title" type="text" placeholder="채팅방 이름(20자)" maxLength="20" required/><br/>
+				<textarea class="form-control" id="description" name="description" placeholder="채팅방 소개 (200자)" maxLength="200" rows="10" required/></textarea><br/>
+				<input class="form-control" id="member" name="member" type="text" placeholder="채팅 멤버(콤마로 구분해주세요)" maxLength="200"/><br/>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button"  class="btn btn-primary" onclick="createChat()">Create Chat!</button>
-		        <button type="button" class="btn btn-secondary" onclick="clickCloseModal()" data-bs-dismiss="modal">Close</button>
+		        <button type="button"  class="btn btn-primary" onclick="createChat()">생성</button>
+		        <button type="button" class="btn btn-secondary" onclick="clickCloseModal()" data-bs-dismiss="modal">닫기</button>
 		      </div>
 		    </div>
 		  </div>
@@ -200,7 +200,7 @@ function exitChat(element) { // 자신을 제거
 		// 참여하고 있는 방이없으면 
 		if (allChatRoom == null) {
 			%>
-			<h1>참여하고있는 채팅방이 없습니다.</h1>
+			<h1>참여하고 있는 채팅방이 없습니다.</h1>
 			<% 
 		}else{
 		// 침여하고 있는 방 표시
@@ -208,7 +208,7 @@ function exitChat(element) { // 자신을 제거
 				%>
 				<div>
 					<div class="card text-white bg-warning mb-3" id="<%=chatRoom.getRoomId() %>" onclick="showChatInfo(this)" ondblclick="enterChat(this)" style="width: 150px; height: 150px; margin:15px;">
-					  <div class="card-header" style="background-color: yellow; color: black;">[ Chat Name ] <%=chatRoom.getTitle() %></div>
+					  <div class="card-header" style="background-color: yellow; color: black;">[ 채팅이름 ] <%=chatRoom.getTitle() %></div>
 					  <div class="card-body">
 					    <p class="card-text"><%=chatRoom.getDescriptions() %></p>
 					  </div>
@@ -233,13 +233,13 @@ function exitChat(element) { // 자신을 제거
 					</colgroup>
 					<thead>
 						<tr class="table-warning" style="color: black;">
-							<th>Chat Id</th>
-							<th>Chat Title</th>
-							<th>Chat Description</th>
-							<th>Chat Member</th>
-							<th>Chat Host</th>
-							<th>Created At</th>
-							<th>Chat Exit</th>
+							<th>채팅방 ID</th>
+							<th>채팅방 이름</th>
+							<th>채팅방 소개</th>
+							<th>채팅 멤버</th>
+							<th>호스트</th>
+							<th>생성시기</th>
+							<th>나가기</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -308,6 +308,7 @@ const createChat = () => {
 			},
 		dataType: "text",
 		success: function(data){
+			alert(data);
 			if (data == null) {
 				alert("이미 존재하는 Chat ID 입니다.");
 				document.getElementById("roomId").value = "";
@@ -318,12 +319,13 @@ const createChat = () => {
 			
 			const chatDiv = document.createElement("div");
 			const chatDivChild = "<div class='card text-white bg-warning mb-3' id=" + json.roomId + " onclick='showChatInfo(this)' ondblclick='enterChat(this)' style='width: 150px; height: 150px; margin:15px;'>";
-									+ "<div class='card-header' style='background-color: yellow; color: black;'>[ Chat Name ] " + json.title + " </div>"
+									+ "<div class='card-header' style='background-color: yellow; color: black;'>[ 채팅이름 ] " + json.title + " </div>"
 									+ "<div class='card-body'>" 
 										+ "<p class='card-text'>" + json.descriptions + "</p>" 
 									+ "</div>" 
 							   + "</div>";
-			chatDiv.appendChild(chatDivChild)
+			chatDiv.innerHTML = chatDivChild;
+			window.location.reload();
 		},
 		error: function(error) {
 			alert("예기치 못한 에러가 발생하였습니다");

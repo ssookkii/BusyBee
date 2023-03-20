@@ -27,9 +27,8 @@ public class ChatRoomDao {
 	};
 	
 	public int createChatRoom(ChatRoomDto dto) {
-		// TODO Auto-generated method stub
-		//멤버가 sql 에서 string 으로 들어가기에 "/" 를 구분자로 나눔
 		String[] memberList = dto.getMembers().split(",");
+		//멤버가 sql 에서 string 으로 들어가기에 "/" 를 구분자로 나눔
 		String stringSplitedBySlash = memberStringSplitedBySlash(memberList, dto.getCreatedBy());
 		dto.setMembers(stringSplitedBySlash); // 구분자를 추가함
 		return session.insert(namespace+"createChatRoom", dto);
@@ -37,6 +36,9 @@ public class ChatRoomDao {
 	
 	public ChatRoomDto chatRoomInfo(String roomId) {
 		ChatRoomDto chatRoom = session.selectOne(namespace+"chatRoomInfo", roomId);
+		if (chatRoom == null) {
+			return null;
+		}
 		chatRoom.setMembers(memberStringSplitedByComma(chatRoom.getMembers()));
 		return chatRoom;
 	};
@@ -47,7 +49,6 @@ public class ChatRoomDao {
 		ChatRoomDto chatRoom = session.selectOne(namespace+"chatRoomInfo", roomId);
 		// DB 에 있는 멤버 중에서 채팅나간 유저를 제거한다
 		String updateMembers = removeUserFromChatMembers(user, chatRoom.getMembers());
-		System.out.println(updateMembers);
 		HashMap<String, String> roomIdAndUpdateMembers= new HashMap<>();
 		roomIdAndUpdateMembers.put("roomId", roomId); // 채팅방 찾고
 		roomIdAndUpdateMembers.put("updateMembers", updateMembers); // 채팅방 멤버 업데이트

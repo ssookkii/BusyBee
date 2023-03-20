@@ -48,7 +48,7 @@ public class WebSocket extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		// 수신(recv)
-		// System.out.println("message: " + message.getPayload());
+		System.out.println("message: " + message.getPayload());
 				
 		// 송신(send) - 모든 client(session)에 전송	
 		for(WebSocketSession s : userMap.values()) {

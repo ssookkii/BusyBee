@@ -42,7 +42,6 @@ public class ChatRoomController {
 			HttpSession session,
 			Model model
 			) {
-		
 		ChatRoomDto isExistDto = chatRoomService.chatRoomInfo(roomId);
 		if (isExistDto != null) { // 이미 존재하는 방이면 생성불가
 			return null;

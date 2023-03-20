@@ -78,8 +78,8 @@ ChatRoomDto chatRoomInfo = (ChatRoomDto)request.getAttribute("chatRoomInfo");
 		<div class="chatHeader">
 			<h1>[ <%=chatRoomInfo.getTitle() %> ]</h1>
 			<br/>
-			<p>member : <%=chatRoomInfo.getMembers() %></p>
-			<p>host : <%=chatRoomInfo.getCreatedBy() %></p>
+			<p>멤버 : <%=chatRoomInfo.getMembers() %></p>
+			<p>호스트 : <%=chatRoomInfo.getCreatedBy() %></p>
 		</div>
 		<div class="item-center">
 			<div class="chat-contents-container">

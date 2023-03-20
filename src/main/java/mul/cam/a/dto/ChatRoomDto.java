@@ -98,6 +98,12 @@ public class ChatRoomDto {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	@Override
+	public String toString() {
+		return "ChatRoomDto [roomId=" + roomId + ", title=" + title + ", descriptions=" + descriptions + ", members="
+				+ members + ", createdBy=" + createdBy + ", createdAt=" + createdAt + "]";
+	}
 	
 
 }
