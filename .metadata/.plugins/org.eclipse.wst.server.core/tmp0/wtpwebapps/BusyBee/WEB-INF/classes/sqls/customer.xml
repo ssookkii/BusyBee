@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Customer">
+
+<!-- create table customer(
+
+	seq int auto_increment primary key,
+	id varchar(50) not null,
+	
+	ref decimal(8) not null,
+	step decimal(8) not null,
+	depth decimal(8) not null,
+	
+	title varchar(200) not null,
+	content varchar(4000) not null,
+	filename varchar(50) not null,
+	newfilename varchar(50) not null,
+	wdate timestamp not null,
+	secret tinyint(1) not null
+	
+
+); -->
+
+<select id="customer" parameterType="mul.cam.a.dto.BbsParam"
+	resultType="mul.cam.a.dto.CustomerDto">
+
+	select seq, id, ref, step, depth, title, content, wdate, secret
+	from
+		(select row_number()over(order by ref desc, step asc) as rnum,
+			seq, id, ref, step, depth, title, content, wdate, secret
+		 from customer
+		 where 1=1 
+		 <if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		and title like concat('%', #{search}, '%') 
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		and content like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'writer'">
+		 		and id=#{search} 
+		 	</if>
+		 </if>		 
+		 order by ref desc, step asc) a
+	where rnum between ${start} and ${end}
+</select>
+
+<!-- 글의 총수 -->
+<select id="getAllCustomer" parameterType="mul.cam.a.dto.BbsParam" resultType="java.lang.Integer">
+	
+	select ifnull(count(*), 0)
+	from customer
+	<if test="choice != null and choice != '' and search != null and search != '' ">
+	 	<if test="choice == 'title'">
+	 		where title like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'content'">
+	 		where content like concat('%', #{search}, '%') 
+	 	</if>
+	 	<if test="choice == 'writer'">
+	 		where id=#{search}
+	 	</if>
+	 </if>
+</select>
+
+<insert id="customerWrite" parameterType="mul.cam.a.dto.CustomerDto">
+	insert into customer(id, ref, step, depth, title, content, wdate, filename, newfilename, secret )
+	values(#{id}, (select ifnull(max(ref), 0)+1 from customer b), 0, 0, 
+			#{title}, #{content}, now(), #{filename}, #{newfilename}, #{secret} )	
+</insert>
+
+<select id="getCustomer" parameterType="Integer" resultType="mul.cam.a.dto.CustomerDto">
+	select seq, id, ref, step, depth, title, content, wdate, filename, newfilename, secret
+	from customer
+	where seq=#{seq}
+</select>
+
+<delete id="customerDelete" parameterType="mul.cam.a.dto.CustomerDto">
+
+	delete from customer
+	where ref=#{ref}
+</delete>
+
+<update id="customerUpdate" parameterType="mul.cam.a.dto.CustomerDto">
+
+	update customer
+	set title=#{title}, content=#{content}, wdate=now(),
+	filename = #{filename}, newfilename=#{newfilename}
+	where seq=#{seq}
+
+</update>
+
+<!-- 답글 -->
+<update id="customerAnswerUpdate" parameterType="mul.cam.a.dto.CustomerDto">
+	update customer
+	set step=step+1
+	where ref=(select ref from (select ref from customer a where seq=#{seq}) A)
+		and step>(select step from (select step from customer b where seq=#{seq}) B)
+
+</update>
+
+<insert id="customerAnswer" parameterType="mul.cam.a.dto.CustomerDto">
+	insert into customer(id, ref, step, depth, title, content, wdate, filename, newfilename, secret)
+	values(#{id}, (select ref from customer a where seq=#{seq}),
+				  (select step from customer b where seq=#{seq})+1,
+				  (select depth from customer c where seq=#{seq})+1,
+			#{title}, #{content}, now(),#{filename},#{newfilename}, #{secret}
+			)
+</insert>
+
+
+
+</mapper>
