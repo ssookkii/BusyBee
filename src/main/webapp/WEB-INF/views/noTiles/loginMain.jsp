@@ -555,7 +555,7 @@ function checkRegi(){
 					}
 				} else {
 					alert('이미 존재하는 ID입니다.');
-					$("#afId").val();
+					$("#afId").val('');
 					id_OK=false;
 				}
 			}

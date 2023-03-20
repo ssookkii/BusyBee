@@ -12,8 +12,6 @@ create table busybGroup(
     leader_id varchar(20),
     regidate timestamp
 );
-
-
 (2) 그룹멤버 테이블 만들기
 create table busybGroupMem(
     seq int auto_increment primary key,
@@ -21,11 +19,9 @@ create table busybGroupMem(
     group_code varchar(8) not null,
     regidate timestamp
 );
-
 (3) 외래키 설정  
 alter table busybGroupMem
 ADD FOREIGN KEY (group_code) references busybGroup (group_code);
-
 (4) 알림 테이블 만들기
 create table noti(
     seq int auto_increment primary key,
@@ -35,7 +31,6 @@ create table noti(
     regimsg varchar(30),
     regidate timestamp
 );
-
 (5) 외래키 설정
 alter table noti
 ADD FOREIGN KEY (group_code) references busybGroup (group_code);
@@ -67,6 +62,14 @@ ADD FOREIGN KEY (group_code) references busybGroup (group_code);
 	select *
 	from busybGroup
 	where group_code=#{group_code};
+</select>
+
+<!-- 비슷 Group 검색 -->
+<select id="similarGroup" parameterType="String" resultType="mul.cam.a.dto.GroupDto">
+	select *
+	from busybGroup
+	where group_name like concat('%', #{search}, '%')
+	or group_info like concat('%', #{search}, '%')
 </select>
 
 <!-- 나의 Group 검색(Leader인 경우) -->
@@ -140,6 +143,11 @@ ADD FOREIGN KEY (group_code) references busybGroup (group_code);
 	where group_code=#{group_code}
 </update>
 
+<!-- Group 리더가 Group 삭제 -->
+<delete id="delGroup" parameterType="String">
+	delete from busybGroup
+	where group_code=#{group_code}
+</delete>
 <!-- 가입신청시 알림 추가 -->
 <insert id="addNoti" parameterType="mul.cam.a.dto.NotiDto">
 	insert into noti(to_id, from_id, group_code, regimsg, regidate)

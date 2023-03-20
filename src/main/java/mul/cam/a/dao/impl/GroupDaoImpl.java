@@ -36,6 +36,11 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
+	public int delGroup(String group_code) {
+		return session.delete(ns + "delGroup", group_code);
+	}
+	
+	@Override
 	public List<GroupDto> selectGroup1(String id) {
 		List<GroupDto> dto = session.selectList(ns + "selectGroup1", id);
 		return dto;
@@ -73,6 +78,12 @@ public class GroupDaoImpl implements GroupDao {
 	public GroupDto singleGroup(String group_code) {
 		return session.selectOne(ns + "singleGroup", group_code);
 	}
+	
+	@Override
+	public List<GroupDto> similarGroup(String search) {
+		return session.selectList(ns + "similarGroup", search);
+	}
+	
 
 	@Override
 	public int updGroup(GroupDto dto) {
@@ -123,8 +134,6 @@ public class GroupDaoImpl implements GroupDao {
 	public GroupDto selectGroupInfo(String group_code) {
 	    return session.selectOne(ns + "selectGroupInfo", group_code);
 	}
-	
+
 }
 	
-	
-

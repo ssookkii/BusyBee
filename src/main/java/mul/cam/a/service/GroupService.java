@@ -12,8 +12,10 @@ public interface GroupService {
 		boolean addGroup(GroupDto dto);
 		boolean addGroupMem(GroupMemDto dto);
 		boolean delGroupMem(GroupMemDto dto);
+		boolean delGroup(String group_code);
 		
 		GroupDto singleGroup(String group_code);
+		List<GroupDto> similarGroup(String search);
 		List<GroupDto> selectGroup1(String id);
 		boolean selectGroup1Cnt(GroupDto dto);
 		List<GroupDto> selectGroup2(String id);

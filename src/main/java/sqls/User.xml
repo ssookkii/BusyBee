@@ -70,10 +70,10 @@ create table emailCerti(
 					> replace(replace(replace(senddate, ':', ' '), '-', ' '), ' ', '')
 </delete>
 
-<!-- User 추가(프로필사진 있을 때) -->
+<!-- User 추가 -->
 <insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
 	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count)
-	values(#{id}, #{password}, #{name}, #{email}, #{phone}, #{phone_public}, 3, #{profMsg}, '기본프로필', 'basic.png', now(), 0)
+	values(#{id}, #{password}, #{name}, #{email}, #{phone}, #{phone_public}, 3, ' ', '기본프로필', 'basic.png', now(), 0)
 </insert>
 
 <!-- ID검색 -->
@@ -162,14 +162,14 @@ create table emailCerti(
 <!-- User 정보 수정(프로필사진 변경 없을 때) -->
 <update id="updUser_n" parameterType="mul.cam.a.dto.UserDto">
 	update user
-	set name=#{name}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg}
+	set name=#{name}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg}
 	where id=#{id}
 </update>
 
 <!-- User 정보 수정(프로필사진 변경 있을 때 : 다른 사진) -->
 <update id="updUser_y" parameterType="mul.cam.a.dto.UserDto">
 	update user
-	set name=#{name}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	set name=#{name}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
 	profPic_Origin=#{profPic_Origin}, profPic_Server=#{profPic_Server}
 	where id=#{id}
 </update>
@@ -177,7 +177,7 @@ create table emailCerti(
 <!-- User 정보 수정(프로필사진 변경 있을 때 : 기본 프로필) -->
 <update id="updUser_b" parameterType="mul.cam.a.dto.UserDto">
 	update user
-	set name=#{name}, email=#{email}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
+	set name=#{name}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
 	profPic_Origin='기본프로필', profPic_Server='basic.png'
 	where id=#{id}
 </update>

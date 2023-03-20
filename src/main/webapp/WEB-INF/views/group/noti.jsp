@@ -14,20 +14,58 @@
 <title>Insert title here</title>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<style type="text/css">
+.table-warning{
+	margin-left: 100px;
+}
+.table-warning th{
+	font-size : 10pt;
+	height : 30px;
+	color : black;
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Dongle', sans-serif;
+	font-family: 'Jua', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+.table-warning td{
+	background-color : white;
+	font-size : 10pt;
+	color : black;
+	text-align: center;
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Dongle', sans-serif;
+	font-family: 'Jua', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom : 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+</style>
 </head>
 <body>
 
 <div>
-<h3>요청 받은 그룹 승인</h3>
-<table border="1">
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;요청 받은 그룹 승인</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;리더님의 그룹에 가입하고 싶어하는 사람들입니다.</small>
+<br><br><br>
+<table class="table-warning">
+<col width="50px"><col width="130px"><col width="130px"><col width="200px"><col width="130px"><col width="130px"><col width="60px">
 	<thead>
-	<tr>
+	<tr class="table-warning">
 		<th>번호</th>
-		<th>그룹 리더(ID)</th>
-		<th>가입 예정 그룹</th>
-		<th>가입 메세지</th>
+		<th>요청자 이름(ID)</th>
+		<th>가입 요청 그룹</th>
+		<th>가입/요청 메세지</th>
 		<th>신청일자</th>
-		<th></th>
+		<th colspan='2'>비고</th>
 	</tr>
 	</thead>
 	<tbody id="tableBody1">
@@ -35,16 +73,21 @@
 </table>
 <br><br><br>
 <hr>
-<h3>내가 요청한 그룹 승인</h3>
-<table border="1">
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;내가 요청한 그룹 승인</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;그룹 리더님의 가입 수락을 기다리고 있어요.</small>
+<br><br><br>
+<table class="table-warning" style="margin-left:130px">
+<col width="50px"><col width="130px"><col width="130px"><col width="200px"><col width="130px"><col width="130px">
 	<thead>
-	<tr>
+	<tr class="table-warning">
 		<th>번호</th>
 		<th>그룹 리더(ID)</th>
 		<th>가입 예정 그룹</th>
 		<th>가입/요청 메세지</th>
 		<th>요청일자</th>
-		<th></th>
+		<th>비고</th>
 	</tr>
 	</thead>
 	<tbody id="tableBody2">
@@ -71,12 +114,12 @@ $(document).ready(function(){
 								+ '<td>' + data[i].group_name + '(' + data[i].group_code + ')' + '</td>'
 								+ '<td>' + data[i].regimsg + '</td>'
 								+ '<td>' + data[i].regidate.substr(0,10) + '</td>'
-								+ "<td><button type='button' onclick="+ "location.href='addGroupMem.do?id="
-									+ data[i].from_id +"&group_code=" + data[i].group_code + "'>"
+								+ "<td><button type='button' class='btn btn-warning' style='font-size:10pt;'onclick="+ "location.href='addGroupMem.do?id="
+									+ data[i].from_id + "&group_code=" + data[i].group_code + "'>"
 									+ "수락</button>"
 								+ "</td>"
-								+ "<td><button type='button' onclick="+ "location.href='lead_deleteNoti.do?from_id="
-									+ data[i].from_id +"&group_code=" + data[i].group_code + "'>"
+								+ "<td><button type='button' class='btn btn-danger' style='font-size:10pt; margin-left:-50px' onclick="+ "location.href='lead_deleteNoti.do?from_id="
+									+ data[i].from_id + "&group_code=" + data[i].group_code + "'>"
 									+ "거절</button>"
 								+ "</td>"
 							 + '</tr>';
@@ -84,7 +127,7 @@ $(document).ready(function(){
 				});
 				$("#tableBody1").append(tableTd);
 			} else if (data==null || data=="") {
-				tableTd += '<tr><td>요청 받은 그룹 승인이 없습니다.</td></tr>'
+				tableTd += "<tr><td colspan='7'>요청 받은 그룹 승인이 없습니다.</td></tr>"
 				$("#tableBody1").append(tableTd);
 			}
 		},	
@@ -109,8 +152,8 @@ $(document).ready(function(){
 								+ '<td>' + data[i].group_name + '(' + data[i].group_code + ')' + '</td>'
 								+ '<td>' + data[i].regimsg + '</td>'
 								+ '<td>' + data[i].regidate.substr(0,10) + '</td>'
-								+ "<td><button type='button' onclick="+ "location.href='deleteNoti.do?from_id="
-									+ '<%=id %>' +"&group_code=" + data[i].group_code + "'>"
+								+ "<td><button type='button' class='btn btn-danger' style='font-size:10pt; margin-left:0px 'onclick="+ "location.href='deleteNoti.do?from_id="
+								+ '<%=id %>' + "&group_code=" + data[i].group_code + "'>"
 									+ "요청 취소</button>"
 								+ "</td>"
 							 + '</tr>';
@@ -118,7 +161,7 @@ $(document).ready(function(){
 				});
 				$("#tableBody2").append(tableTd);
 			} else if (data==null || data=="") {
-				tableTd += '<tr><td>요청한 그룹 승인이 없습니다.</td></tr>'
+				tableTd += "<tr><td colspan='6'>요청한 그룹 승인이 없습니다.</td></tr>"
 				$("#tableBody2").append(tableTd);
 			}
 		},	
@@ -127,7 +170,6 @@ $(document).ready(function(){
 		}
 	});
 });
-
 </script>
 </body>
 </html>

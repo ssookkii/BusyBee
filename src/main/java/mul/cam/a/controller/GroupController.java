@@ -64,6 +64,18 @@ public class GroupController {
 		return "message";
 	}
 	
+	@GetMapping(value = "delGroup.do")
+	public String delGroup(Model model, String group_code) {
+		
+		boolean isS = service.delGroup(group_code);
+		String delGroup_Msg = "delGroup_FAIL";
+		if(isS) {
+			delGroup_Msg = "delGroup_SUCCESS";
+		}
+		model.addAttribute("delGroup_Msg", delGroup_Msg);
+		return "message";
+	}
+	
 	// 리더가 추방
 	@GetMapping(value = "outGroupMem.do")
 	public String outGroupMem(Model model, GroupMemDto dto) {
@@ -109,6 +121,13 @@ public class GroupController {
 	public GroupDto singleGroup(String group_code) {
 		
 		return service.singleGroup(group_code);
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "similarGroup.do")
+	public List<GroupDto> similarGroup(String search) {
+		
+		return service.similarGroup(search);
 	}
 	
 	@GetMapping(value = "updGroup.do")

@@ -11,8 +11,11 @@ public interface GroupDao {
 	int addGroup(GroupDto dto);
 	int addGroupMem(GroupMemDto dto);
 	int delGroupMem(GroupMemDto dto);
+	int delGroup(String group_code);
 	
 	GroupDto singleGroup(String group_code);
+	List<GroupDto> similarGroup(String search);
+	
 	List<GroupDto> selectGroup1(String id);
 	int selectGroup1Cnt(GroupDto dto);
 	List<GroupDto> selectGroup2(String id);

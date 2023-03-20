@@ -37,6 +37,12 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+	public boolean delGroup(String group_code) {
+		int count = dao.delGroup(group_code);
+		return count>0?true:false;
+	}
+	
+	@Override
 	public List<GroupDto> selectGroup1(String id) {
 		return dao.selectGroup1(id);
 	}
@@ -75,6 +81,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public GroupDto singleGroup(String group_code) {
 		return dao.singleGroup(group_code);
+	}
+	
+	@Override
+	public List<GroupDto> similarGroup(String search) {
+		return dao.similarGroup(search);
 	}
 	
 	@Override
@@ -133,8 +144,6 @@ public class GroupServiceImpl implements GroupService {
 	    List<String> userIds = new ArrayList<>();
 	    for (String id : groupMembers) {
 	        userIds.add(id);
-
-	   
 	}
 	    return userIds;
 
@@ -143,6 +152,5 @@ public class GroupServiceImpl implements GroupService {
 	public GroupDto selectGroupInfo(String group_code) {
 	    return dao.selectGroupInfo(group_code);
 	}
+
 }
-	
-	
