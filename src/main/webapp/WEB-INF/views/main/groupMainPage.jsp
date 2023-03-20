@@ -12,7 +12,6 @@
 	GroupDto dto = (GroupDto)request.getAttribute("dto");
 	String group_code = (String) request.getAttribute("group_code");
 	String group_name = (String) request.getAttribute("group_name");
-
     %>
 <!DOCTYPE html>
 <html>
@@ -36,34 +35,28 @@
 
 
 <style>
-
 body{
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
 }
-
 .flex-container {
   display: flex;
   justify-content: center;
   
 }
-
 .flex-item {
   margin: 15px;
   width: 500px;
   margin: 15px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
 .card-body {
 	width : 500px;
   height: 500px;
   font-size: 14px;
 }
-
 #notice{
   display: flex;
   justify-content: center;
@@ -73,12 +66,9 @@ font-family: 'Jua', sans-serif;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
-
 .card-header{
 font-size: 15px;
-
 }
 </style>
 
@@ -136,7 +126,6 @@ notice
 
 
 <script type="text/javascript">
-
 //게시판 미리보기
 $.ajax({
        url: 'preBbsList.do',
@@ -147,7 +136,6 @@ $.ajax({
          if (data != null && data.length > 0) {
                 $("#bbsBody").html('');
            for (var i = 0; i < data.length; i++) {
-
                 tableTd = '<tr>';
                if(data[i].title.length > 10){
                	
@@ -164,10 +152,7 @@ $.ajax({
        error: function(){
            alert('error');
        }
-
 });
-
-
 // 일정 미리보기
 	 $.ajax({
             url: 'preScheduleList.do',
@@ -178,7 +163,6 @@ $.ajax({
               if (data != null && data.length > 0) {
                      $("#calBody").html('');
                 for (var i = 0; i < data.length; i++) {
-
                      tableTd = '<tr>';
                     if(data[i].title.length > 7){
                     	
@@ -196,9 +180,7 @@ $.ajax({
             error: function(){
                 alert('error');
             }
-
 });
-
 </script>
 </body>
 </html>

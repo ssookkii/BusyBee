@@ -85,6 +85,38 @@ public class MenuController {
 		model.addAttribute("group_code", group_code);
 		return "groupMainPage";
 	}
+	
+	/* 일정관리 이동 */
+	@GetMapping(value = "goCalendar.do")
+	public String goCalendar(Model model, String group_code, String group_name) {
+		
+		model.addAttribute("group_code", group_code);
+		model.addAttribute("group_name", group_name);
+
+		return "goCalendar";
+	}
+	
+	/* 게시판 이동 */
+	@GetMapping(value = "goBbslist.do")
+	public String bbslist(Model model, String group_code, String group_name) {
+		
+		model.addAttribute("group_code", group_code);
+		model.addAttribute("group_name", group_name);
+
+		return "redirect:/bbslist.do";
+	}
+	
+	/* 게시판 미리보기 */
+	@GetMapping(value = "preBbslist.do")
+	public String preBbslist(Model model, String group_code) {
+		
+		model.addAttribute("group_code", group_code);
+
+		return "redirect:/bbslist.do";
+	}
+	
+	/* 채팅창 이동 */
+	
 }
 
 
