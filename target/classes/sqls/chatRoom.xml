@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+
+create table chatRoom(
+	roomId varchar(45) not null,
+    title varchar(45) not null,
+    descriptions varchar(100),
+    members varchar(100) not null,
+    createdBy varchar(20) not null,
+    createdAt datetime not null
+);
+ALTER TABLE chatRoom
+ADD primary key(roomId);
+
+ -->
+<mapper namespace="ChatRoom">
+
+	<select id="printAllChatRoom" resultType="mul.cam.a.dto.ChatRoomDto" parameterType="String">
+		select roomId, title, descriptions, members, createdBy, createdAt
+		from chatRoom
+		where members like concat("%/",#{userId},"/%")
+	</select>
+	
+	<insert id="createChatRoom" parameterType="mul.cam.a.dto.ChatRoomDto">
+		insert into chatRoom(roomId, title, descriptions, members, createdBy, createdAt)
+		values(#{roomId}, #{title}, #{descriptions}, #{members}, #{createdBy}, now())
+	</insert>
+	
+	<select id="chatRoomInfo" resultType="mul.cam.a.dto.ChatRoomDto" parameterType="String">
+		select roomId ,title, descriptions, members, createdBy, createdAt
+		from chatRoom
+		where roomId=#{roomId}
+	</select>
+	
+	<!-- mysql update 허가해야함 -->
+	<update id="exitChatRoom" parameterType="hashMap">
+		update chatRoom
+		set members=#{updateMembers}
+		where roomId=#{roomId}
+	</update> 
+	
+</mapper>
