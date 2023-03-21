@@ -13,8 +13,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Busy bee</title>
+<title>BUSY BEE</title>
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 <!-- 부트스트랩 JavaScript 및 의존성 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
@@ -129,7 +130,7 @@ td {
 
                         <!-- 로그아웃 , 회원정보 수정-->
                         <br /> 
-                        <a style="float: right; margin-right: 5px;"    href="${logoutUrl}">로그아웃</a> 
+                        <a style="float: right; margin-right: 5px;"    href="loginMain.do">로그아웃</a> 
                         <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
                     </div>
                          <!-- user image -->

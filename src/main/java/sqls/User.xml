@@ -72,8 +72,8 @@ create table emailCerti(
 
 <!-- User 추가 -->
 <insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
-	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count)
-	values(#{id}, #{password}, #{name}, #{email}, #{phone}, #{phone_public}, 3, ' ', '기본프로필', 'basic.png', now(), 0)
+	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate)
+	values(#{id}, #{password}, #{name}, #{email}, #{phone}, #{phone_public}, 1, ' ', '기본프로필', 'basic.png', now())
 </insert>
 
 <!-- ID검색 -->
