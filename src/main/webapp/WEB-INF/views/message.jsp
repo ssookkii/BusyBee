@@ -274,7 +274,24 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 			<%
 		}
 	}
-	
+	String delGroup_Msg = (String) request.getAttribute("delGroup_Msg");
+	   if(delGroup_Msg!=null && delGroup_Msg!="") {
+	      if(delGroup_Msg=="delGroup_SUCCESS") {
+	         %>
+	         <script>
+	         alert('그룹을 해체했습니다.');
+	         location.href="goMygroup.do";
+	         </script>
+	         <%
+	      } else {
+	         %>
+	         <script>
+	         alert('그룹 해체에 실패했습니다.');
+	         location.href="goMygroup.do";
+	         </script>
+	         <%
+	      }
+	   }
 	String outGroupMem_Msg = (String) request.getAttribute("outGroupMem_Msg");
 	if(outGroupMem_Msg!=null && outGroupMem_Msg!="") {
 		if(outGroupMem_Msg=="outGroupMem_SUCCESS") {
