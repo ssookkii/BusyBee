@@ -1161,31 +1161,32 @@ $('#share-event-btn').click(function() {
 	  var scheduleId = $(this).data('scheduleId');
   
   // AJAX를 이용하여 서버에 일정 정보를 전송
-  $.ajax({
+$.ajax({
     url: 'userId.do?group_code=' + '<%=myGroup%>',
     type: 'get',
     success: function(data) {
-        for (var i = 0; i < data.length; i++) {
-            
-            var shareid = data[i];
+        for (let i = 0; i < data.length; i++) {
+            let memid = data[i];
+            console.log(memid);
             // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
             if (data[i] === '<%= id %>') {
+            	console.log('같음');
                 continue;
             }
           
           	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
           	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
-          	     
+          	      var myid = memid;
+          	    console.log(memid);
+          	    
           	      var title = "[공유]"+event.title;
 				  var start = event.startDate;
 				  var end = event.endDate;
 				  var description = event.description;
 				  var groupCode = '<%=myGroup%>';
-
-				  
-				  
+						
 	          	  var eventData ={
-	          	    id : shareid,
+	          	    id : myid,
 	          	    title : title,
 	          	    startDate : start,
 	          	    endDate : end,

@@ -39,6 +39,9 @@ public interface UserDao {
 	
 	
 	int delUser(String id);
+	int delUser2(String id);
+	int delUser3(String id);
+	int delUser4(String id);
 	
 	// 유저 리스트
 	List<UserDto> userList(BbsParam param);

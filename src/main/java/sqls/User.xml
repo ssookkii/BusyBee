@@ -166,6 +166,20 @@ create table emailCerti(
 	delete from user
 	where id=#{id}
 </delete>
+<delete id="delUser2" parameterType="String">
+	delete from noti
+	where to_id=#{id} or from_id=#{id}
+</delete>	
+
+<delete id="delUser3" parameterType="String">
+	delete from busybGroup
+	where leader_id=#{id};
+</delete>	
+	
+<delete id="delUser4" parameterType="String">
+	delete from busybGroupMem
+	where id=#{id}
+</delete>
 
 <update id="userBan" parameterType="mul.cam.a.dto.UserDto">
     update user
@@ -178,5 +192,8 @@ create table emailCerti(
     set auth=1
     where id=#{id}
 </update>
+
+
+
 
 </mapper>

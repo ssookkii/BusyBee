@@ -34,6 +34,9 @@ public interface UserService {
 	boolean updPwd(UserDto dto);
 	
 	boolean delUser(String id);
+	boolean delUser2(String id);
+	boolean delUser3(String id);
+	boolean delUser4(String id);
 	
 	// 유저 리스트
 	List<UserDto> userList(BbsParam param);

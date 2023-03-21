@@ -99,7 +99,22 @@ public class UserDaoImpl implements UserDao {
 	public int delUser(String id) {
 		return session.delete(ns + "delUser", id);
 	}
+	@Override
+	public int delUser2(String id) {
+		return session.delete(ns + "delUser2", id);
+	}
 
+	@Override
+	public int delUser3(String id) {
+		// TODO Auto-generated method stub
+		return session.delete(ns + "delUser3", id);
+	}
+
+	@Override
+	public int delUser4(String id) {
+		// TODO Auto-generated method stub
+		return session.delete(ns + "delUser4", id);
+	}
 	@Override
 	public List<UserDto> userList(BbsParam param) {
 		// TODO Auto-generated method stub

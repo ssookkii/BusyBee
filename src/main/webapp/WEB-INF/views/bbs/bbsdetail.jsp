@@ -167,13 +167,13 @@
 <tr>
 	<th>파일</th>
 	<td>
-		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
+		<% 	if(dto.getFilename() != null){ %>
 				<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly">
 		<%	}else{ %>
 				<input value="" type="text" class="form-control form-control-lg" readonly="readonly">
 		<%	} %>
 		<br>
-		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
+		<% 	if(dto.getFilename() != null){ %>
 				<input type="button" value="파일 다운로드" class="btn btn-warning"
 				onclick="filedown(<%=dto.getSeq() %>, '<%=dto.getNewfilename() %>', '<%=dto.getFilename() %>')">
 		<%	}else{ %>
@@ -205,24 +205,24 @@
 <input type="hidden" id="group_code" value="<%=dto.getGroup_code() %>">
 <input type="hidden" id="category" value="<%=dto.getCategory() %>">
 
+	<button type="button" class="btn btn-outline-warning" onclick="bbslist()">글목록</button>
+	<button type="button" id="reportBtn" class="btn btn-danger">신고</button>
 <%
 UserDto login = (UserDto)session.getAttribute("login");
 if(dto.getId().equals(login.getId())){
 	%>
 	<div>
-	<button type="button" class="btn btn-outline-warning" onclick="bbslist()">글목록</button>
 	<button type="button" class="btn btn-warning" onclick="updateBbs(<%=dto.getSeq() %>)">수정</button>
 	<button type="button" class="btn btn-danger" onclick="deleteBbs(<%=dto.getSeq() %>)">삭제</button>
 	</div>
 	
 	<br>
 	
-	<div>
-	<button type="button" id="reportBtn" class="btn btn-danger">신고</button>
-	</div>
 	<%
 }
 %>
+
+
 
 </div>
 

@@ -280,6 +280,10 @@ public class UserController {
 	@GetMapping(value = "delUser.do")
 	public String delUser(Model model, String id) {
 
+		service.delUser2(id);
+		service.delUser3(id);
+		service.delUser3(id);
+		
 		boolean isS = service.delUser(id);
 
 		String delUser_Msg = "delUser_FAIL";
@@ -291,4 +295,5 @@ public class UserController {
 
 		return "message";
 	}
+
 }

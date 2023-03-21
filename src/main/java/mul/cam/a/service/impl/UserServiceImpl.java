@@ -117,6 +117,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean delUser2(String id) {
+		int count = dao.delUser2(id);
+		return count>0?true:false;
+	}
+
+	@Override
+	public boolean delUser3(String id) {
+		int count = dao.delUser3(id);
+		return count>0?true:false;
+	}
+
+	@Override
+	public boolean delUser4(String id) {
+		int count = dao.delUser4(id);
+		return count>0?true:false;
+	}
+	
+	@Override
 	public List<UserDto> userList(BbsParam param) {
 		// TODO Auto-generated method stub
 		return dao.userList(param);
