@@ -40,9 +40,11 @@ Foreign Key 설정 SQL - busybee_bbscomment(seq) -> busybee_bbs(seq)
 ALTER TABLE busybee_bbscomment
 ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
 REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
 Foreign Key 삭제 SQL - busybee_bbscomment(seq)
 ALTER TABLE busybee_bbscomment
 DROP FOREIGN KEY FK_busybee_bbscomment_seq_busybee_bbs_seq;
+
 busybee_star Table Create SQL
 테이블 생성 SQL - busybee_star
 CREATE TABLE busybee_star

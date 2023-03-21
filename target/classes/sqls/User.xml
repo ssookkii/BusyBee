@@ -7,7 +7,7 @@
 create table user(
     id varchar(20) not null primary key,
     password varchar(70) not null,
-    name varchar(20) not null,
+    name varchar(20) not null unique key,
     email varchar(30) not null,
     phone varchar(20) not null,
     phone_public varchar(5),
@@ -15,6 +15,7 @@ create table user(
     profMsg varchar(30),
     regidate timestamp
 );
+
 (2) Email 인증 table 생성
 create table emailCerti(
     seq int auto_increment primary key,

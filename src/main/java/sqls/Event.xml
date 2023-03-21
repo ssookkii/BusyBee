@@ -4,7 +4,7 @@
 
 <!-- CREATE TABLE Schedule (
     `scheduleId`   INT              NOT NULL    AUTO_INCREMENT COMMENT '일정 고유 번호', 
-    `id`           VARCHAR(45)      NULL        COMMENT '사용자 id', 
+    `id`           VARCHAR(20)      NULL        COMMENT '사용자 id', 
     `title`        VARCHAR(200)     NULL        COMMENT '일정 제목', 
     `description`  VARCHAR(3000)    NOT NULL    COMMENT '일정 상세',
     `startDate`   DATETIME         NULL        COMMENT '일정 시작 날짜', 
@@ -12,13 +12,18 @@
     `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
     `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
     `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
-     PRIMARY KEY (sheduleId)
-); -->
+     PRIMARY KEY (scheduleId)
+);
+ -->
 
 <!-- 외래키 설정
 ALTER TABLE schedule
 ADD FOREIGN KEY (id) references user (id);
+
+ALTER TABLE schedule
+ADD FOREIGN KEY (groupCode) references busybGroup (group_code);
   -->
+
 
 <mapper namespace="Event">
 

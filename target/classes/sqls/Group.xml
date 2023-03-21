@@ -12,6 +12,7 @@ create table busybGroup(
     leader_id varchar(20),
     regidate timestamp
 );
+
 (2) 그룹멤버 테이블 만들기
 create table busybGroupMem(
     seq int auto_increment primary key,
@@ -19,10 +20,8 @@ create table busybGroupMem(
     group_code varchar(8) not null,
     regidate timestamp
 );
-(3) 외래키 설정  
-alter table busybGroupMem
-ADD FOREIGN KEY (group_code) references busybGroup (group_code);
-(4) 알림 테이블 만들기
+
+(3) 알림 테이블 만들기
 create table noti(
     seq int auto_increment primary key,
     to_id varchar(20) not null,
@@ -31,10 +30,33 @@ create table noti(
     regimsg varchar(30),
     regidate timestamp
 );
-(5) 외래키 설정
-alter table noti
+
+
+(4) 외래키 설정
+
+
+alter table busybGroupMem
 ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+
+alter table busybGroupMem
+ADD FOREIGN KEY (id) references user (id);
+
+alter table noti
+ADD FOREIGN KEY (from_id) references user (id);
+
+alter table noti
+ADD FOREIGN KEY (to_id) references user (id);
+
+alter table busybGroupMem
+ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+
+alter table busybGroup
+ADD FOREIGN KEY (leader_name) references user (name);
+
+alter table busybGroup
+ADD FOREIGN KEY (leader_id) references user (id);
 -->
+
 
 
 <mapper namespace="Group">

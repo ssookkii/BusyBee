@@ -114,7 +114,6 @@ margin-top: 10px" value="계정삭제" onclick="go_delUser()"/>
 <br><br><br>
 </div>
 
-<img src="/bbImg/upload/basic.png" />
 
 <script type="text/javascript">
 var imgsrc = "";

@@ -1,59 +1,22 @@
--- chatRoom
-create table chatRoom(
-	roomId varchar(45) not null,
-    title varchar(45) not null,
-    descriptions varchar(100),
-    members varchar(100) not null,
-    createdBy varchar(20) not null,
-    createdAt datetime not null
-);
-ALTER TABLE chatRoom
-ADD primary key(roomId);
--- chatMessage
-create table chatMessage(
-	roomId varchar(45) not null,
-    writer varchar(45) not null,
-    recipient varchar(45) not null,
-    message varchar(500) not null,
-    sendTime datetime not null
-);
-ALTER TABLE chatMessage
-ADD FOREIGN KEY(roomId) 
-REFERENCES chatRoom(roomId);
-
--- customer
- create table customer(
-
-	seq int auto_increment primary key,
-	id varchar(50) not null,
-	
-	ref decimal(8) not null,
-	step decimal(8) not null,
-	depth decimal(8) not null,
-	
-	title varchar(200) not null,
-	content varchar(4000) not null,
-	filename varchar(50) not null,
-	newfilename varchar(50) not null,
-	wdate timestamp not null,
-	secret tinyint(1) not null
-	
-
+--  user
+create table user(
+    id varchar(20) not null primary key,
+    password varchar(70) not null,
+    name varchar(20) not null unique key,
+    email varchar(30) not null,
+    phone varchar(20) not null,
+    phone_public varchar(5),
+    auth int,
+    profMsg varchar(30),
+    regidate timestamp
 );
 
--- event(calendar)
-CREATE TABLE Schedule (
-    `scheduleId`   INT              NOT NULL    AUTO_INCREMENT COMMENT '일정 고유 번호', 
-    `id`           VARCHAR(45)      NULL        COMMENT '사용자 id', 
-    `title`        VARCHAR(200)     NULL        COMMENT '일정 제목', 
-    `description`  VARCHAR(3000)    NOT NULL    COMMENT '일정 상세',
-    `startDate`   DATETIME         NULL        COMMENT '일정 시작 날짜', 
-    `endDate`     DATETIME         NULL        COMMENT '일정 종료 날짜', 
-    `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
-    `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
-    `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
-     PRIMARY KEY (sheduleId)
-);
+create table emailCerti(
+    seq int auto_increment primary key,
+    cert_email varchar(20) not null,
+    authkey varchar(8) not null,
+    senddate timestamp
+    );
 -- group
 create table busybGroup(
     group_code varchar(8) not null primary key,
@@ -71,9 +34,6 @@ create table busybGroupMem(
     regidate timestamp
 );
 
-alter table busybGroupMem
-ADD FOREIGN KEY (group_code) references busybGroup (group_code);
-
 create table noti(
     seq int auto_increment primary key,
     to_id varchar(20) not null,
@@ -82,11 +42,92 @@ create table noti(
     regimsg varchar(30),
     regidate timestamp
 );
+alter table busybGroupMem
+ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+
+alter table busybGroupMem
+ADD FOREIGN KEY (id) references user (id);
 
 alter table noti
+ADD FOREIGN KEY (from_id) references user (id);
+
+alter table noti
+ADD FOREIGN KEY (to_id) references user (id);
+
+alter table busybGroupMem
 ADD FOREIGN KEY (group_code) references busybGroup (group_code);
+
+alter table busybGroup
+ADD FOREIGN KEY (leader_name) references user (name);
+
+alter table busybGroup
+ADD FOREIGN KEY (leader_id) references user (id);
+
+-- customer
+create table customer(
+	seq int auto_increment primary key,
+	id varchar(50) not null,
+	ref decimal(8) not null,
+	step decimal(8) not null,
+	depth decimal(8) not null,
+	title varchar(200) not null,
+	content varchar(4000) not null,
+	filename varchar(50) not null,
+	newfilename varchar(50) not null,
+	wdate timestamp not null,
+	secret tinyint(1) not null
+	
+);
+
+-- chatRoom
+create table chatRoom(
+	roomId varchar(45) not null,
+    title varchar(45) not null,
+    descriptions varchar(100),
+    members varchar(100) not null,
+    createdBy varchar(20) not null,
+    createdAt datetime not null
+);
+
+ALTER TABLE chatRoom
+ADD primary key(roomId);
+
+-- chatMessage
+create table chatMessage(
+	roomId varchar(45) not null,
+    writer varchar(45) not null,
+    recipient varchar(45) not null,
+    message varchar(500) not null,
+    sendTime datetime not null
+);
+
+ALTER TABLE chatMessage
+ADD FOREIGN KEY(roomId) 
+REFERENCES chatRoom(roomId);
+
+INSERT INTO chatRoom(roomId, title, descriptions, members, createdBy, createdAt)
+VALUES("AllChatRoom", "AllChatRoom", "AllChatRoom", "AllUser","busyBee", now());
+
+-- event(calendar)
+CREATE TABLE Schedule (
+    `scheduleId`   INT              NOT NULL    AUTO_INCREMENT COMMENT '일정 고유 번호', 
+    `id`           VARCHAR(20)      NULL        COMMENT '사용자 id', 
+    `title`        VARCHAR(200)     NULL        COMMENT '일정 제목', 
+    `description`  VARCHAR(3000)    NOT NULL    COMMENT '일정 상세',
+    `startDate`   DATETIME         NULL        COMMENT '일정 시작 날짜', 
+    `endDate`     DATETIME         NULL        COMMENT '일정 종료 날짜', 
+    `isPublic`    INT              NOT NULL    COMMENT '일정 공개 여부(0 or 1)', 
+    `isAllDay`   INT              NOT NULL    COMMENT '종일 일정 여부(0 or 1)', 
+    `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
+     PRIMARY KEY (scheduleId)
+);
+
+ALTER TABLE schedule
+ADD FOREIGN KEY (groupCode) references busybGroup (group_code);
+
 ALTER TABLE schedule
 ADD FOREIGN KEY (id) references user (id);
+
 
 -- report
 
@@ -100,25 +141,7 @@ ADD FOREIGN KEY (id) references user (id);
 	report_date timestamp not null
 	);
 
---  user
-create table user(
-    id varchar(20) not null primary key,
-    password varchar(70) not null,
-    name varchar(20) not null,
-    email varchar(30) not null,
-    phone varchar(20) not null,
-    phone_public varchar(5),
-    auth int,
-    profMsg varchar(30),
-    regidate timestamp
-    
-);
-create table emailCerti(
-    seq int auto_increment primary key,
-    cert_email varchar(40) not null,
-    authkey varchar(8) not null,
-    senddate timestamp
-);
+
 
 -- bbs
 CREATE TABLE busybee_bbs
@@ -140,6 +163,7 @@ CREATE TABLE busybee_bbs
     `group_code`  varchar(15)      NOT NULL    COMMENT '그룹코드', 
      PRIMARY KEY (seq, id)
 );
+
 CREATE TABLE busybee_bbscomment
 (
     `seq`      INT              NOT NULL    COMMENT '글번호. 부모글번호', 
@@ -150,20 +174,20 @@ CREATE TABLE busybee_bbscomment
      PRIMARY KEY (anseq)
 );
 
-ALTER TABLE busybee_bbscomment
-ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
-REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE busybee_bbscomment
-DROP FOREIGN KEY FK_busybee_bbscomment_seq_busybee_bbs_seq;
  
  CREATE TABLE busybee_star
 (
     `id`   VARCHAR(50)    NOT NULL    COMMENT '작성자', 
     `seq`  INT            NOT NULL    COMMENT '글번호'
 );
+
+ALTER TABLE busybee_bbscomment
+ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
+REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE busybee_bbs ADD INDEX idx_busybee_bbs_id (id);
+
 ALTER TABLE busybee_star
-    ADD CONSTRAINT FK_busybee_star_id_busybee_bbs_id FOREIGN KEY (id, seq)
-        REFERENCES busybee_bbs (id, seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
-ALTER TABLE busybee_star
- DROP FOREIGN KEY FK_busybee_star_id_busybee_bbs_id;
+ADD CONSTRAINT FK_busybee_star_id_busybee_bbs_id FOREIGN KEY (id)
+REFERENCES busybee_bbs (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
