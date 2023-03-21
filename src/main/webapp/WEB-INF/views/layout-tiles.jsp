@@ -157,7 +157,7 @@ td {
 					<li class="nav-item"><a class="nav-link" href="goSearchgroup.do">그룹 검색</a></li>
 					<li class="nav-item"><a class="nav-link" href="goNoti.do">그룹 알림</a></li>
 					<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
-					<li class="nav-item"><a class="nav-link" href="chatHome.do">채팅</a></li>
+					<li class="nav-item"><a class="nav-link" href="chatHome.do">채팅방</a></li>
 				</ul>
 			</div>
 		</div>

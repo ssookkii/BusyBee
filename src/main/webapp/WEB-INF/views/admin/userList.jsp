@@ -90,10 +90,9 @@ margin-left: 300px;
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <div class="d-flex" >
-	      	<select id="choice" style="color:black;">
-				<option value="id" selected="selected">ID</option>
-				<option value="report_type">신고유형</option>
-			</select>
+<select id="choice" style="color: black;" disabled>
+  <option value="id" selected="selected">ID</option>
+</select>
 <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>" style="font-size: 13px">
 	        <button type="button" onclick="searchBtn()" class="btn btn-danger" style="width: 55px; height: 30px; font-size: 13px; ">검색</button>
       </div>

@@ -36,7 +36,7 @@ List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChat
 }
 #chatList {
 	display: flex;
-	height: 400px;
+	height: 300px;
 	justify-content: center;
 	align-items: center;
 }
@@ -145,6 +145,13 @@ function exitChat(element) { // 자신을 제거
 </script>
 </head>
 <body>
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold; color:#aa9a89">&nbsp;&nbsp;&nbsp;채팅방</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;BUSY BEE를 이용하는 모든 사람들과 대화하세요!</small>
+
+<br><br>
+<hr>
 	<div id="ChatContainer">
 		<div class="flexible">
 			<div>

@@ -746,7 +746,7 @@ function initTimepicker() {
 					    </div>
 						    <div class="form-group">
 						      <label for="event-description" style = "font-size: 14px;">일정 내용</label>
-						      <textarea class="form-control" id="event-description" rows="3" style="height: 330px; font-size:14px;"></textarea>
+						      <textarea class="form-control" id="event-description" rows="3" style="height: 300px; font-size:14px;"></textarea>
 						    </div>
 						    
 						    <button type="button" class="btn btn-warning" id="save-event-btn" style = "font-size: 14px;">저장</button>
@@ -873,7 +873,11 @@ $(document).ready(function() {
 			        // 일정을 추가한 후 FullCalendar를 갱신합니다.
 			        $('#calendar').fullCalendar('refetchEvents');
 			        // 일정 리스트로 변경합니다.
-			        location.reload();
+			       					        setTimeout(function() {
+					        	location.reload();
+								}, 800);
+				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
+	        				  '일정을 추가하였습니다.' +'</div>');
 			      },
 			      error: function() {
 			        alert('일정을 추가하는데 실패하였습니다.');
@@ -1027,7 +1031,11 @@ $(document).ready(function() {
 					    	  data: JSON.stringify(eventData),
 					    	  contentType: 'application/json',
 					    	  success: function(response) {
-					    		  location.reload();
+	       					        setTimeout(function() {
+	    					        	location.reload();
+	    								}, 800);
+	    				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
+	    	        				  '일정을 수정하였습니다.' +'</div>');
 					    	  },
 					    	  error: function() {
 					    	    alert('일정을 수정하는데 실패하였습니다.');

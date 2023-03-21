@@ -171,7 +171,7 @@
     <div class="wrapper">
         <ul class="mainMenu">
             <li class="item" id="account">
-                <a style="color:#8c5a0b;" href="#account" class="subMenuBtn"><img src = "./images/mark2.png" width="50px" height="45px" style="float: left; "/>나의 그룹</a>
+                <a style="color:#8c5a0b;" href="#account" class="subMenuBtn"><img src = "./images/mark2.png" width="40px" height="35px" style="float: left; "/>나의 그룹</a>
                  <div id="subMenu" class="subMenu" >
                                               
                </div>

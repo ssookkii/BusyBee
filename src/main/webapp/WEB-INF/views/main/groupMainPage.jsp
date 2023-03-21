@@ -37,7 +37,7 @@
   width: 500px;
   margin: 15px;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0.2, 0.2);
 
 }
 
@@ -45,19 +45,7 @@
 	width : 500px;
   height: 500px;
   font-size: 14px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-
-}
-
-#notice{
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 15px;
-  margin-top:40px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0.2, 0.2);
 
 }
 
@@ -83,7 +71,7 @@ th {
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
 <h1 style="font-weight: bold; color:#aa9a89">&nbsp;&nbsp;&nbsp;현재 나의 그룹: <%=group_name %></h1>
-<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;내 그룹 게시판 글과 일정을 확인하세요!</small>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;나의 그룹 게시판 글과 일정을 확인하세요!</small>
 
 <br><br>
 <hr>
@@ -110,7 +98,7 @@ th {
 </table>
   </div>
 </div>
-&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div class="card border-warning mb-3 rounded" style="text-align: center;">
   <div class="card-header">
   <a class="nav-link active1" style="font-size: 35px; color:#aa9a89; font-weight: bold;"
