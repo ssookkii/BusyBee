@@ -1,5 +1,7 @@
 package mul.cam.a.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,6 +86,8 @@ public class MenuController {
 		
 		model.addAttribute("group_code", group_code);
 		model.addAttribute("group_name", group_name);
+		
+		
 
 		return "groupMainPage";
 	}
@@ -107,7 +111,7 @@ public class MenuController {
 		System.out.println(group_name);
 		System.out.println(group_code);
 
-		return "redirect:/bbslist.do";
+		return "redirect:/bbssession.do";
 	}
 	
 	/* 게시판 미리보기 */

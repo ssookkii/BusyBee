@@ -94,7 +94,6 @@ public class GroupController {
 	@ResponseBody
 	@GetMapping(value = "selectGroup1.do")
 	public List<GroupDto> selectGroup1(String id) {
-		
 		return service.selectGroup1(id);
 	}
 	
