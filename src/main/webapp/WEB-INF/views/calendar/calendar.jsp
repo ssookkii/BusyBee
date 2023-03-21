@@ -1140,7 +1140,8 @@ $(document).ready(function() {
             // 일정 목록을 모달에 출력
             var todayEventHtml = '';
             for (var j = 0; j < todayEventList.length; j++) {
-              todayEventHtml += todayEventList[j].title + '</br>';
+            	
+              todayEventHtml += "♬ " + todayEventList[j].title + '</br>';
             }
             $('#today-event-modal .modal-header').html('오늘 일정을 확인하세요.');
             $('#today-event-modal .modal-body').html(todayEventHtml);
