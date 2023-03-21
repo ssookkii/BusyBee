@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import mul.cam.a.dto.ChatMessageDto;
-import mul.cam.a.service.ChatMessageService;
+import mul.cam.a.service.impl.ChatMessageServiceImpl;
 
 public class WebSocket extends TextWebSocketHandler {
 	

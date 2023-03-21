@@ -9,6 +9,10 @@ create table chatRoom(
 );
 ALTER TABLE chatRoom
 ADD primary key(roomId);
+
+INSERT INTO chatRoom(roomId, title, descriptions, members, createdBy, createdAt)
+VALUES("AllChatRoom", "AllChatRoom", "AllChatRoom", "AllUser","busyBee", now());
+
 -- chatMessage
 create table chatMessage(
 	roomId varchar(45) not null,

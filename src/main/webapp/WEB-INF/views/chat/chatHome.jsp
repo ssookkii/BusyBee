@@ -312,7 +312,7 @@ const createChat = () => {
 			},
 		dataType: "text",
 		success: function(data){
-			alert(data);
+			alert("채팅방이 생성되었습니다.");
 			if (data == null) {
 				alert("이미 존재하는 Chat ID 입니다.");
 				document.getElementById("roomId").value = "";

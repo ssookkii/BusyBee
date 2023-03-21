@@ -83,10 +83,12 @@ body {
 
 .whisper {
 	display: flex;
-	justifty-content: flex-end;
+	justify-content: flex-end;
+	margin-left: auto;
 }
 
 .whisper p {
+	margin-left: auto;
 	border: 2px solid black;
 	border-radius: 5px;
 	box-shadow: 5px 5px 2px 1px gray;
@@ -168,7 +170,6 @@ function send() {
 	sendTime = sendTime.toLocaleString('ko-kr');
 	// 유효성 검사
 	if (message == "" || message == null || message == "" || message == null) {
-		alert("유효하지 않은 요청입니다.");
 		return;
 	};
 	if (recipient == "" || recipient == null) {
@@ -217,7 +218,6 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	
 	// 자신이 보낸 메세지일경우
 	if (writer == "<%=User%>" && recipient == "to All") { 
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>" + "나 | " + message + "</p><br/>" +
 								"<span>" + sendTime + "</span>";
@@ -227,7 +227,6 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	}
 	// 자신이 보낸 귓속말 메세지인경우
 	else if (writer == "<%=User %>" && recipient != "to All"){
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>[" + recipient + "]에게 귓속말 | " + message + "</p><br/>" +
 								"<span>" + sendTime + "</span>";
@@ -237,7 +236,6 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	}
 	// 다른사람이 보낸 전체메세지 일경우
 	else if (writer != "<%=User%>" && recipient == "to All") {
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-other";
 		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+ 
 									"<p>"+ message + " [" + writer + "]</p>";
@@ -248,15 +246,18 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	
 	// 다른사람이 보낸 귓속말 일경우
 	else if(writer != "<%=User%>" && recipient == "<%=User%>"){ 
-		const chatContent = document.createElement("div");
 		chatContent.className = "whisper";
 		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+
-									"<p>" + message + " |  <귓속말>[" + writer + "]</p>";
-		chatContent.innerHTML = plusElemenOtherChat;
+									"<p>" + message + " [" + writer + "]</p>";
+		chatContent.innerHTML = plusElementOtherChat;
 		chatBox.appendChild(chatContent);
 	}
-		// 스크롤을 위로 이동 시킨다
-	chatBox.scrollTop = chatBox.scrollHeight;
+	
+	const chatScrollBar = document.querySelector(".chat-contents-container")
+	console.log(chatScrollBar.offsetHeight);
+	chatScrollBar.scrollTop = chatScrollBar.offsetHeight;
+	
+	//chatBox.lastChild.focus();
 }
 
 

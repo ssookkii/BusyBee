@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import mul.cam.a.dto.ChatMessageDto;
 import mul.cam.a.service.ChatMessageService;
 
-
 @Controller
 public class ChatController {
 	
