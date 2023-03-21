@@ -167,13 +167,13 @@
 <tr>
 	<th>파일</th>
 	<td>
-		<% 	if(dto.getFilename() != null){ %>
+		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
 				<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly">
 		<%	}else{ %>
 				<input value="" type="text" class="form-control form-control-lg" readonly="readonly">
 		<%	} %>
 		<br>
-		<% 	if(dto.getFilename() != null){ %>
+		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
 				<input type="button" value="파일 다운로드" class="btn btn-warning"
 				onclick="filedown(<%=dto.getSeq() %>, '<%=dto.getNewfilename() %>', '<%=dto.getFilename() %>')">
 		<%	}else{ %>

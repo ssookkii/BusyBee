@@ -256,10 +256,15 @@ public class BbsController {
 			System.out.println("파일미첨부 작동");
 			
 			System.out.println(dto.toString());
+			
+			dto.setFilename("");
+			dto.setNewfilename("");
+			
 			boolean isS = service.updateBbs(dto);
 			System.out.println("DB 통과");
 			
 			String bbsupdate = "";
+
 			
 			if(isS) {
 				bbsupdate = "bbsupdate_YES";
