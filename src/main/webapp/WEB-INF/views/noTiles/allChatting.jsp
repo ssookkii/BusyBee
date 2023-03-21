@@ -123,6 +123,16 @@ body {
 
 var wsocket;
 
+function loginCheck() {
+	if ( "<%=User%>" == "" || "<%=User%>" == "null"){
+		location.href= "/BusyBee/loginMain.do";
+		alert("로그인 후 이용해주세요");
+		return false;
+	}
+	return true;
+}
+
+
 // 접속
 function connect() {
 	
@@ -285,6 +295,6 @@ function resizeWindowSize() {
 
 window.addEventListener("resize", resizeWindowSize);
 
-connect();
+if (loginCheck()) connect();
 
 </script>

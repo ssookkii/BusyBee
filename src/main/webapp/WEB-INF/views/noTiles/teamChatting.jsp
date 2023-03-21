@@ -114,8 +114,32 @@ body {
 </div>
 
 <script>
+
+function loginCheck() {
+	if ( "<%=User%>" == "" || "<%=User%>" == "null"){
+		location.href= "/BusyBee/loginMain.do";
+		alert("로그인 후 이용해주세요");
+		return;
+	};
+};
+
+function memberCheck() {
+	let memberList = "<%=chatRoomInfo.getMembers() %>";
+	memberList = memberList.split(",");
+	const user = "<%=User%>";
+	if (!(memberList.includes(user))) {
+		location.href= "/BusyBee/loginMain.do";
+		alert("팀 멤버만 입장할 수 있습니다.");
+		return false;
+	}
+};
+
 function resizeWindowSize() {
 	window.resizeTo(600,900);
 }
+
+loginCheck();
+memberCheck();
+
 window.addEventListener("resize", resizeWindowSize);
 </script>
