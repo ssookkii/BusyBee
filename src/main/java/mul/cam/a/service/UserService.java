@@ -28,8 +28,6 @@ public interface UserService {
 	UserDto selectUser(String id);
 	
 	boolean updUser_n(UserDto dto);
-	boolean updUser_y(UserDto dto);
-	boolean updUser_b(UserDto dto);
 	
 	UserDto findId(UserDto dto);
 	boolean findforPwd(UserDto dto);

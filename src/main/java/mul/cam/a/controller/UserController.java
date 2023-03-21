@@ -237,59 +237,6 @@ public class UserController {
 		return "message";
 	}
 
-	@PostMapping(value = "updUser_y.do")
-	public String updUser_y(Model model, UserDto dto,
-			@RequestParam(value = "profPic", required = false)
-	MultipartFile profPic, HttpServletRequest req) {
-
-		// filename 취득
-		String filename = profPic.getOriginalFilename(); // 원본파일명
-		dto.setProfPic_Origin(filename);
-
-		// upload 경로 설정
-		// to server
-		String fUpload = req.getServletContext().getRealPath("/upload");
-
-		// 파일명을 고유한 명칭으로 변경(Date)
-		String newfilename = FileUtil.getNewFileName(filename);
-		dto.setProfPic_Server(newfilename);
-
-		File file = new File(fUpload + "/" + newfilename);
-
-		try {
-			FileUtils.writeByteArrayToFile(file, profPic.getBytes());
-
-			System.out.println(fUpload);
-			boolean isS = service.updUser_y(dto);
-
-			String updUser_y_Msg = "updUser_y_FAIL";
-			if(isS) {
-				updUser_y_Msg = "updUser_y_SUCCESS";
-			}
-
-			model.addAttribute("updUser_y_Msg", updUser_y_Msg);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return "message";
-	}
-
-	@PostMapping(value = "updUser_b.do")
-	public String updUser_b(Model model, UserDto dto) {
-
-		boolean isS = service.updUser_b(dto);
-
-		String updUser_b_Msg = "updUser_b_FAIL";
-		if(isS) {
-			updUser_b_Msg = "updUser_b_SUCCESS";
-		}
-
-		model.addAttribute("updUser_b_Msg", updUser_b_Msg);
-
-		return "message";
-	}
 	
 	@ResponseBody
 	@PostMapping(value = "findId.do")

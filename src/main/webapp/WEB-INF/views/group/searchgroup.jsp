@@ -249,7 +249,6 @@ function go_checkDupl(){
 	
 	if(!group_code_OK) {
 		$("#wantTo").val('');
-		alert('유효한 그룹코드를 작성해주세요.');
 		return;
 	} else {
 		location.href="addNoti.do?to_id="+$("#leader_id").val()+"&from_id="+'<%=id%>'

@@ -31,8 +31,6 @@ public interface UserDao {
 	UserDto selectUser(String id);
 	
 	int updUser_n(UserDto dto);
-	int updUser_y(UserDto dto);
-	int updUser_b(UserDto dto);
 	
 	// Id 찾기/PWD 재설정
 	UserDto findId(UserDto dto);

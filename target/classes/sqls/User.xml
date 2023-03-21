@@ -13,8 +13,6 @@ create table user(
     phone_public varchar(5),
     auth int,
     profMsg varchar(30),
-    profPic_Origin varchar(20),
-    profPic_Server varchar(20),
     regidate timestamp
 );
 (2) Email 인증 table 생성
@@ -71,8 +69,8 @@ create table emailCerti(
 
 <!-- User 추가 -->
 <insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
-	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate)
-	values(#{id}, #{password}, #{name}, #{email}, #{phone}, 'on', '1', ' ', '기본프로필', 'basic.png', now())
+	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, regidate)
+	values(#{id}, #{password}, #{name}, #{email}, #{phone}, 'on', '1', ' ', now())
 </insert>
 
 <!-- ID검색 -->
@@ -99,10 +97,10 @@ create table emailCerti(
 	<!-- 유저 리스트 -->
 	<select id="userList" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.UserDto">
-	select id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate
+	select id, password, name, email, phone, phone_public, auth, profMsg,  regidate
 	from
 			(select row_number()over(order by regidate desc) as rnum,
-			id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate
+			id, password, name, email, phone, phone_public, auth, profMsg,  regidate
 	from user
 	where 1=1 
 		 <if test="choice != null and choice != '' and search != null and search != '' ">
@@ -161,21 +159,6 @@ create table emailCerti(
 	where id=#{id}
 </update>
 
-<!-- User 정보 수정(프로필사진 변경 있을 때 : 다른 사진) -->
-<update id="updUser_y" parameterType="mul.cam.a.dto.UserDto">
-	update user
-	set name=#{name}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
-	profPic_Origin=#{profPic_Origin}, profPic_Server=#{profPic_Server}
-	where id=#{id}
-</update>
-
-<!-- User 정보 수정(프로필사진 변경 있을 때 : 기본 프로필) -->
-<update id="updUser_b" parameterType="mul.cam.a.dto.UserDto">
-	update user
-	set name=#{name}, phone=#{phone}, phone_public=#{phone_public}, profMsg=#{profMsg},
-	profPic_Origin='기본프로필', profPic_Server='basic.png'
-	where id=#{id}
-</update>
 
 <!-- 계정삭제 (서비스 탈퇴) -->
 <delete id="delUser" parameterType="String">

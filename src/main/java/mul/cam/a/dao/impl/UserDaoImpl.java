@@ -79,15 +79,6 @@ public class UserDaoImpl implements UserDao {
 		return session.update(ns + "updUser_n", dto);
 	}
 
-	@Override
-	public int updUser_y(UserDto dto) {
-		return session.update(ns + "updUser_y", dto);
-	}
-	
-	@Override
-	public int updUser_b(UserDto dto) {
-		return session.update(ns + "updUser_b", dto);
-	}
 	
 	@Override
 	public UserDto findId(UserDto dto) {

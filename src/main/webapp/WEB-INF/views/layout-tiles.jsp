@@ -135,7 +135,7 @@ td {
                     </div>
                          <!-- user image -->
                     <div style="float: right; margin: 5px; margin-right: 30px;">
-                        <img src="/busyBeeImg/<%=login.getProfPic_Server() %>" width="70px" height="70px"
+                     <img src="./images/BusyB.png" width="70px" height="70px"
                             style="border-radius: 50%;">
                     </div>
                 </td>

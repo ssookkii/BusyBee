@@ -354,6 +354,7 @@ function initTimepicker() {
 	        }
 	        
 	        $('#deleteConfirmBtn').click(function() {
+	        	
 	        	 // 체크된 일정의 scheduleId들을 배열로 수집
 	        	 var selectedEventIds = $('input[name="eventIds[]"]:checked').map(function() {
 	        		    return $(this).val();
@@ -373,9 +374,13 @@ function initTimepicker() {
 				      data: { 'scheduleId': eventId },
 				      success: function(response) {
 				        // FullCalendar에서 일정 삭제
+				        
 				        $('#calendar').fullCalendar('removeEvents', selectedEventIds);
-				        // 일정 리스트 업데이트
-				        location.reload();
+				       	 setTimeout(function() {	
+						        $('body').fadeOut(1000, function() {
+												  location.reload();
+												});}, 500);	
+						    
 				      },
 				      error: function() {
 				        alert('일정을 삭제하는데 실패하였습니다.');
@@ -383,7 +388,7 @@ function initTimepicker() {
 			    });
 			    });
 			
-			    $('#customConfirmModal').modal('hide');
+			    
 			  });
 			});
 
@@ -601,6 +606,7 @@ function initTimepicker() {
         <h8 class="modal-title" ></h8>
       </div>
       <div class="modal-body" style="height: 270px; display: flex; align-items: center; justify-content: center;">
+      	<div id="delete2-alert-message" style="font-size: 14px"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal" id="deletecancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
@@ -873,9 +879,10 @@ $(document).ready(function() {
 			        // 일정을 추가한 후 FullCalendar를 갱신합니다.
 			        $('#calendar').fullCalendar('refetchEvents');
 			        // 일정 리스트로 변경합니다.
-			       					        setTimeout(function() {
-					        	location.reload();
-								}, 800);
+			       	 setTimeout(function() {				     
+			        $('body').fadeOut(1000, function() {
+									  location.reload();
+									});}, 300);
 				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
 	        				  '일정을 추가하였습니다.' +'</div>');
 			      },
@@ -1031,9 +1038,11 @@ $(document).ready(function() {
 					    	  data: JSON.stringify(eventData),
 					    	  contentType: 'application/json',
 					    	  success: function(response) {
-	       					        setTimeout(function() {
-	    					        	location.reload();
-	    								}, 800);
+					    		  
+							       	 setTimeout(function() {				     
+									        $('body').fadeOut(1000, function() {
+															  location.reload();
+															});}, 300);
 	    				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
 	    	        				  '일정을 수정하였습니다.' +'</div>');
 					    	  },
@@ -1061,9 +1070,10 @@ $(document).ready(function() {
 					        $('#calendar').fullCalendar('removeEvents', eventId);
 					        // 일정 리스트 업데이트
 								
-					        setTimeout(function() {
-					        	location.reload();
-								}, 800);
+					       	 setTimeout(function() {				     
+							        $('body').fadeOut(1000, function() {
+													  location.reload();
+													});}, 300);
 					    	
 					      },
 					      error: function() {

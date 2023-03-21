@@ -92,17 +92,6 @@ public class UserServiceImpl implements UserService {
 		return count>0?true:false;
 	}
 
-	@Override
-	public boolean updUser_y(UserDto dto) {
-		int count = dao.updUser_y(dto);
-		return count>0?true:false;
-	}
-	
-	@Override
-	public boolean updUser_b(UserDto dto) {
-		int count = dao.updUser_b(dto);
-		return count>0?true:false;
-	}
 
 	@Override
 	public UserDto findId(UserDto dto) {
