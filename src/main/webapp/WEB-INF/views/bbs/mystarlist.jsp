@@ -123,9 +123,9 @@ String org = (String)session.getAttribute("org");
             <h3 id="nogroup"></h3>
           </div>
         </li> -->
-        <li class="nav-item dropdown">
+   <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
-          <div class="dropdown-menu">
+          <div class="dropdown-menu" style="font-size: 14px">
             <a class="dropdown-item" onclick="categorybtn()">전체글</a>
             <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
             <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
@@ -134,29 +134,28 @@ String org = (String)session.getAttribute("org");
           </div>
         </li>
       </ul>
-      <div class="d-flex" >
+      <div class="d-flex" style="font-size: 13px" >
 	      	<select id="choice" style="color:black">
 				<option value="" selected="selected">검색</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
-	        <button type="button" onclick="searchBtn()" class="btn btn-light">검색</button>
+	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>" style="font-size: 13px">
+	        <button type="button" onclick="searchBtn()" class="btn btn-danger" style="width: 55px; height: 30px; font-size: 13px; ">검색</button>
       </div>
     </div>
   </div>
 </nav>
 </div>
-
 <div align="center">
 
 <input type="hidden" id="id" value='<%=login.getId()%>'>
 <input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
 
-<table id="bbs" class="table table-hover" style="width: 1000px">
-<col width="70"><col width="150"><col width="70"><col width="150"><col width="400"><col width="100"><col width="150"><col width="70">
+<table id="bbs" class="table table-hover" style="width: 1000px; font-size: 12px;">
+<col width="70"><col width="150"><col width="70"><col width="150"><col width="400"><col width="100"><col width="150"><col width="80">
 <thead class="table-warning">
 <tr>
 	<th>즐겨찾기</th><th>분류</th><th>번호</th><th>그룹명</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
@@ -279,23 +278,23 @@ if(list == null || list.size() == 0){
     </nav>
 </div>
 
-<button class="btn btn-warning" onclick="bbswrite()">글쓰기</button>
+<button class="btn btn-warning" onclick="bbswrite()" style="width: 55px; height: 30px; font-size: 13px; ">글쓰기</button>
 
 </div>
 
 <div id="pop_info_1" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기에 추가하시겠습니까?</p>
-    <button id="staradd" type="button" class="btn btn-warning btn_close">예</button>
-    <button type="button" class="btn btn-warning btn_close">아니오</button>
+    <p class="dsc">즐겨찾기에<br/> 추가하시겠습니까?</p>
+    <button id="staradd" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
+    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
   </div>
 </div>
 
 <div id="pop_info_2" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기를 삭제하시겠습니까?</p>
-    <button id="stardelete" type="button" class="btn btn-warning btn_close">예</button>
-    <button type="button" class="btn btn-warning btn_close">아니오</button>
+    <p class="dsc">즐겨찾기를<br/>삭제하시겠습니까?</p>
+    <button id="stardelete" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
+    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
   </div>
 </div>
   

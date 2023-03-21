@@ -222,11 +222,14 @@ function initTimepicker() {
 
 		 setTimeout(function() {
 		      if (myGroupName !== undefined) {
-		        var groupNameElem = $('<div style="text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px;">현재 내 그룹: ' + myGroupName + '</div>');
+		    	  var groupNameElem = $('<div style="text-align: center; font-size: 25px; font-weight: bold; margin-top: 0px;"> <img src = "./images/mark.png" width="35px" height="27px" /><h1 style="font-weight: bold; color:#aa9a89; font-size:18px; margin-left: 10px; display: inline;">현재 나의 그룹: ' + myGroupName + '</h1></div>');
+
+
+
 		        $('#calendar').before(groupNameElem);
 		      }
 		    }, 100);
-		 
+
 		 var previousDate = null;
 	    $('#calendar').fullCalendar({
 	        // 일정 데이터
@@ -394,6 +397,7 @@ function initTimepicker() {
 
 	
 		<table style="width: 100%;">
+		
 		<div id="delete-alert-message" style="font-size: 14px"></div>
 			<tr>
 				<td style="width: 60%;">

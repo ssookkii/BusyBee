@@ -5,8 +5,8 @@
         
 <%
 	UserDto login = (UserDto)session.getAttribute("login");
-	String group_code = (String)request.getAttribute("group_code");
-	String org = (String)request.getAttribute("org");
+String group_code = (String)session.getAttribute("group_code");
+String org = (String)session.getAttribute("org");
 %>      
     
     
@@ -57,6 +57,7 @@
 	<th>파일</th>
 	<td>
 		<input id="fileload" type="file" name="fileload" onchange="readURL(this);">
+		
 	</td>
 </tr>
 <tr>
@@ -68,7 +69,7 @@
 <tr>
 	<th>카테고리</th>
 	<td>
-		<select id="category" name="category" class="form-control form-control-lg">
+		<select id="category" name="category" class="form-control form-control-lg" >
 			<option>아래에서 선택</option>
 			<option value="공지사항">공지사항</option>
 			<option value="일반게시글">일반게시글</option>
@@ -97,7 +98,6 @@
 <script type="text/javascript">
 let group_code = document.getElementById("group_code").value;
 let org = document.getElementById("org").value;
-
 function bbswrite(){
 	
 	if($("#title").val().trim() == "" ){
@@ -113,11 +113,9 @@ function bbswrite(){
 		$("#frm").submit();
 	}		
 }
-
 function bbslist(){
 	location.href= "bbslist.do?group_code=" + group_code + "&org=" + org;
 }
-
 function readURL(input) {
 	  if (input.files && input.files[0]) {
 	    var reader = new FileReader();
@@ -129,7 +127,6 @@ function readURL(input) {
 	    document.getElementById('preview').src = "";
 	 }
 }
-
 </script>
 
 </body>

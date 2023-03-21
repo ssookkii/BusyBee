@@ -26,8 +26,12 @@ String search = (String)request.getAttribute("search");
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
+<link rel="stylesheet"
+	href="https://bootswatch.com/5/minty/bootstrap.min.css">
 
 <style type="text/css">
+
+
 .d-flex{
 font-size: 14px;
 float: right;
@@ -38,8 +42,15 @@ padding-right: 100px;
 	width: 50px;
 	
 }
+
+.pagination{
+margin-left: 400px;
+}
+
 body{
 font-size: 14px;
+margin-left:auto;
+margin-right:auto;
 }
 .pagination .page-link {
   color: #333;
@@ -64,6 +75,10 @@ font-size: 14px;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
+
+
+
+
 </style>
 
 </head>
@@ -78,19 +93,22 @@ font-size: 14px;
 
 
 <div align="right">
-<nav style="width: 1000px; text-align: right; padding-left: 300px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px;">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <div class="d-flex" >
-	      	<select id="choice" style="color:black;">
+    <ul class="navbar-nav me-auto">
+    </ul>
+ <div class="d-flex" style="font-size: 13px" >
+	      	<select id="choice" style="color:black">
 				<option value="reported_id" selected="selected">ID</option>
 				<option value="report_type">신고유형</option>
 			</select>
-  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-				<button type="button" class="btn btn-secondary my-2 my-sm-0" onclick="searchBtn()">검색</button>
+<input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>" style="font-size: 13px">
+	        <button type="button" onclick="searchBtn()" class="btn btn-danger" style="width: 55px; height: 30px; font-size: 13px; ">검색</button>
       </div>
     </div>
   </div>
@@ -101,11 +119,9 @@ font-size: 14px;
 
 
 <br>
-<table class="table table-hover" style="width: 1700px;, font-size: 20px;">
-<col width="50">
-<col width="100"><col width="100"><col width="100">
-<col width="100"><col width="200"><col width="600"><col width="200">
-<col width="100">
+<table class="table table-hover" style="width: 1000px;, font-size: 20px;margin-left: 500px;">
+<col width="50"><col width="100"><col width="100"><col width="150">
+<col width="150"><col width="200"><col width="150"><col width="100">
 
 <thead>
 <tr class="table-warning" style="color: black;">
@@ -114,7 +130,7 @@ font-size: 14px;
 	<th scope="row">신고일시</th><th scope="row">신고글 관리</th>
 </tr>
 </thead>
-<tbody style="text-align: left;">
+<tbody style="text-align: left ;">
 <%
 if(list == null || list.size() == 0){
 	%>

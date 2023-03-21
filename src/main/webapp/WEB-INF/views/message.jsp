@@ -111,25 +111,32 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 	
 	
 	// 로그인
-	String loginCheck_Msg = (String) request.getAttribute("loginCheck_Msg");
-	if(loginCheck_Msg!=null && loginCheck_Msg!="") {
-		if(loginCheck_Msg=="loginCheck_SUCCESS") {
-			String name = (String) request.getAttribute("name");
-			%>
-			<script>
-			alert('오늘도 파이팅입니다, ' + '<%=name %>' + '님 :)');
-			location.href="login.do";
-			</script>
-			<%
-		} else {
-			%>
-			<script>
-			alert('로그인 정보를 다시 확인해주세요.');
-			location.href="loginMain.do";
-			</script>
-			<%
+		String loginCheck_Msg = (String) request.getAttribute("loginCheck_Msg");
+		if(loginCheck_Msg!=null && loginCheck_Msg!="") {
+			if(loginCheck_Msg=="loginCheck_BANNED"){
+				%>
+				<script>
+				alert('정지된 회원입니다. BUSY BEE 고객샌터로 문의해주세요.');
+				location.href="loginMain.do";
+				</script>
+				<%
+			} else if(loginCheck_Msg=="loginCheck_SUCCESS") {
+				String name = (String) request.getAttribute("name");
+				%>
+				<script>
+				alert('오늘도 파이팅입니다, ' + '<%=name %>' + '님 :)');
+				location.href="login.do";
+				</script>
+				<%
+			} else {
+				%>
+				<script>
+				alert('로그인 정보를 다시 확인해주세요.');
+				location.href="loginMain.do";
+				</script>
+				<%
+			}
 		}
-	}
 	
 	// 프로필사진이 바뀌지 않는 정보수정
 	String updUser_n_Msg = (String) request.getAttribute("updUser_n_Msg");

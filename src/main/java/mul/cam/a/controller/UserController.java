@@ -196,14 +196,23 @@ public class UserController {
 		String loginCheck_Msg = "loginCheck_FAIL";
 
 		if(login != null) {
-			loginCheck_Msg = "loginCheck_SUCCESS";
-			model.addAttribute("name", login.getName());
+			System.out.println(login.getAuth());
+			
+			if(login.getAuth()==2) {
+				loginCheck_Msg = "loginCheck_BANNED";
+				model.addAttribute("loginCheck_Msg", loginCheck_Msg);
+			} else {
+				loginCheck_Msg = "loginCheck_SUCCESS";
+				model.addAttribute("name", login.getName());
+				model.addAttribute("loginCheck_Msg", loginCheck_Msg);
+				session.setAttribute("login", login);
+			}
+			return "message";
+		
+		} else {
 			model.addAttribute("loginCheck_Msg", loginCheck_Msg);
-			session.setAttribute("login", login);
+			return "message";
 		}
-
-		model.addAttribute("loginCheck_Msg", loginCheck_Msg);
-		return "message";
 	}
 
 	@ResponseBody

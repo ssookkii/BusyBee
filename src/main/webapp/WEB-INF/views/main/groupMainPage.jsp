@@ -82,7 +82,9 @@ th {
 
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
-<h1 style="font-weight: bold; font-size: 48px; color:#aa9a89">&nbsp;&nbsp;&nbsp;<%=group_name %></h1>
+<h1 style="font-weight: bold; color:#aa9a89">&nbsp;&nbsp;&nbsp;현재 나의 그룹: <%=group_name %></h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;내 그룹 게시판 글과 일정을 확인하세요!</small>
+
 <br><br>
 <hr>
 
@@ -91,7 +93,7 @@ th {
 <div class="card border-warning mb-3 rounded" style="text-align: center; ">
   <div class="card-header" >
   
-  <a class="nav-link active" style="font-size: 35px; color:#b7750d; font-weight: bold;"
+  <a class="nav-link active" style="font-size: 35px; color:#aa9a89; font-weight: bold;"
   href="goBbslist.do?group_code=<%=group_code %>&group_name=<%=group_name %>">그룹 게시판</a>
   </div>
 
@@ -111,7 +113,7 @@ th {
 &nbsp;&nbsp;
 <div class="card border-warning mb-3 rounded" style="text-align: center;">
   <div class="card-header">
-  <a class="nav-link active1" style="font-size: 35px; color:#c83a12; font-weight: bold;"
+  <a class="nav-link active1" style="font-size: 35px; color:#aa9a89; font-weight: bold;"
   href="goCalendar.do?group_code=<%=group_code %>&group_name=<%=group_name %>">일정 관리</a></div>
   <div class="card-body">
 <table class="table table-hover">

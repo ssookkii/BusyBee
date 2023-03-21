@@ -18,17 +18,16 @@
 	report_seq int not null,
 	report_type varchar(45) not null,
 	report_date timestamp not null,
-	report_count decimal(8) unique
 ); -->
 	
 	
 	<select id="reportList" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.ReportDto">
 	select report_id, reporter_id, reported_id, report_content,
-	report_seq, report_type, report_date, report_count
+	report_seq, report_type, report_date
 	from
 			(select row_number()over(order by report_date desc) as rnum,
-			report_id, reporter_id, reported_id, report_content, report_seq, report_type, report_date, report_count
+			report_id, reporter_id, reported_id, report_content, report_seq, report_type, report_date
 	from report
 	where 1=1 
 		 <if test="choice != null and choice != '' and search != null and search != '' ">
@@ -62,9 +61,9 @@
 
 <insert id="reportSubmit" parameterType="mul.cam.a.dto.ReportDto">
 	insert into report(reporter_id, reported_id, report_content,
-	report_seq, report_type, report_date, report_count )
+	report_seq, report_type, report_date)
 	values(#{reporter_id}, #{reported_id}, #{report_content},
-	#{report_seq}, #{report_type}, now(), 0 )
+	#{report_seq}, #{report_type}, now())
 
 </insert>
 

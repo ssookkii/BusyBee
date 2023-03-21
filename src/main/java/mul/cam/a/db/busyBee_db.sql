@@ -90,19 +90,15 @@ ADD FOREIGN KEY (id) references user (id);
 
 -- report
 
- 	create table report(
-
-	report_id int not null primary key,
+ 	 	create table report(
+	report_id int auto_increment primary key,
 	reporter_id varchar(45) not null,
 	reported_id varchar(45) not null,
 	report_content varchar(200) not null,
 	report_seq int not null,
 	report_type varchar(45) not null,
-	report_date timestamp not null,
-	auth int not null,
-	report_count decimal(8)
-
-); 
+	report_date timestamp not null
+	);
 
 --  user
 create table user(
@@ -116,8 +112,8 @@ create table user(
     profMsg varchar(30),
     profPic_Origin varchar(20),
     profPic_Server varchar(20),
-    regidate timestamp,
-    report_count decimal(8)
+    regidate timestamp
+    
 );
 create table emailCerti(
     seq int auto_increment primary key,
@@ -129,23 +125,22 @@ create table emailCerti(
 -- bbs
 CREATE TABLE busybee_bbs
 (
-    `seq`        INT              NOT NULL    AUTO_INCREMENT COMMENT '글번호. 글번호', 
-    `ref`        DECIMAL(8)       NOT NULL    COMMENT '그룹번호. 그룹번호', 
-    `step`       DECIMAL(8)       NOT NULL    COMMENT '행번호. 행번호', 
-    `depth`      DECIMAL(8)       NOT NULL    COMMENT '깊이번호. 깊이번호', 
-    `id`         VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
-    `title`      VARCHAR(200)     NOT NULL    COMMENT '제목. 제목', 
-    `content`    VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
-    `wdate`      TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
-    `readcount`  DECIMAL(8)       NOT NULL    COMMENT '조회수. 조회수', 
-    `org`        VARCHAR(50)      NOT NULL    COMMENT '조직명. 조직명', 
-    `filename`   VARCHAR(50)      NOT NULL    COMMENT '파일명. 파일명', 
-    `newfilename`   VARCHAR(50)      NOT NULL    COMMENT '시스템파일명. 시스템파일명', 
-    `category`   VARCHAR(50)      NOT NULL    COMMENT '카테고리', 
-    `del`        INT              NOT NULL    COMMENT '삭제', 
-    `groupCode`   VARCHAR(8)       NOT NULL    COMMENT '그룹 코드', 
-
-     PRIMARY KEY (seq)
+    `seq`         INT              NOT NULL    AUTO_INCREMENT COMMENT '글번호. 글번호', 
+    `ref`         DECIMAL(8)       NOT NULL    COMMENT '그룹번호. 그룹번호', 
+    `step`        DECIMAL(8)       NOT NULL    COMMENT '행번호. 행번호', 
+    `depth`       DECIMAL(8)       NOT NULL    COMMENT '깊이번호. 깊이번호', 
+    `id`          VARCHAR(50)      NOT NULL    COMMENT '작성자. 회원 아이디', 
+    `title`       VARCHAR(200)     NOT NULL    COMMENT '제목. 제목', 
+    `content`     VARCHAR(4000)    NOT NULL    COMMENT '내용. 내용', 
+    `wdate`       TIMESTAMP        NOT NULL    COMMENT '작성일. 작성일', 
+    `readcount`   DECIMAL(8)       NOT NULL    COMMENT '조회수. 조회수', 
+    `org`         VARCHAR(50)      NOT NULL    COMMENT '조직명. 조직명', 
+    `filename`    VARCHAR(50)          COMMENT '파일명. 파일명', 
+    `newfilename` VARCHAR(50)          COMMENT '시스템파일명. 시스템파일명', 
+    `category`    VARCHAR(50)      NOT NULL    COMMENT '카테고리', 
+    `del`         INT              NOT NULL    COMMENT '삭제', 
+    `group_code`  varchar(15)      NOT NULL    COMMENT '그룹코드', 
+     PRIMARY KEY (seq, id)
 );
 CREATE TABLE busybee_bbscomment
 (
@@ -158,10 +153,11 @@ CREATE TABLE busybee_bbscomment
 );
 
 ALTER TABLE busybee_bbscomment
-    ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
-        REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ADD CONSTRAINT FK_busybee_bbscomment_seq_busybee_bbs_seq FOREIGN KEY (seq)
+REFERENCES busybee_bbs (seq) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
 ALTER TABLE busybee_bbscomment
- DROP FOREIGN KEY FK_busybee_bbscomment_seq_busybee_bbs_seq;
+DROP FOREIGN KEY FK_busybee_bbscomment_seq_busybee_bbs_seq;
  
  CREATE TABLE busybee_star
 (

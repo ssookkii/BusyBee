@@ -15,8 +15,7 @@ create table user(
     profMsg varchar(30),
     profPic_Origin varchar(20),
     profPic_Server varchar(20),
-    regidate timestamp,
-    report_count decimal(8)
+    regidate timestamp
 );
 (2) Email 인증 table 생성
 create table emailCerti(
@@ -73,7 +72,7 @@ create table emailCerti(
 <!-- User 추가 -->
 <insert id="addUser" parameterType="mul.cam.a.dto.UserDto">
 	insert into user(id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate)
-	values(#{id}, #{password}, #{name}, #{email}, #{phone}, #{phone_public}, 1, ' ', '기본프로필', 'basic.png', now())
+	values(#{id}, #{password}, #{name}, #{email}, #{phone}, 'on', '1', ' ', '기본프로필', 'basic.png', now())
 </insert>
 
 <!-- ID검색 -->
@@ -100,24 +99,21 @@ create table emailCerti(
 	<!-- 유저 리스트 -->
 	<select id="userList" parameterType="mul.cam.a.dto.BbsParam"
 	resultType="mul.cam.a.dto.UserDto">
-	select id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+	select id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate
 	from
-			(select row_number()over(order by report_count desc) as rnum,
-			id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate, report_count
+			(select row_number()over(order by regidate desc) as rnum,
+			id, password, name, email, phone, phone_public, auth, profMsg, profPic_Origin, profPic_Server, regidate
 	from user
 	where 1=1 
 		 <if test="choice != null and choice != '' and search != null and search != '' ">
 		 	<if test="choice == 'id'">
 	 		and id like concat('%', #{search}, '%') 
 	 	</if>
-	 	<if test="choice == 'report_count'">
-	 		and report_count>4
-	 	</if>
 	 	<if test="choice == 'auth'">
 	 		and auth=#{search}
 	 	</if>
 		 </if>		 
-		 order by report_count desc) a
+		 order by regidate desc) a
 	where rnum between ${start} and ${end}
 	</select>
 
@@ -129,9 +125,7 @@ create table emailCerti(
 	 	<if test="choice == 'id'">
 	 		where id like concat('%', #{search}, '%') 
 	 	</if>
-	 	<if test="choice == 'report_count'">
-	 		where report_count>4
-	 	</if>
+
 	 	<if test="choice == 'auth'">
 	 		where auth=#{search}
 	 	</if>
@@ -150,6 +144,7 @@ create table emailCerti(
 	select *
 	from user
 	where id=#{id} and password=#{password}
+	
 </select>
 
 <!-- User 검색 -->

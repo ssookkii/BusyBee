@@ -19,9 +19,6 @@ List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChat
 
 <title>Chat!</title>
 <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -158,21 +155,21 @@ function exitChat(element) { // 자신을 제거
 		<div class="modal" id="modal">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
-		      <div class="modal-header">
+		      <div class="modal-header" style="background-color: #ffefb4">
 		        <h3>채팅방 생성</h3>
 		        <button type="button" id="closeModal" class="btn-close" onclick="clickCloseModal()" data-bs-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true" ></span>
 		        </button>
 		      </div>
-		      <div class="modal-body">
-				<input class="form-control" id="roomId" name="roomId" type="text" placeholder="채팅방 ID" maxLength="20" required /><br/>
-				<input class="form-control" id="title" name="title" type="text" placeholder="채팅방 이름(20자)" maxLength="20" required/><br/>
-				<textarea class="form-control" id="description" name="description" placeholder="채팅방 소개 (200자)" maxLength="200" rows="10" required/></textarea><br/>
-				<input class="form-control" id="member" name="member" type="text" placeholder="채팅 멤버(콤마로 구분해주세요)" maxLength="200"/><br/>
+		      <div class="modal-body" >
+				<input class="form-control" id="roomId" name="roomId" type="text" placeholder="채팅방 ID" maxLength="20" required style="font-size:13px;"/><br/>
+				<input class="form-control" id="title" name="title" type="text" placeholder="채팅방 이름(20자)" maxLength="20" required style="font-size:13px;"/><br/>
+				<textarea class="form-control" id="description" name="description" placeholder="채팅방 소개 (200자)" maxLength="200" rows="10" required style="font-size:13px;"/></textarea><br/>
+				<input class="form-control" id="member" name="member" type="text" placeholder="채팅 멤버(콤마로 구분해주세요)" maxLength="200" style="font-size:13px;"/><br/>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button"  class="btn btn-primary" onclick="createChat()">생성</button>
-		        <button type="button" class="btn btn-secondary" onclick="clickCloseModal()" data-bs-dismiss="modal">닫기</button>
+		        <button type="button"  class="btn btn-warning" onclick="createChat()" style="width: 55px; height: 30px; font-size: 13px;">생성</button>
+		        <button type="button" class="btn btn-dark" onclick="clickCloseModal()" data-bs-dismiss="modal" style="width: 55px; height: 30px; font-size: 13px;">닫기</button>
 		      </div>
 		    </div>
 		  </div>
@@ -190,9 +187,9 @@ function exitChat(element) { // 자신을 제거
 				%>
 				<div>
 					<div class="card text-white bg-warning mb-3" id="<%=chatRoom.getRoomId() %>" onclick="showChatInfo(this)" ondblclick="enterChat(this)" style="width: 150px; height: 150px; margin:15px;">
-					  <div class="card-header" style="background-color: #ffefb4; color: black; font-size:14px;">[ 채팅이름 ] <%=chatRoom.getTitle() %></div>
+					  <div class="card-header" style="background-color: #ffefb4; color: black; font-size:13px;">[ 채팅이름 ] <%=chatRoom.getTitle() %></div>
 					  <div class="card-body">
-					    <p class="card-text"><%=chatRoom.getDescriptions() %></p>
+					    <p class="card-text" style="font-size:13px"><%=chatRoom.getDescriptions() %></p>
 					  </div>
 					</div>
 				</div>
@@ -214,7 +211,7 @@ function exitChat(element) { // 자신을 제거
 						<col width="100" />
 					</colgroup>
 					<thead>
-						<tr class="table-warning" style="color: black;">
+						<tr class="table-warning" style="color: black; font-size:13px">
 							<th>채팅방 ID</th>
 							<th>채팅방 이름</th>
 							<th>채팅방 소개</th>
@@ -225,7 +222,7 @@ function exitChat(element) { // 자신을 제거
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr style="font-size:12px">
 							<td id="showChatId">-</td>
 							<td id="showChatTitle"> - </td>
 							<td id="showChatDescription">- </td>
@@ -284,7 +281,7 @@ const createChat = () => {
 			},
 		dataType: "text",
 		success: function(data){
-			alert(data);
+			alert("채팅방이 생성되었습니다.");
 			if (data == null) {
 				alert("이미 존재하는 Chat ID 입니다.");
 				document.getElementById("roomId").value = "";
@@ -295,7 +292,7 @@ const createChat = () => {
 			
 			const chatDiv = document.createElement("div");
 			const chatDivChild = "<div class='card text-white bg-warning mb-3' id=" + json.roomId + " onclick='showChatInfo(this)' ondblclick='enterChat(this)' style='width: 150px; height: 150px; margin:15px;'>";
-									+ "<div class='card-header' style='background-color: yellow; color: black;'>[ 채팅이름 ] " + json.title + " </div>"
+									+ "<div class='card-header' style='background-color: #ffeebe; color: black; font-size:14px;'>[ 채팅이름 ] " + json.title + " </div>"
 									+ "<div class='card-body'>" 
 										+ "<p class='card-text'>" + json.descriptions + "</p>" 
 									+ "</div>" 
@@ -310,7 +307,7 @@ const createChat = () => {
 }
 const chatForAll = () =>{
 	const allChatWindow = window.open("allChatting.do", "chatAll", "resizable");
-	allChatWindow.resizeTo(600,900);
+	allChatWindow.resizeTo(600,850);
 }
 </script>
 </body>

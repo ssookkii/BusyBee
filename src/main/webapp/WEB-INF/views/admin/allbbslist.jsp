@@ -46,19 +46,9 @@
 #bbs{
 	text-align: center;	
 }
-.body{
-	font-family: 'Black Han Sans', sans-serif;
-	font-family: 'Dongle', sans-serif;
-	font-family: 'Jua', sans-serif;
-	font-family: 'Noto Sans KR', sans-serif;
-}
-.nav nav-tabs{
-margin-left: 1000px;
-}
-.d-flex{
-font-size: 14px;
-float: right;
-padding-right: 300px;
+
+.nav{
+text-align: center;
 }
 .pagination .page-link {
   color: #333;
@@ -110,22 +100,24 @@ String category = (String)request.getAttribute("category");
 <br><br>
 
 
-    <div align="right">
-<nav style="width: 1000px; text-align: right;">
+<div align="center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <div class="d-flex" >
-	      	<select id="choice" style="color:black;">
+      <ul class="navbar-nav me-auto">
+      </ul>
+           <div class="d-flex" style="font-size: 13px" >
+	      	<select id="choice" style="color:black">
 				<option value="" selected="selected">검색</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-				<button type="button" class="btn btn-danger" onclick="searchBtn()">검색</button>
+	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>" style="font-size: 13px">
+	        <button type="button" onclick="searchBtn()" class="btn btn-danger" style="width: 55px; height: 30px; font-size: 13px; ">검색</button>
       </div>
     </div>
   </div>
@@ -139,14 +131,12 @@ String category = (String)request.getAttribute("category");
 
 
 <input type="hidden" id="id" value='<%=login.getId()%>'>
-<input type="hidden" id="login" value="<%=login.getId() %>">
 
-
-<table id="bbs" class="table table-hover" style="width: 1500px; font-size: 12px; text-align: center;" >
-<col width="100"><col width="150"><col width="70"><col width="600"><col width="100"><col width="150"><col width="100">
+<table id="bbs" class="table table-hover" style="width: 1000px; font-size: 12px " >
+<col width="100"><col width="800"><col width="100"><col width="180"><col width="100">
 <thead class="table-warning">
 <tr>
-<th>번호</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
+	<th>번호</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
 </tr>
 </thead>
 <tbody>
@@ -165,16 +155,15 @@ if(list == null || list.size() == 0){
 		BbsDto dto = list.get(i);
 		%>
 		<tr>
-
-			<th style="vertical-align: middle"><%=i + 1 + (pageNumber * 10) %></th>
-			
+					<th style="vertical-align: middle"><%=i + 1 + (pageNumber * 10) %></th>
+	
 				<td style="text-align: left;">
 					<%=Utility.arrow(dto.getDepth()) %>
 					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
 						<%=dto.getTitle() %>
 					</a>
-				</td>			
-
+				</td>
+			
 			<td style="vertical-align: middle"><%=dto.getReadcount() %></td>
 			<td style="vertical-align: middle"><%=dto.getId() %></td>
 			
@@ -198,27 +187,6 @@ if(list == null || list.size() == 0){
 </tbody>
 </table>
 
-<br>
-
-<%-- <%
-for(int i = 0;i < pageBbs; i++){
-	if(pageNumber == i){	// 현재 페이지
-		%>
-		<span style="font-size: 15pt;color: #0000ff">
-			<%=i+1 %>
-		</span>
-		<%
-	}else{					// 그밖에 다른 페이지
-		%>
-		<a href="#none" title="<%=i+1 %>페이지" onclick="goPage(<%=i %>)"
-			style="font-size: 15pt; color: #000; text-decoration: none;">
-			[<%=i+1 %>]
-		</a>			
-		<%
-	}		
-}
-%> --%>
-
 
 <div class="container">
     <nav aria-label="Page navigation">
@@ -240,7 +208,7 @@ if(search != ""){
 function goPage( pageNumber ) {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
-	location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber;	
+	location.href = "allbbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + pageNumber;	
 }
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
@@ -261,7 +229,7 @@ function searchBtn() {
 		return;
 	} */
 	
-	location.href = "bbslist.do?choice=" + choice + "&search=" + search;
+	location.href = "allbbslist.do?choice=" + choice + "&search=" + search;
 }
 $('#pagination').twbsPagination({
 	startPage:<%=pageNumber+1 %>,
@@ -276,8 +244,7 @@ $('#pagination').twbsPagination({
     	let choice = document.getElementById('choice').value;
     	let search = document.getElementById('search').value;
     	
-    	location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
-    //	location.href = "bbslist.do?choice=null&search=null" + "&category=" + category + "&pageNumber=" + (page-1);
+    	location.href = "allbbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
     }
 })
 </script>

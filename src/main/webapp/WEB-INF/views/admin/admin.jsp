@@ -29,31 +29,9 @@ font-family: 'Dongle', sans-serif;
 font-family: 'Jua', sans-serif;
  justify-content: center;
 }
-.flex-container {
-  display: flex;
-  justify-content: center;
-}
-.flex-item {
-  margin: 15px;
-  width: 400px;
-  margin: 15px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 .btn {
-  height: 500px;
-	width: 650px;
-  
-}
-#notice{
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 15px;
-  margin-top:40px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 700px;
+	width: 400px;
 }
 </style>
 
@@ -66,7 +44,7 @@ font-family: 'Jua', sans-serif;
 <div class="flex-container" >
 
 
-    <button style="font-size: 50px;" class="btn btn-warning" onclick="userList()">회원 관리</button>
+    <button style="font-size: 50px; margin-left: 340px;" class="btn btn-warning" onclick="userList()">회원 관리</button>
 
 
 

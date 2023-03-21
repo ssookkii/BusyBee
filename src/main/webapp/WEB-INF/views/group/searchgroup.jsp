@@ -143,6 +143,7 @@ margin-top: 10px" value="가입신청" onclick="go_checkDupl()">
 $("#search").keyup(function(){
 	searchGroup();
 });
+
 $("#wantTo").keyup(function(e){
 	
 	let key = e.key || e.keyCode;
@@ -200,46 +201,51 @@ $("#wantTo").keyup(function(e){
 		}
 	});
 });
-var group_code_OK = false;
+
+var group_code_OK;
 function go_checkDupl(){
 	
 	if($.trim($("#wantTo").val())=="") {
 		alert('그룹 코드를 입력해주세요.');
 		$("#wantTo").val('');
+		group_code_OK = false;
 		return;
-	}
-	
-	$.ajax({
-		url:"checkDupl.do",
-		type:"get",
-		data:{"id":'<%=id%>', "group_code":$("#group_code").val()},
-		success:function(msg){
-			if(msg!=null && msg!="") {
-				if(msg=="Already"){
-					alert('이미 가입된 그룹입니다.');
-					$("#wantTo").val('');
-					$("#wantTo_Msg").val('');
-					$("#tableBody2").html('');
-					group_code_OK = false;
-				} else if(msg=="WAIT") {
-					alert('승인 대기중인 그룹입니다.');
-					$("#wantTo").val('');
-					$("#wantTo_Msg").val('');
-					$("#tableBody2").html('');
-					group_code_OK = false;
+	} else {
+		$.ajax({
+			url:"checkDupl.do",
+			type:"get",
+			async:false,
+			data:{"id":'<%=id%>', "group_code":$("#group_code").val()},
+			success:function(msg){
+				if(msg!=null && msg!="") {
+					if(msg=="Already"){
+						alert('이미 가입된 그룹입니다.');
+						$("#wantTo").val('');
+						$("#wantTo_Msg").val('');
+						$("#tableBody2").html('');
+						group_code_OK = false;
+						return;
+					} else if(msg=="WAIT") {
+						alert('승인 대기중인 그룹입니다.');
+						$("#wantTo").val('');
+						$("#wantTo_Msg").val('');
+						$("#tableBody2").html('');
+						group_code_OK = false;
+						return;
+					} else {
+						group_code_OK = true;
+					}
 				} else {
-					group_code_OK = true;
+					alert('그룹코드를 다시 확인해주세요.');
+					$("#wantTo").val('');
+					group_code_OK = false;
 				}
-			} else {
-				alert('그룹코드를 다시 확인해주세요.');
-				$("#wantTo_Msg").val('');
-				$("#wantTo_Msg").val('');
+			},
+			error:function(){
+				alert('error');
 			}
-		},
-		error:function(){
-			alert('error');
-		}
-	});
+		});
+	}
 	
 	if(!group_code_OK) {
 		$("#wantTo").val('');

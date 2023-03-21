@@ -27,27 +27,42 @@
 
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 
-<style>
-
-.btn{
-	height : 30px;
-	width: 50px;
-	
+<style type="text/css">
+#bbs{
+	text-align: center;	
 }
-
-.table{
-font-size: 14px;
-
+.body{
+	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Dongle', sans-serif;
+	font-family: 'Jua', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
-.d-flex{
-font-size: 14px;
-float: right;
-padding-right: 450px;
+.nav{
+text-align: center;
 }
-
-
+.pagination .page-link {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
 }
-
+.pagination .page-item.active .page-link {
+  background-color: #FFCE67;
+  border-color: #FFCE67;
+}
+.pagination .page-link:focus,
+.pagination .page-link:hover {
+  color: #FFCE67;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+.pagination .page-item:first-child .page-link {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination .page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
 </style>
 
 <!-- 부트스트랩 CSS -->
@@ -58,7 +73,6 @@ padding-right: 450px;
 <body>
 <%
 UserDto login = (UserDto)session.getAttribute("login");
-
 List<CustomerDto> list = (List<CustomerDto>)request.getAttribute("customer");
 int pageBbs = (Integer)request.getAttribute("pageBbs");
 int pageNumber = (Integer)request.getAttribute("pageNumber");
@@ -74,22 +88,24 @@ String search = (String)request.getAttribute("search");
 <hr>
 
 
-<div align="right">
-<nav style="width: 1000px; text-align: right;">
+<div align="center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <div class="d-flex" >
-	      	<select id="choice" style="color:black;">
+      <ul class="navbar-nav me-auto">
+      </ul>
+<div class="d-flex" style="font-size: 13px" >
+	      	<select id="choice" style="color:black">
 				<option value="" selected="selected">검색</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-				<button type="button" class="btn btn-secondary my-2 my-sm-0" onclick="searchBtn()">검색</button>
+<input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>" style="font-size: 13px">
+	        <button type="button" onclick="searchBtn()" class="btn btn-danger" style="width: 55px; height: 30px; font-size: 13px; ">검색</button>
       </div>
     </div>
   </div>
@@ -98,8 +114,8 @@ String search = (String)request.getAttribute("search");
 
 <br>
 <div align="center">
-<table class="table table-hover" style="width: 1000px">
-<col width="70"><col width="600"><col width="100"><col width="150">
+<table class="table table-hover" style="width: 1000px; font-size: 14px;">
+<col width="200"><col width="600"><col width="200">
 <thead>
 <tr class="table-warning" style="color: white;">
 	<th>번호</th><th>제목</th><th>작성자</th>
@@ -193,11 +209,9 @@ if(list == null || list.size() == 0){
 </div>
 
 <script type="text/javascript">
-
 function customerWrite() {
 	location.href="customerWrite.do";
 }
-
 let search = "<%=search %>";
 console.log("search = " + search);
 if(search != ""){
@@ -205,23 +219,18 @@ if(search != ""){
 	obj.value = "<%=choice %>";
 	obj.setAttribute("selected", "selected");
 }
-
 function enterKeyEvent() {
 	if(window.event.keyCode==13){
 		searchBtn();
 	}
 }
-
 function searchBtn() {
 	let choice = document.getElementById('choice').value;
 	let search = document.getElementById('search').value;
 	
-
 	
 	location.href = "customer.do?choice=" + choice + "&search=" + search;
 }
-
-
 $('#pagination').twbsPagination({
 	startPage: <%=pageNumber+1 %>, 
     totalPages: <%=pageBbs %>,
@@ -238,11 +247,6 @@ $('#pagination').twbsPagination({
     	location.href = "customer.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
     }
 });
-
-
-
-
-
 </script>
 </body>
 </html>

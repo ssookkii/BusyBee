@@ -156,7 +156,7 @@
     
 }
 .item:target .subMenu{
-    max-height: 10em;
+    max-height: 30em;
 }
 
 </style>

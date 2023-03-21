@@ -20,7 +20,7 @@ String User = (String)request.getAttribute("User");
 	font-family: 'Noto Sans KR', sans-serif;
 }
 body {
-	height: 900px;
+	height: 850px;
 }
 #sendOption{
 	margin-top: 10px;
@@ -45,7 +45,7 @@ body {
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 10px;
 	width: 500px;
-	height: 700px;
+	height: 650px;
 	overflow: scroll;
 	background-color: white;
 }
@@ -73,24 +73,26 @@ body {
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 5px 10px;
 	margin: 5px 5px;
-	background-color: #fae2c2;
+	background-color: #ffecd2;
 }
 .whisper {
 	display: flex;
 	justify-content: flex-end;
+	margin-left: auto;
 }
 .whisper p {
+	margin-left: auto;
 	border: 2px solid black;
 	border-radius: 5px;
 	box-shadow: 5px 5px 2px 1px gray;
 	padding: 5px 10px;
 	margin: 5px 5px;
-	background-color: #ffd0f9;
+	background-color: #ffd2e8;
 }
 </style>
 
 <div id="allChatContainer">	
-	<h1 style="text-align: center;">전체채팅방</h1>
+	<h2 style="text-align: center;">전체채팅방</h2>
 	<div class="item-center">
 		<div class="chat-contents-container">
 			<div class="chat-contents">
@@ -111,6 +113,14 @@ body {
 </div>
 <script>
 var wsocket;
+function loginCheck() {
+	if ( "<%=User%>" == "" || "<%=User%>" == "null"){
+		location.href= "/BusyBee/loginMain.do";
+		alert("로그인 후 이용해주세요");
+		return false;
+	}
+	return true;
+}
 // 접속
 function connect() {
 	
@@ -120,12 +130,7 @@ function connect() {
 	}
 	
 	// Web Socket 생성
-	
-
-		wsocket = new WebSocket("ws://localhost:8080/BusyBee/echo.do");
-
-
-	
+	wsocket = new WebSocket("ws://localhost:8080/BusyBee/echo.do");
 	wsocket.onopen = onOpen;
 	wsocket.onmessage = onMessage;
 	wsocket.close = onClose;
@@ -157,7 +162,6 @@ function send() {
 	sendTime = sendTime.toLocaleString('ko-kr');
 	// 유효성 검사
 	if (message == "" || message == null || message == "" || message == null) {
-		alert("유효하지 않은 요청입니다.");
 		return;
 	};
 	if (recipient == "" || recipient == null) {
@@ -198,14 +202,12 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	const message = messageList[1];
 	const recipient = messageList[2];
 	const sendTime = messageList[3];
-	
 	const chatBox = document.querySelector(".chat-contents");
 	const chatContent = document.createElement("div");
 	if (message === undefined || message == "") return; // 만약에라도 메세지가 비어있으면 아무동작 안함.
 	
 	// 자신이 보낸 메세지일경우
 	if (writer == "<%=User%>" && recipient == "to All") { 
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>" + "나 | " + message + "</p><br/>" +
 								"<span>" + sendTime + "</span>";
@@ -215,7 +217,6 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	}
 	// 자신이 보낸 귓속말 메세지인경우
 	else if (writer == "<%=User %>" && recipient != "to All"){
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-me";
 		const plusElementMyChat = "<p>[" + recipient + "]에게 귓속말 | " + message + "</p><br/>" +
 								"<span>" + sendTime + "</span>";
@@ -225,7 +226,6 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	}
 	// 다른사람이 보낸 전체메세지 일경우
 	else if (writer != "<%=User%>" && recipient == "to All") {
-		const chatContent = document.createElement("div");
 		chatContent.className = "chat-other";
 		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+ 
 									"<p>"+ message + " [" + writer + "]</p>";
@@ -236,15 +236,18 @@ function appendMessage( msg ) { // msg >> "user이름:message내용"
 	
 	// 다른사람이 보낸 귓속말 일경우
 	else if(writer != "<%=User%>" && recipient == "<%=User%>"){ 
-		const chatContent = document.createElement("div");
 		chatContent.className = "whisper";
 		const plusElementOtherChat = "<span>" + sendTime + "</span><br/>"+
-									"<p>" + message + " |  <귓속말>[" + writer + "]</p>";
+									"<p>" + message + " [" + writer + "]</p>";
 		chatContent.innerHTML = plusElementOtherChat;
 		chatBox.appendChild(chatContent);
 	}
-		// 스크롤을 위로 이동 시킨다
-	chatBox.scrollTop = chatBox.scrollHeight;
+	
+	const chatScrollBar = document.querySelector(".chat-contents-container")
+	console.log(chatScrollBar.offsetHeight);
+	chatScrollBar.scrollTop = chatScrollBar.offsetHeight;
+	
+	//chatBox.lastChild.focus();
 }
 function toChatWho() {
 	//select option 의 value 추출
@@ -267,5 +270,5 @@ function resizeWindowSize() {
 	window.resizeTo(600,900);
 }
 window.addEventListener("resize", resizeWindowSize);
-connect();
+if (loginCheck()) connect();
 </script>
