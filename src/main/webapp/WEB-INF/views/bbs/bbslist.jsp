@@ -122,12 +122,12 @@ String org = (String)session.getAttribute("org");
         <li class="nav-item">
           <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
         </li>
-       <li class="nav-item dropdown">
+       <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">그룹 선택</a>
           <div id="groupdrop" class="dropdown-menu">
          	<h3 id="nogroup"></h3>
           </div>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
           <div class="dropdown-menu">
