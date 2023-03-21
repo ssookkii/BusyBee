@@ -5,8 +5,8 @@
         
 <%
 	UserDto login = (UserDto)session.getAttribute("login");
-	String group_code = (String)request.getAttribute("group_code");
-	String org = (String)request.getAttribute("org");
+String group_code = (String)session.getAttribute("group_code");
+String org = (String)session.getAttribute("org");
 %>      
     
     
