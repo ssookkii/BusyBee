@@ -11,19 +11,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- 부트스트랩 JavaScript 및 의존성 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle:wght@300;400;700&family=Jua&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -39,11 +37,6 @@
 	.pop_wrap{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
 	.pop_wrap:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
 	.pop_wrap .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
-.d-flex{
-font-size: 14px;
-float: right;
-padding-right: 300px;
-}
 .pagination .page-link {
   color: #333;
   background-color: #fff;
@@ -106,51 +99,51 @@ String org = (String)session.getAttribute("org");
 <small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;작성하신 글입니다.</small>
 <br><br>
 
-    <div align="right">
-<nav style="width: 1000px; text-align: right;">
+ <div align="center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <div class="d-flex" >
-	      	<select id="choice" style="color:black;">
-				<option value="" selected="selected">검색</option>
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="writer">작성자</option>
-			</select>
-  <input style="width: 100px; height: 30px;" class="form-control form-control-sm" type="text" id="search" name="search" onkeyup="enterKeyEvent()" placeholder="검색어" value="<%=search %>">
-				<button type="button" class="btn btn-danger" onclick="searchBtn()">검색</button>
-      </div>
-    </div>
-  </div>
-</nav>
-</div>
-
-<ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a style="margin-left: 300px;" class="nav-link active" onclick="beforelist()" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">게시판으로</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" data-bs-toggle="tab" onclick="mystarlist()" href="#profile" aria-selected="false" tabindex="-1" role="tab">즐겨찾기 한 글</a>
-  </li>
-
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
-    <div class="dropdown-menu" style="">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" onclick="beforelist()" style="font-size: 15px">게시판으로</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="mystarlist()" style="font-size: 15px">즐겨찾기 한 글</a>
+        </li>
+       <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">그룹 선택</a>
+          <div id="groupdrop" class="dropdown-menu">
+         	<h3 id="nogroup"></h3>
+          </div>
+        </li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
+          <div class="dropdown-menu">
             <a class="dropdown-item" onclick="categorybtn()">전체글</a>
             <a class="dropdown-item" onclick="categorybtn1()">공지사항</a>
             <a class="dropdown-item" onclick="categorybtn2()">일반게시글</a>
             <a class="dropdown-item" onclick="categorybtn3()">자료게시글</a>
             <a class="dropdown-item" onclick="categorybtn4()">회의록</a>
+          </div>
+        </li>
+      </ul>
+       <div class="d-flex" >
+	      	<select id="choice" style="color:black">
+				<option value="" selected="selected">검색</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+	        <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" class="form-control"  value="<%=search %>">
+	        <button type="button" onclick="searchBtn()" class="btn btn-light">검색</button>
+      </div>
     </div>
-    
-
-  </li>
-</ul>
-
-
+  </div>
+</nav>
+</div>
 <div align="center">
 
 <input type="hidden" id="category" value="<%=category %>">
@@ -199,6 +192,10 @@ if(list == null || list.size() == 0){
 			 %>
 				<td><i class="fa fa-file"></i></td>
 			<%
+			} else{
+				%>
+				<td></td>
+				<%
 			}
 			%>
 		</tr>
@@ -231,10 +228,8 @@ if(list == null || list.size() == 0){
 
   
 <script type="text/javascript">
-let group_code = document.getElementById("group_code").value;
-let org = document.getElementById("org").value;
 function beforelist() {
-	location.href="bbslist.do?group_code=" + group_code + "&org=" + org;
+	location.href="bbslist.do";
 }
 function categorybtn() {
 	location.href="mybbslist.do";

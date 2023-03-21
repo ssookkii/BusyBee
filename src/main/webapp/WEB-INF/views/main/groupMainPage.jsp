@@ -163,7 +163,7 @@ $.ajax({
            }
          }else{
        	  tableTd += '<tr>' 
-        	  + '<td colspan="2" style="font-size: 15px; font-weight: 300; color:black; ">게시글이 없습니다</td><td></td>'
+        	  + '<td colspan="2" style="font-size: 15px; font-weight: 300; color:black; ">&nbsp&nbsp&nbsp&nbsp&nbsp게시글이 없습니다</td><td></td>'
         	  +'</tr>';
               $("#bbsBody").append(tableTd);
 
@@ -201,7 +201,7 @@ $.ajax({
            }
          }else{
           	  tableTd += '<tr>' 
-            	  + '<td style="font-size: 15px; font-weight: 300;   color:black;">일정이 없습니다</td>'
+          		+ '<td colspan="3" style="font-size: 15px; font-weight: 300; color:black; ">&nbsp&nbsp&nbsp&nbsp일정이 없습니다</td><td></td>'
             	  +'</tr>';
                   $("#calBody").append(tableTd);
 

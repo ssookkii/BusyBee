@@ -104,12 +104,12 @@ table, td, th {
 <br>
 <table class="table table-hover" >
 <col width="50">
-<col width="100"><col width="100"><col width="100"><col width="300">
+<col width="100"><col width="100"><col width="250"><col width="300">
 <col width="300"><col width="100">
 
 <thead>
 <tr class="table-warning" style="color: black;">
-	<th>번호</th><th>회원ID</th><th>회원상태</th><th>신고누적</th>
+	<th>번호</th><th>회원ID</th><th>회원상태</th>
 	<th>가입일</th><th>이메일</th><th>회원관리</th>
 </tr>
 </thead>
@@ -148,9 +148,6 @@ if(list == null || list.size() == 0){
 			}
 			%>
 			
-			</td>
-						<td>
-			<%=dto.getReport_count()%>
 			</td>
 			<td>
 			<%=dto.getRegidate() %>

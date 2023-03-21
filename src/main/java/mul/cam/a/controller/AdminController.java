@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import mul.cam.a.dto.BbsDto;
 import mul.cam.a.dto.BbsParam;
+import mul.cam.a.dto.CustomerDto;
+import mul.cam.a.dto.MemberDto;
 import mul.cam.a.dto.ReportDto;
 import mul.cam.a.dto.UserDto;
+import mul.cam.a.dto.starDto;
 import mul.cam.a.service.BbsService;
+import mul.cam.a.service.MemberService;
 import mul.cam.a.service.ReportService;
 import mul.cam.a.service.UserService;
 
@@ -84,6 +89,7 @@ System.out.println("신고 관리 진입 " + new Date());
 	// 게시글 관리 이동
 
 	// 모든 게시글
+	
 	@GetMapping(value = "allbbslist.do")
 	public String allbbslist(BbsParam param, Model model, HttpSession session) {
 		System.out.println("allbbslist" + new Date());
@@ -219,6 +225,7 @@ System.out.println("신고 관리 진입 " + new Date());
 			return "message";
 		}
 		
+		// 신고기능
 		@PostMapping(value = "reportSubmit.do")
 		@ResponseBody
 		public Map<String, Object> reportSubmit(ReportDto dto) {

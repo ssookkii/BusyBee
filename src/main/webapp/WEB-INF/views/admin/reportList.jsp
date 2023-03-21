@@ -103,14 +103,14 @@ font-size: 14px;
 <br>
 <table class="table table-hover" style="width: 1700px;, font-size: 20px;">
 <col width="50">
-<col width="100"><col width="100"><col width="150"><col width="100">
+<col width="100"><col width="100"><col width="100">
 <col width="100"><col width="200"><col width="600"><col width="200">
 <col width="100">
 
 <thead>
 <tr class="table-warning" style="color: black;">
 	<th scope="row">번호</th><th scope="row">신고자</th><th scope="row">피신고자</th>
-	<th scope="row">신고누적횟수</th><th scope="row">신고글 번호</th><th scope="row">신고글 유형</th><th>신고사유</th>
+	<th scope="row">신고글 번호</th><th scope="row">신고글 유형</th><th>신고사유</th>
 	<th scope="row">신고일시</th><th scope="row">신고글 관리</th>
 </tr>
 </thead>
@@ -135,9 +135,7 @@ if(list == null || list.size() == 0){
 			<td>
 			<%=dto.getReported_id() %>
 			</td>
-			<td>
-			<%=dto.getReport_count() %>
-			</td>
+
 						<td>
 			<%=dto.getReport_seq() %>
 			</td>

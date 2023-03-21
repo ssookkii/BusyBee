@@ -36,10 +36,6 @@ public class ReportDaoImpl implements ReportDao{
 		return session.insert(ns + "reportSubmit", dto);
 	}
 
-	@Override
-	public int countUp(ReportDto dto) {
-		// TODO Auto-generated method stub
-		return session.update(ns+"countUp", dto);
-	}
+
 
 }

@@ -41,6 +41,9 @@ public class BbsController {
 		UserDto login = (UserDto)session.getAttribute("login");
 		String id = login.getId();
 		
+		param.setGroup_code((String)session.getAttribute("group_code"));
+		param.setOrg((String)session.getAttribute("org"));
+		
 		// 글의 시작과 끝
 		int pn = param.getPageNumber();  // 0 1 2 3 4
 		int start = 1 + (pn * 10);	// 1  11
@@ -49,7 +52,7 @@ public class BbsController {
 		param.setStart(start);
 		param.setEnd(end);
 		
-		System.out.println(param.toString());
+		System.out.println("~~~~~~~~" + param.toString());
 		
 		List<starDto> star = service.starlist(id);
 		List<BbsDto> list = service.bbslist(param);
@@ -410,6 +413,9 @@ public class BbsController {
 		
 		param.setId(id);
 		
+		param.setGroup_code((String)session.getAttribute("group_code"));
+		param.setOrg((String)session.getAttribute("org"));
+		
 		System.out.println(param.toString());
 		
 		// 글의 시작과 끝
@@ -511,7 +517,7 @@ public class BbsController {
 
 //		session.setAttribute("login", login);
 		
-		return "redirect:/bbslist.do?group_code=" + param.getGroup_code() + "&org=" + URLEncoder.encode(param.getOrg(), "UTF-8");
+		return "redirect:/bbslist.do";
 		
 	}
 	

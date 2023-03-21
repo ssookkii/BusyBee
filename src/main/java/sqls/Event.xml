@@ -55,12 +55,14 @@ ADD FOREIGN KEY (id) references user (id);
 	    SELECT * FROM schedule WHERE id = #{id}
 	</select>
 
-	<!-- 일정 리스트 미리보기 SQL문 -->
+<!-- 일정 리스트 미리보기 SQL문 -->
 	<select id="preScheduleList" parameterType="String" resultType="mul.cam.a.dto.EventDto">	
 	select *
 	from schedule
 	where 
 	groupCode=#{groupCode}
+	and
+	id=#{id}
 	and
 	replace(replace(replace(endDate, ':', ' '), '-', ' '), ' ', '')
 	> replace(replace(replace(now(), ':', ' '), '-', ' '), ' ', '')

@@ -394,7 +394,7 @@ function initTimepicker() {
 
 	
 		<table style="width: 100%;">
-		
+		<div id="delete-alert-message" style="font-size: 14px"></div>
 			<tr>
 				<td style="width: 60%;">
 
@@ -549,6 +549,7 @@ function initTimepicker() {
       </div>
       <div class="modal-body" style="height: 80px; display: flex; align-items: center; justify-content: center;">
         <p>정말로 일정을 삭제하시겠습니까?</p>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" style=" font-size: 13px; font-weight: 700;" >취소</button>
@@ -1037,7 +1038,7 @@ $(document).ready(function() {
 					  // 확인창 띄우기
 					  $('#customConfirmModal').modal('show');
 					
-					  $('#customConfirmBtn').click(function() {
+					  $('#customConfirmBtn').click(function() {			        		 
 					    // 일정 삭제 요청
 					    $.ajax({
 					      url: 'eventdelete.do',
@@ -1047,14 +1048,20 @@ $(document).ready(function() {
 					        // FullCalendar에서 일정 삭제
 					        $('#calendar').fullCalendar('removeEvents', eventId);
 					        // 일정 리스트 업데이트
-					        location.reload();
+								
+					        setTimeout(function() {
+					        	location.reload();
+								}, 800);
+					    	
 					      },
 					      error: function() {
 					        alert('일정을 삭제하는데 실패하였습니다.');
 					      }
 					    });
-					
+
 					    $('#customConfirmModal').modal('hide');
+					    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
+		        				  '일정을 삭제하였습니다.' +'</div>');
 					  });
 					});
 

@@ -10,16 +10,16 @@
 	report_seq 해당 신고글 -->
 	
 <!--
- 	 	create table report(
-	report_id int auto_increment primary key,
+ 	create table report(
+	report_id int auto_increment not null primary key,
 	reporter_id varchar(45) not null,
 	reported_id varchar(45) not null,
 	report_content varchar(200) not null,
 	report_seq int not null,
 	report_type varchar(45) not null,
 	report_date timestamp not null,
-	report_count decimal(8) );
-	 -->
+	report_count decimal(8) unique
+); -->
 	
 	
 	<select id="reportList" parameterType="mul.cam.a.dto.BbsParam"
@@ -68,11 +68,7 @@
 
 </insert>
 
-<update id="countUp" parameterType="mul.cam.a.dto.ReportDto">
 
-	update user
-	set report_count = report_count+1
 
-</update>
 	
 	</mapper>

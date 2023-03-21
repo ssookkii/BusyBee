@@ -5,6 +5,7 @@ import java.util.List;
 
 import mul.cam.a.dto.BbsParam;
 import mul.cam.a.dto.ReportDto;
+import mul.cam.a.dto.UserDto;
 
 public interface ReportDao {
 
@@ -13,7 +14,5 @@ public interface ReportDao {
 	int getAllReport(BbsParam param);
 	
 	int reportSubmit(ReportDto dto);
-	
-	int countUp(ReportDto dto);
-	
+
 }

@@ -96,7 +96,7 @@ td {
 	vertical-align: top;
 	padding: 0;
 }
-    
+ 
     
 </style>
 </head>
@@ -110,8 +110,8 @@ td {
             <tr align="center" style="background-color: #fff7e1; color: gray;">
                 <td><header>
                 <a href="login.do">
-                        <img src="images/logo.png" width="250px" height="40px"
-                            style="float: left; margin: 20px;">
+                     <img src="images/logo.png" width="280px" height="40px"
+                            style="float: left; margin-left: 10px; margin-top : 20px">
                             </a>
                     </header></td>
 
@@ -155,7 +155,8 @@ td {
 					<li class="nav-item"><a class="nav-link" href="goMygroup.do">내 그룹</a></li>
 					<li class="nav-item"><a class="nav-link" href="goSearchgroup.do">그룹 검색</a></li>
 					<li class="nav-item"><a class="nav-link" href="goNoti.do">그룹 알림</a></li>
-					<li class="nav-item"><a class="nav-link" href="chatHome.do">임시 채팅</a></li>
+					<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+					<li class="nav-item"><a class="nav-link" href="chatHome.do">채팅</a></li>
 				</ul>
 			</div>
 		</div>
