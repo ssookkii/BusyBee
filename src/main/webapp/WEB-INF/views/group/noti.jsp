@@ -76,7 +76,7 @@
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
 <h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;내가 요청한 그룹 승인</h1>
-<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;그룹 리더님의 가입 수락을 기다리고 있어요.</small>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;다른 멤버를 초대하셨거나, 다른 그룹에 가입을 요청한 목록이에요.</small>
 <br><br><br>
 <table class="table-warning" style="margin-left:130px">
 <col width="50px"><col width="130px"><col width="130px"><col width="200px"><col width="130px"><col width="130px">

@@ -218,7 +218,6 @@ $(document).ready(function(){
 	});
 	
 });
-var selMem_OK = false;
 $("#wantId").keyup(function(e){
 	
 	let key = e.key || e.keyCode;
@@ -236,7 +235,7 @@ $("#wantId").keyup(function(e){
 	if(key==" " || key==32) {
 		$("#wantId").val('');
 		$("#tBody3").html('');
-		var tableTdNone = '<tr><td>아이디에는 공백이 들어갈 수 없습니다.</td></tr>';
+		var tableTdNone = "<tr><td colspan='5'>아이디에는 공백이 들어갈 수 없습니다.</td></tr>";
 		$("#tBody3").append(tableTdNone);
 		return;
 	}
@@ -244,7 +243,7 @@ $("#wantId").keyup(function(e){
 	if(!idValid.test($("#wantId").val())) {
 		$("#wantId").val('');
 		$("#tBody3").html('');
-		var tableTdNone = '<tr><td>아이디에는 영문 대소문자, 숫자만 들어갈 수 있습니다.</td></tr>';
+		var tableTdNone = "<tr><td colspan='5'>아이디에는 영문 대소문자, 숫자만 들어갈 수 있습니다.</td></tr>";
 		$("#tBody3").append(tableTdNone);
 		return;
 	}
@@ -289,49 +288,52 @@ function go_groupUpd() {
 	location.href="updGroup.do?group_code=" + '<%=group_code%>' + "&group_name=" + $("#group_name").val()
 			+ "&group_info=" + $("#group_info").val();
 }
+
+var selMem_OK;
 function go_checkDupl(){
 	
 	if($.trim($("#wantId").val())=="") {
 		alert('초대 ID를 입력해주세요.');
 		var selMem_OK = false;
 		return;
+	} else{
+		$.ajax({
+			url:"inv_checkDupl.do",
+			type:"get",
+			async:false,
+			data:{"id":$("#wantId").val(), "group_code":'<%=group_code%>'},
+			success:function(msg){
+				console.log(msg);
+				if(msg!=null && msg!="") {
+					if(msg=="Already"){
+						alert('이미 가입된 멤버입니다.');
+						$("#wantId").val('');
+						$("#wantTo_Msg").val('');
+						$("#tBody3").html('');
+						selMem_OK = false;
+						return;
+					} else if(msg=="WAIT") {
+						alert('승인 대기중인 멤버입니다.');
+						$("#wantId").val('');
+						$("#wantTo_Msg").val('');
+						$("#tBody3").html('');
+						selMem_OK = false;
+						return;
+					} else {
+						selMem_OK = true;
+					}
+				} else {
+					alert('초대ID를 다시 확인해주세요.');
+					$("#wantId").val('');
+				}
+			},
+			error:function(){
+				alert('error');
+			}
+		});
 	}
 	
-	$.ajax({
-		url:"inv_checkDupl.do",
-		type:"get",
-		data:{"id":$("#wantId").val(), "group_code":'<%=group_code%>'},
-		success:function(msg){
-			if(msg!=null && msg!="") {
-				if(msg=="Already"){
-					alert('이미 가입된 멤버입니다.');
-					$("#wantId").val('');
-					$("#wantTo_Msg").val('');
-					$("#tBody3").html('');
-					var selMem_OK = false;
-					return;
-				} else if(msg=="WAIT") {
-					alert('승인 대기중인 멤버입니다.');
-					$("#wantId").val('');
-					$("#wantTo_Msg").val('');
-					$("#tBody3").html('');
-					var selMem_OK = false;
-					return;
-				} else {
-					var selMem_OK = true;
-				}
-			} else {
-				alert('초대ID를 다시 확인해주세요.');
-				$("#wantId").val('');
-			}
-		},
-		error:function(){
-			alert('error');
-		}
-	});
-	
 	if(!selMem_OK) {
-		alert('초대 불가능한 ID입니다.');
 		$("#wantId").val('');
 		return;
 	} else {
@@ -339,6 +341,7 @@ function go_checkDupl(){
 		+"&group_code="+'<%=group_code%>'+"&regimsg=" + $("#wantTo_Msg").val();
 	}
 }
+
 function go_delGroup(){
 	
 	location.href="delGroup.do?group_code=" + '<%=group_code%>';
