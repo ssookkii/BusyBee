@@ -74,6 +74,7 @@ List<ChatRoomDto> allChatRoom = (List<ChatRoomDto>)request.getAttribute("allChat
 <script>
 function showChatInfo(element) {
 	const chatRoomId = element.id; // 태그 구분을 개행으로 하면 첫 자식이 빈 text 가 잡힌다..
+
 	$.ajax({
 		method: "post",
 		data: { "chatRoomId": chatRoomId },
@@ -81,18 +82,19 @@ function showChatInfo(element) {
 		dataType: "text",
 		success: function(data){
 			data = JSON.parse(data);
-			
+			let chatCreatedAt = new Date(data.createdAt);
+
 			const chatTitle = data.title;
 			const chatDescription = data.descriptions;
 			const chatMembers = data.members;
 			const chatHost = data.createdBy;
-			const chatCreatedAt = data.createdAt;
+			
 			document.getElementById("showChatId").innerText = chatRoomId;
 			document.getElementById("showChatTitle").innerText = chatTitle;
 			document.getElementById("showChatDescription").innerText = chatDescription;
 			document.getElementById("showChatMember").innerText = chatMembers;
 			document.getElementById("showChatHost").innerText = chatHost;
-			document.getElementById("showChatCreatedAt").innerText = chatCreatedAt;
+			document.getElementById("showChatCreatedAt").innerText = formatDate(chatCreatedAt);
 			document.getElementById("chatExit").innerHTML = "<button class='exitChatBtn' onclick='exitChat(this)'>Chat Exit</button>";
 		},
 		error: function(){
@@ -101,6 +103,13 @@ function showChatInfo(element) {
 	});
 	
 	
+}
+function formatDate(date) {
+	  return date.getFullYear() + '년 ' + 
+	    (date.getMonth() + 1) + '월 ' + 
+	    date.getDate() + '일 ' + 
+	    date.getHours() + '시 ' + 
+	    date.getMinutes() + '분';
 }
 function enterChat(element) {
 	const chatRoomId = element.id;
