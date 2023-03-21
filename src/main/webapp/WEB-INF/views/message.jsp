@@ -469,114 +469,114 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 	}
 	
 	// 게시판 message
-	String bbswrite = (String)request.getAttribute("bbswrite");
-if(bbswrite != null && !bbswrite.equals("")){
-	if(bbswrite.equals("bbswrite_YES")){
-		%>
-		<script type="text/javascript">
-		alert("성공적으로 작성되었습니다");
-		location.href = "bbslist.do?group_code="+'<%=group_code%>'+"&org="+'<%=org%>';
-		</script>
-		<%
+		String bbswrite = (String)request.getAttribute("bbswrite");
+	if(bbswrite != null && !bbswrite.equals("")){
+		if(bbswrite.equals("bbswrite_YES")){
+			%>
+			<script type="text/javascript">
+			alert("성공적으로 작성되었습니다");
+			location.href = "bbslist.do?group_code="+'<%=group_code%>'+"&org="+'<%=org%>';
+			</script>
+			<%
+		}
+		else{
+			%>
+			<script type="text/javascript">
+			alert("다시 작성해 주십시오");
+			location.href = "bbswrite.do";
+			</script>
+			<%
+		}
 	}
-	else{
-		%>
-		<script type="text/javascript">
-		alert("다시 작성해 주십시오");
-		location.href = "bbswrite.do";
-		</script>
-		<%
+	String bbsupdate = (String)request.getAttribute("bbsupdate");
+	if(bbsupdate != null && !bbsupdate.equals("")){
+		if(bbsupdate.equals("bbsupdate_YES")){
+			%>
+			<script type="text/javascript">
+			alert("성공적으로 수정되었습니다");
+			location.href = "bbslist.do";
+			</script>
+			<%
+		}
+		else{
+			int seq = (Integer)request.getAttribute("seq");
+			%>
+			<script type="text/javascript">
+			alert("다시 작성해 주십시오");
+			let seq = "<%=seq %>";		
+			location.href = "bbsupdate.do?seq=" + seq;
+			</script>
+			<%
+		}	
 	}
-}
-String bbsupdate = (String)request.getAttribute("bbsupdate");
-if(bbsupdate != null && !bbsupdate.equals("")){
-	if(bbsupdate.equals("bbsupdate_YES")){
+	String bbsdelete = (String)request.getAttribute("bbsdelete");
+	if(bbsdelete != null && !bbsdelete.equals("")){
+		if(bbsdelete.equals("bbsdelete_YES")){
 		%>
-		<script type="text/javascript">
-		alert("성공적으로 수정되었습니다");
-		location.href = "bbslist.do?group_code="+group_code+"&org="+org;
-		</script>
-		<%
-	}
-	else{
-		int seq = (Integer)request.getAttribute("seq");
-		%>
-		<script type="text/javascript">
-		alert("다시 작성해 주십시오");
-		let seq = "<%=seq %>";		
-		location.href = "bbsupdate.do?seq=" + seq;
-		</script>
-		<%
-	}	
-}
-String bbsdelete = (String)request.getAttribute("bbsdelete");
-if(bbsdelete != null && !bbsdelete.equals("")){
-	if(bbsdelete.equals("bbsdelete_YES")){
-	%>
-		<script type="text/javascript">
-		alert("삭제되었습니다");
-		location.href = "bbslist.do?group_code="+group_code+"&org="+org;
-		</script>
-	<% 
-} else{	
-	int seq = Integer.parseInt(request.getParameter("seq"));
-	%>
-		<script type="text/javascript">
-		
-		alert("삭제에 실패했습니다");
-		let seq = "<%=seq %>";
-		location.href = "bbsdetail.do?seq=" + seq;
-		</script>
-	<%
-	}
-}
-String bbscomment = (String) request.getAttribute("bbscomment");
-if(bbscomment != null && bbscomment != "") {
-	if(bbscomment == "bbscomment_YES") {
+			<script type="text/javascript">
+			alert("삭제되었습니다");
+			location.href = "bbslist.do";
+			</script>
+		<% 
+	} else{	
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		%>
-		<script type="text/javascript">
-		alert("댓글이 작성되었습니다");
-		let seq = "<%=seq %>";
-		location.href = "bbsdetail.do?seq=" + seq;
-		</script>
-	<% 
-} else{	
-	int seq = Integer.parseInt(request.getParameter("seq"));
-	%>
-		<script type="text/javascript">
-		
-		alert("댓글작성에 실패했습니다");
-		let seq = "<%=seq %>";
-		location.href = "bbsdetail.do?seq=" + seq;
-		</script>
-	<%
+			<script type="text/javascript">
+			
+			alert("삭제에 실패했습니다");
+			let seq = "<%=seq %>";
+			location.href = "bbsdetail.do?seq=" + seq;
+			</script>
+		<%
+		}
 	}
-}
-String deleteBbscomment = (String) request.getAttribute("deleteBbscomment");
-if(deleteBbscomment != null && deleteBbscomment != "") {
-	if(deleteBbscomment == "deleteBbscomment_YES") {
+	String bbscomment = (String) request.getAttribute("bbscomment");
+	if(bbscomment != null && bbscomment != "") {
+		if(bbscomment == "bbscomment_YES") {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			%>
+			<script type="text/javascript">
+			alert("댓글이 작성되었습니다");
+			let seq = "<%=seq %>";
+			location.href = "bbsdetail.do?seq=" + seq;
+			</script>
+		<% 
+	} else{	
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		%>
-		<script type="text/javascript">
-		alert("댓글이 삭제되었습니다");
-		let seq = "<%=seq %>";
-		location.href = "bbsdetail.do?seq=" + seq;
-		</script>
-	<% 
-} else{	
-	int seq = Integer.parseInt(request.getParameter("seq"));
-	%>
-		<script type="text/javascript">
-		
-		alert("댓글삭제에 실패했습니다");
-		let seq = "<%=seq %>";
-		location.href = "bbsdetail.do?seq=" + seq;
-		</script>
-	<%
+			<script type="text/javascript">
+			
+			alert("댓글작성에 실패했습니다");
+			let seq = "<%=seq %>";
+			location.href = "bbsdetail.do?seq=" + seq;
+			</script>
+		<%
+		}
 	}
-}
-%>
+	String deleteBbscomment = (String) request.getAttribute("deleteBbscomment");
+	if(deleteBbscomment != null && deleteBbscomment != "") {
+		if(deleteBbscomment == "deleteBbscomment_YES") {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			%>
+			<script type="text/javascript">
+			alert("댓글이 삭제되었습니다");
+			let seq = "<%=seq %>";
+			location.href = "bbsdetail.do?seq=" + seq;
+			</script>
+		<% 
+	} else{	
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		%>
+			<script type="text/javascript">
+			
+			alert("댓글삭제에 실패했습니다");
+			let seq = "<%=seq %>";
+			location.href = "bbsdetail.do?seq=" + seq;
+			</script>
+		<%
+		}
+	}
+	%>
 
 
 

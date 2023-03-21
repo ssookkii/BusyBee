@@ -110,8 +110,6 @@ create table user(
     phone_public varchar(5),
     auth int,
     profMsg varchar(30),
-    profPic_Origin varchar(20),
-    profPic_Server varchar(20),
     regidate timestamp
     
 );
