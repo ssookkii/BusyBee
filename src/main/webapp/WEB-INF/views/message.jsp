@@ -164,8 +164,10 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 		if(delUser_Msg=="delUser_SUCCESS") {
 			%>
 			<script>
-			alert('그동안 BusyBee를 사용해주셔서 감사합니다.');
-			location.href="loginMain.do";
+			 if (confirm('정말 BUSY BEE를 떠나실건가요?')) {
+		            alert('그동안 BusyBee를 사용해주셔서 감사합니다.');
+		            location.href="loginMain.do";
+		        }
 			</script>
 			<%
 		} else {
@@ -222,8 +224,12 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 		if(delGroupMem_Msg=="delGroupMem_SUCCESS") {
 			%>
 			<script>
-			alert('그룹에서 탈퇴했습니다.');
-			location.href="goMygroup.do";
+			if (confirm('정말 그룹을 탈퇴하실거에요?')) {
+				  alert('그룹에서 탈퇴했습니다.');
+				  location.href="goMygroup.do"; 
+				} else {
+				  location.href="goMygroup.do"; 
+				}
 			</script>
 			<%
 		} else {
@@ -240,8 +246,13 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 	      if(delGroup_Msg=="delGroup_SUCCESS") {
 	         %>
 	         <script>
+	         if (confirm('정말 그룹을 해체하실거에요?')) {
 	         alert('그룹을 해체했습니다.');
 	         location.href="goMygroup.do";
+	         }
+	         else {
+	        	 location.href="goMygroup.do";
+	         }
 	         </script>
 	         <%
 	      } else {
@@ -259,8 +270,9 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 			String outgroup_code = (String) request.getAttribute("outgroup_code");
 			%>
 			<script>
+			  if (confirm('함께하는 그룹 멤버를 정말 추방하실건가요?')) {
 			alert('해당 멤버를 그룹에서 추방했습니다.');
-			location.href="goManagegroup.do?group_code=" + '<%=outgroup_code %>';
+			location.href="goManagegroup.do?group_code=" + '<%=outgroup_code %>'; }
 			</script>
 			<%
 		} else {
