@@ -130,7 +130,15 @@ td {
 
                         <!-- 로그아웃 , 회원정보 수정-->
                         <br /> 
-                        <a style="float: right; margin-right: 5px;"    href="loginMain.do">로그아웃</a> 
+                        <a style="float: right; margin-right: 5px;" href="#" onclick="logout()">로그아웃</a>
+
+										<script>
+										function logout() {
+										  if(confirm("로그아웃 하시겠습니까?")) {
+										    location.href = "loginMain.do";
+										  }
+										}
+										</script>
                         <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
                     </div>
                          <!-- user image -->

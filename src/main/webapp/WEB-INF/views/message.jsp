@@ -144,7 +144,7 @@ if(customerAnswer != null && !customerAnswer.equals("")){
 		if(updUser_n_Msg=="updUser_n_SUCCESS") {
 			%>
 			<script>
-			alert('회원정보가 수정되었습니다.');
+			alert('회원정보가 수정되어 로그아웃 처리됩니다.');
 			location.href="loginMain.do";
 			</script>
 			<%
