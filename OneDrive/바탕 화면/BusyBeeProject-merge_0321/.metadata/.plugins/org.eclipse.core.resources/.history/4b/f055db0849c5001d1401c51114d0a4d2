@@ -1,0 +1,301 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입(1/2)</title>
+
+<!-- AJAX -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</head>
+<body>
+
+<form action="regi2.do" id="frm" method="post">
+이메일 : <input type="text" id="email1">@
+<select id="email2" onchange="ifdirect()">
+	<option>naver.com</option>
+	<option>daum.net</option>
+	<option>gmail.com</option>
+	<option>hanmail.com</option>
+	<option>yahoo.co.kr</option>
+	<option value="direct">직접 입력</option>
+</select>
+<div id="directEmail">
+<input type="hidden" id="isDirect" value="no">
+</div>
+<button type="button" id="emailCert" onclick="doCert()">인증메일 발송</button>
+인증번호 : <input type="text" id="certNum" disabled="disabled" maxlength="6"> <button type="button" id="check" onclick="checkCert()">인증번호 확인</button>
+<input type="hidden" id="cert_OK">
+
+아이디 : <input type="text" id="id" name="id">
+<h3 id="idCheck"></h3>
+
+비밀번호 : <input type="password" id="pwd1" name="password">
+<h3 id="pwdCheck1"></h3>
+비밀번호 확인:<input type="password" id="pwd2">
+<h3 id="pwdCheck2"></h3>
+
+<input type="hidden" id="email" name="email">
+<input type="hidden" id="id_OK">
+<input type="hidden" id="pwd1_OK">
+<input type="hidden" id="pwd2_OK">
+
+<button type="button" onclick="go_regi2()">다음</button>
+</form>
+
+<script>
+
+var userEmail;
+var authkey;
+
+var id_OK = document.getElementById("id_OK").value;
+var pwd1_OK = document.getElementById("pwd1_OK").value;
+var pwd2_OK = document.getElementById("pwd2_OK").value;
+var cert_OK = document.getElementById("cert_OK").value;
+cert_OK = false;
+
+// EMAIL 인증
+function ifdirect(){
+	
+	if ($("#email2").val()=='direct'){
+		var directE = "<input type='text' id='email3'>"
+		$("#directEmail").append(directE);
+		$("#isDirect").val('yes');
+	} else {
+		$("#email3").remove();
+		$("#isDirect").val('no');
+	}
+}
+
+function doCert() {
+	
+	// 이메일 정규식
+	var emailValid = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	if ($("#isDirect").val()=='no') {
+		userEmail = $("#email1").val() + '@' + $("#email2").val();
+		if(!emailValid.test(userEmail)) {
+			alert('유효한 이메일을 입력해주세요.');
+			$("#email1").val('');
+			$("#email2").val('');
+			return;
+		}
+	} else {
+		userEmail = $("#email1").val() + '@' + $("#email3").val();
+		if(!emailValid.test(userEmail)) {
+			alert('유효한 이메일을 입력해주세요.');
+			$("#email1").val('');
+			$("#email2").val('');
+			return;
+		}
+	}
+	
+	var checkCert = $("#certNum").val();
+	
+	$.ajax({
+		url : "select3.do",
+		async:false,
+		type : 'get',
+		data : {"cert_email" : userEmail},
+		success : function(msg) {
+			if(msg=="cert3_FAIL"){
+				alert('일일 최대 인증횟수 3회를 초과했습니다. 다음에 다시 시도해주세요.');
+				$("#certNum").attr('disabled', true);
+				$("#emailCert").attr('disabled', true);
+				$("#check").attr('disabled', true);
+				location.href='loginMain.do';
+			}
+		},
+		error : function(){
+			alert('error');
+		}
+	})
+	
+	
+	$.ajax({
+			url : "mailCheck.do",
+			type : 'get',
+			data : {"email" : userEmail},
+			success : function(data) {
+				$("#certNum").attr('disabled',false);
+				alert('인증번호가 전송되었습니다. 인증은 일일 3회까지 가능합니다.');
+				authkey = data;
+			},
+			error : function(){
+				alert('error');
+			}
+		});
+}
+
+function checkCert(){
+	
+	$.ajax({
+		type : 'get',
+		url : "selectCert.do",
+		data : {"cert_email" : userEmail, "authkey" : $("#certNum").val()},
+		success : function(msg) {
+			if(msg!=null && msg!=""){
+				if(msg=="cert_SUCCESS") {
+					alert("인증되었습니다.");
+					$("#email1").attr('disabled', true);
+					$("#email2").attr('disabled', true);
+					$("#certNum").attr('disabled', true);
+					$("#emailCert").attr('disabled', true);
+					$("#check").attr('disabled', true);
+					cert_OK = true;
+				} else {
+					alert("잘못된 인증번호입니다. 다시 확인해주세요");
+					cert_OK = false;
+				}
+			}
+		},
+		error : function() {
+			alert('error');
+		}
+	});
+	
+}
+
+// ID
+$("#id").keyup(function(e){
+	
+	let key = e.key || e.keyCode;
+	
+	// ID 유효성 검사
+	var idValid = /^[a-zA-z0-9]{6,12}$/;
+	
+	if($("#id").val()=="") {
+		$("#idCheck").text('');
+		id_OK=false;
+		return;
+	}
+	
+	if(key==" " || key==32) {
+		alert('아이디에는 공백이 들어갈 수 없습니다.');
+		$("#id").val('');
+		$("#idCheck").text('');
+		id_OK=false;
+		return;
+	}
+	
+	$.ajax({
+		url:"idCheck.do",
+		type:"post",
+		data:{"id":$("#id").val()},
+		success:function(idCheck_Msg) {
+			if(idCheck_Msg!=null && idCheck_Msg!="") {
+				if(idCheck_Msg=="idCheck_SUCCESS") {
+					if(!idValid.test($("#id").val())) {
+						$("#idCheck").text('ID는 6~12자, 영문 대소문자와 숫자로 설정해주세요.');
+						id_OK=false;
+					} else {
+						$("#idCheck").text('사용가능한 ID입니다.');
+						id_OK=true;
+					}
+
+				} else {
+					$("#idCheck").text('이미 존재하는 ID입니다.');
+					id_OK=false;
+				}
+			}
+		},
+		error:function(){
+			alert('error');
+		}
+	});
+});
+
+// PWD(1/2)
+$("#pwd1").keyup(function(e){
+	
+	let key = e.key || e.keyCode;
+
+	if($("#pwd1").val()=="") {
+		$("#pwdCheck1").text('');
+		$("#pwdCheck2").text('');
+		pwd1_OK=false;
+		pwd2_OK=false;
+		return;
+	}
+	
+	if(key==" " || key==32) {
+		alert('비밀번호에는 공백이 들어갈 수 없습니다.');
+		$("#pwd1").val('');
+		$("#pwdCheck1").text('');
+		pwd1_OK=false;
+		return;
+	}
+	
+	if($("#pwd1").val()==$("#pwd2").val()) {
+		$("#pwdCheck2").text('동일합니다.');
+		pwd2_OK=true;
+	} else{
+		$("#pwdCheck2").text('');
+		pwd2_OK=false;
+	}
+	
+	// PWD 유효성 검사
+	var pwd1 = $("#pwd1").val();
+	var numValid = pwd1.search(/[0-9]/g);
+	var engValid = pwd1.search(/[a-z]/ig);
+	var speValid = pwd1.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	
+	if (pwd1.length<8 || pwd1.length>20) {
+		$("#pwdCheck1").text('비밀번호는 6~20자로 설정해주세요.');
+		pwd1_OK=false;
+	} else if(numValid < 0 || engValid < 0 || speValid < 0 ){
+		$("#pwdCheck1").text('비밀번호에는 숫자, 영문, 특수문자가 모두 포함되어있어야 합니다.');
+		pwd1_OK=false;
+	} else {
+		$("#pwdCheck1").text('사용가능한 비밀번호입니다.');
+		pwd1_OK=true;
+	}
+	
+});
+
+// PWD(2/2)
+
+$("#pwd2").keyup(function(){
+	
+	if($("#pwd2").val()=="") {
+		$("#pwdCheck2").text('');
+		pwd2_OK=false;
+		return;
+	}
+	
+	if($("#pwd1").val()!=$("#pwd2").val()) {
+		$("#pwdCheck2").text('동일한 비밀번호를 입력해주세요.');
+		pwd2_OK=false;
+	} else {
+		$("#pwdCheck2").text('동일합니다.');
+		pwd2_OK=true;
+	}
+
+});
+
+function go_regi2() {
+
+	if (!cert_OK) {
+		alert('이메일 인증을 진행해주세요.');
+		$("#email").val(userEmail);
+	} else if(!id_OK) {
+		alert('아이디 중복 여부를 확인해주세요.');
+		$("#id").focus();
+	} else if((!pwd1_OK)) {
+		alert('사용 가능한 비밀번호인지 확인해주세요.');
+		$("#pwd1").focus();		
+	} else if((!pwd2_OK)) {
+		alert('동일한 비밀번호를 입력했는지 확인해주세요.');
+		$("#pwd2").focus();		
+	} else {
+		$("#frm").submit();
+	}
+	
+	
+}
+
+</script>
+</body>
+</html>

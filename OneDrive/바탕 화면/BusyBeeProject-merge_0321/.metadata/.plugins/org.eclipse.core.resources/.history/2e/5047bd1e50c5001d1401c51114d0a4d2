@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- AJAX -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<body>
+<h3>ID 찾기</h3>
+<hr>
+이름 : <input type="text" id="name">
+등록 이메일 : <input type="text" id="email">
+<br><br><br>
+
+
+등록된 정보
+<hr>
+<script type="text/javascript">
+
+$.ajax({
+	url:"findId.do",
+	type:"post",
+	data:{"name":$("#id").val(), },
+	
+	
+});
+
+</script>
+
+</body>
+</html>

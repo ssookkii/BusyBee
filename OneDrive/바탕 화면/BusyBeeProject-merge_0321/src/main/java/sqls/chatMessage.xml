@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+chatRoom 먼저 만들어주세요!
+create table chatMessage(
+	roomId varchar(45) not null,
+    writer varchar(45) not null,
+    recipient varchar(45) not null,
+    message varchar(500) not null,
+    sendTime datetime not null
+);
+ALTER TABLE chatMessage
+ADD FOREIGN KEY(roomId) 
+REFERENCES chatRoom(roomId);
+-->
+<mapper namespace="ChatMessage">
+	<insert id="saveChatMessage" parameterType="mul.cam.a.dto.ChatMessageDto">
+		insert into chatmessage(roomId, writer, recipient, message, sendTime)
+		values(#{roomId}, #{writer}, #{recipient}, #{message}, now())
+	</insert>
+</mapper>
