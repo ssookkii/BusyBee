@@ -118,11 +118,10 @@ margin-top: 10px" value="정보 수정" onclick='go_groupUpd()'/>
 						type="text" readonly="readonly" value="초대메세지" maxlength="25">
 <input class="form-control form-control-lg" type="text" id="wantTo_Msg" placeholder="해당 멤버에게 전달될 메세지입니다.">
 <br>
-<table class="table-warning" style="margin-left:200px">
-<col width="130px"><col width="160px"><col width="130px"><col width="130px"><col width="130px">
+<table class="table-warning" style="margin-left:260px">
+<col width="130px"><col width="160px"><col width="130px"><col width="130px">
 	<thead>
 	<tr class="table-warning">
-		<th>프로필</th>
 		<th>이름(ID)</th>
 		<th>email</th>
 		<th>핸드폰번호</th>
@@ -261,7 +260,6 @@ $("#wantId").keyup(function(e){
 				var tableTd = "";
 				$("#tBody3").html('');
 				tableTd += '<tr>'
-							+ "<td><img src ='/busyBeeImg/" + data.profPic_Server + "'width='100px' height='100px' alt=''/>"
 							+ '<td>' + data.name +'(' + data.id + ')' + '</td>'
 							+ '<td>' + data.email + '</td>';
 				if(data.phone_public==null) {
