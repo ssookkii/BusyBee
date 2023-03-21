@@ -1166,6 +1166,7 @@ $('#share-event-btn').click(function() {
         for (var i = 0; i < data.length; i++) {
             
             var shareid = data[i];
+            console.log(shareid);
             // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
             if (data[i] === '<%= id %>') {
                 continue;
@@ -1231,7 +1232,8 @@ $('#share-event-btn').click(function() {
 	            
 	            var shareid = data.leader_id;
 	            // 내가 로그인한 유저의 아이디와 같은 경우 일정 중복 추가되지 않게 건너뛰기
-            if (id !== shareid) {
+            if (<%=id%> !== shareid) {
+            	console.log('같지 않음');
 	          	  $.get('eventdetail.do', { scheduleId: scheduleId }, function(event) {
 	          	    // 서버에서 반환된 일정 정보를 처리하는 로직 작성
 	          	     
