@@ -37,6 +37,7 @@
 	.pop_wrap{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
 	.pop_wrap:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
 	.pop_wrap .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
+
 .pagination .page-link {
   color: #333;
   background-color: #fff;
@@ -100,9 +101,9 @@ String org = (String)session.getAttribute("org");
 <br>
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
 <h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;즐겨찾기</h1>
-<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기 한 글입니다.</small>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;내가 즐겨찾기 한 글을 모아볼 수 있어요</small>
 <br><br>
-
+<hr>
 <div align="center">
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
@@ -148,6 +149,7 @@ String org = (String)session.getAttribute("org");
   </div>
 </nav>
 </div>
+
 <div align="center">
 
 <input type="hidden" id="id" value='<%=login.getId()%>'>
@@ -162,6 +164,7 @@ String org = (String)session.getAttribute("org");
 </tr>
 </thead>
 <tbody>
+
 
 <%
 if(list == null || list.size() == 0){
@@ -193,7 +196,7 @@ if(list == null || list.size() == 0){
 							%>
 							<th>
 							<a href="#pop_info_2" class="btn_open">
-								<button onclick="star2(<%=dto.getSeq() %>)" class="btn btn-danger">
+								<button onclick="star2(<%=dto.getSeq() %>)" class="btn btn-danger" style="font-size:13px;">
 									<i class="fa fa-star"></i>
 								</button>
 							</a>
@@ -206,7 +209,7 @@ if(list == null || list.size() == 0){
 					%>
 					<th>
 					<a href="#pop_info_1" class="btn_open">
-						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning">
+						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning" style="font-size:13px;">
 							<i class="fa fa-star-o"></i>
 						</button>
 					</a>
@@ -217,7 +220,7 @@ if(list == null || list.size() == 0){
 					%>
 					<th>
 					<a href="#pop_info_1" class="btn_open">
-						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning">
+						<button onclick="star(<%=dto.getSeq() %>)" class="btn btn-warning" style="font-size:13px;">
 							<i class="fa fa-star-o"></i>
 						</button>
 					</a>
@@ -240,7 +243,7 @@ if(list == null || list.size() == 0){
 				%>			
 				<td style="text-align: left">
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
+					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>
 				</td>			
@@ -248,7 +251,7 @@ if(list == null || list.size() == 0){
 			<td><%=dto.getId() %></td>
 			
 			<%
-			if(dto.getFilename() != null){
+			if(dto.getFilename() != null && !dto.getFilename().equals("")){
 			 %>
 				<td><i class="fa fa-file"></i></td>
 			<%
@@ -278,23 +281,23 @@ if(list == null || list.size() == 0){
     </nav>
 </div>
 
-<button class="btn btn-warning" onclick="bbswrite()" style="width: 55px; height: 30px; font-size: 13px; ">글쓰기</button>
+<button class="btn btn-warning" onclick="bbswrite()" style="font-size:13px;">글쓰기</button>
 
 </div>
 
 <div id="pop_info_1" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기에<br/> 추가하시겠습니까?</p>
-    <button id="staradd" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
-    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
+    <p class="dsc">즐겨찾기에 추가하시겠습니까?</p>
+    <button id="staradd" type="button" class="btn btn-warning btn_close" >예</button>
+    <button type="button" class="btn btn-warning btn_close">아니오</button>
   </div>
 </div>
 
 <div id="pop_info_2" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기를<br/>삭제하시겠습니까?</p>
-    <button id="stardelete" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
-    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
+    <p class="dsc">즐겨찾기를 삭제하시겠습니까?</p>
+    <button id="stardelete" type="button" class="btn btn-warning btn_close">예</button>
+    <button type="button" class="btn btn-warning btn_close">아니오</button>
   </div>
 </div>
   
@@ -406,7 +409,7 @@ $('#staradd').click(function() {
 	let pageNumber = <%=pageNumber%>;
 	
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/staradd.do",
+		url:"staradd.do",
 		type:"get",
 		async:false,
 		data:{ "seq": seq, "id":id },
@@ -431,7 +434,7 @@ $('#stardelete').click(function() {
 	let id = document.getElementById('login').value;
 	let pageNumber = <%=pageNumber%>;
 	$.ajax({
-		url:"http://localhost:8090/BusyBee/stardelete.do",
+		url:"stardelete.do",
 		type:"get",
 		async:false,
 		data:{ "seq": seq, "id":id },

@@ -53,7 +53,6 @@
 .nav{
 text-align: center;
 }
-
 .pagination .page-link {
   color: #333;
   background-color: #fff;
@@ -97,6 +96,7 @@ int pageNumber = (Integer)request.getAttribute("pageNumber");
 String choice = (String)request.getAttribute("choice");
 String search = (String)request.getAttribute("search");
 String category = (String)request.getAttribute("category");
+
 String group_code = (String)session.getAttribute("group_code");
 String org = (String)session.getAttribute("org");
 %>
@@ -107,7 +107,7 @@ String org = (String)session.getAttribute("org");
 <h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;게시판</h1>
 <small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;자유롭게 작성하세요.</small>
 <br><br>
-
+<hr>
 <div align="center">
 <nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
@@ -252,7 +252,7 @@ if(list == null || list.size() == 0){
 				%>			
 				<td style="text-align: left;">
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
+					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>" style="text-decoration: none; color:#978c88; ">
 						<%=dto.getTitle() %>
 					</a>
 				</td>			
@@ -261,7 +261,7 @@ if(list == null || list.size() == 0){
 				%>
 				<td>
 					<%=Utility.arrow(dto.getDepth()) %>
-					<font color="#ff0000">*** 이 글은 작성자에 의해서 삭제되었습니다 ***</font>	
+					<font color="#fe8738">*** 삭제된 글이에요! ***</font>	
 				</td>
 				<%
 			}	
@@ -271,7 +271,7 @@ if(list == null || list.size() == 0){
 			<td style="vertical-align: middle"><%=dto.getId() %></td>
 			
 			<%
-			if(dto.getFilename() != null){
+			if(dto.getFilename() != null && !dto.getFilename().equals("")){
 			 %>
 				<td><i class="fa fa-file"></i></td>
 			<%
@@ -312,35 +312,36 @@ for(int i = 0;i < pageBbs; i++){
 %> --%>
 
 
-<div class="container" >
-    <nav aria-label="Page navigation" >
-       <ul class="pagination" id="pagination" style="justify-content:center; " ></ul>
+<div class="container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination" style="justify-content:center"></ul>
     </nav>
 </div>
 
 
 
-<button class="btn btn-warning" onclick="bbswrite()" style="width: 55px; height: 30px; font-size: 13px; ">글쓰기</button>
+<button class="btn btn-warning" onclick="bbswrite()" style="font-size:13px;" >글쓰기</button>
 
 </div>
 
 <div id="pop_info_1" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기에<br/> 추가하시겠습니까?</p>
-    <button id="staradd" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
-    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
+    <p class="dsc">즐겨찾기에 추가하시겠습니까?</p>
+    <button id="staradd" type="button" class="btn btn-warning btn_close">예</button>
+    <button type="button" class="btn btn-warning btn_close">아니오</button>
   </div>
 </div>
 
 <div id="pop_info_2" class="pop_wrap" style="display:none;">
   <div class="pop_inner">
-    <p class="dsc">즐겨찾기를<br/>삭제하시겠습니까?</p>
-    <button id="stardelete" type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">예</button>
-    <button type="button" class="btn btn-warning btn_close" style="width: 55px; height: 30px; font-size: 13px; ">아니오</button>
+    <p class="dsc">즐겨찾기를 삭제하시겠습니까?</p>
+    <button id="stardelete" type="button" class="btn btn-warning btn_close">예</button>
+    <button type="button" class="btn btn-warning btn_close">아니오</button>
   </div>
 </div>
   
 <script type="text/javascript">
+
 function bbslist(){
 //	alert("bbslist작동합니다");
 	location.href="login.do";

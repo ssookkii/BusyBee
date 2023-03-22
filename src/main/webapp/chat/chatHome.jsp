@@ -156,7 +156,7 @@ function exitChat(element) { // 자신을 제거
 	<div id="ChatContainer">
 		<div class="flexible">
 			<div>
-				<button onclick="clickOpenModal()" class="btn btn-danger" style="width: 200px; height: 80px; font-size: 15px;">새 채팅방 만들기</button>
+				<button onclick="clickOpenModal()" class="btn" style="width: 200px; height: 80px; font-size: 15px; ">새 채팅방 만들기</button>
 			</div>
 		</div>
 		

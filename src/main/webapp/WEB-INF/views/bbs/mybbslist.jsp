@@ -96,9 +96,9 @@ String org = (String)session.getAttribute("org");
 
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
 <h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;내가쓴 글</h1>
-<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;작성하신 글입니다.</small>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;내가 작성한 글을 모아볼 수 있어요.</small>
 <br><br>
-
+<hr>
  <div align="center">
 <nav class="navbar navbar-expand-lg navbar-dark bg-warning" style="width: 1000px">
   <div class="container-fluid">
@@ -119,7 +119,7 @@ String org = (String)session.getAttribute("org");
          	<h3 id="nogroup"></h3>
           </div>
         </li> -->
-         <li class="nav-item dropdown">
+       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-size: 15px" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">게시판 선택</a>
           <div class="dropdown-menu" style="font-size: 14px">
             <a class="dropdown-item" onclick="categorybtn()">전체글</a>
@@ -149,7 +149,7 @@ String org = (String)session.getAttribute("org");
 <input type="hidden" id="category" value="<%=category %>">
 <input type="hidden" id="login" value="<%=login.getId() %>">
 <table id="bbs" class="table table-hover" style="width: 1000px; font-size: 12px">
-<col width="150"><col width="70"><col width="150"><col width="600"><col width="100"><col width="150"><col width="80">
+<col width="150"><col width="70"><col width="160"><col width="600"><col width="100"><col width="150"><col width="85">
 <thead class="table-warning">
 <tr>
 	<th>분류</th><th>번호</th><th>그룹명</th><th>제목</th><th>조회수</th><th>작성자</th><th>첨부파일</th>
@@ -180,7 +180,7 @@ if(list == null || list.size() == 0){
 				%>			
 				<td style="text-align: left">
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
+					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>
 				</td>			
@@ -188,7 +188,7 @@ if(list == null || list.size() == 0){
 			<td><%=dto.getId() %></td>
 			
 			<%
-			if(dto.getFilename() != null){
+			if(dto.getFilename() != null && !dto.getFilename().equals("")){
 			 %>
 				<td><i class="fa fa-file"></i></td>
 			<%
@@ -222,7 +222,7 @@ if(list == null || list.size() == 0){
 <input type="hidden" id="org" value="<%=org %>">
 <input type="hidden" id="group_code" value="<%=group_code %>">
 
-<button class="btn btn-warning" onclick="bbswrite()" style="width: 55px; height: 30px; font-size: 13px; ">글쓰기</button>
+<button class="btn btn-warning" onclick="bbswrite()" style="font-size:13px;">글쓰기</button>
 
 </div>
 

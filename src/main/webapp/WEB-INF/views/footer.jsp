@@ -6,17 +6,18 @@
 UserDto login = (UserDto)session.getAttribute("login");
 %>
    
-<a style="float: right; margin: 20px;" href="customer.do" >고객센터</a>
+<a style="float: right; margin: 20px; color: #bca880; font-size:12px; text-decoration: none;" href="customer.do" >고객센터</a>
 <%if(login.getAuth()==3){
 	
 	%>
-<a style="float: right; margin: 20px;" href="javascript:void(0)" onclick="admin()">어드민</a>
+<a style="float: right; margin: 20px; color: #bca880; font-size:12px; text-decoration: none;" href="javascript:void(0)" onclick="admin()">Admin</a>
 	<% 
 }
 	%>
 <br/>
 <div style="text-align: center;">
-  <p>busy beeeeeeee</p>
+   <img src="images/favicon.ico">busy beeeeeeee </br>
+   Developer : 양상숙 박상준 신준 임영언 정은성
 </div>
 
 <script type="text/javascript">

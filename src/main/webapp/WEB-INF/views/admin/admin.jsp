@@ -30,7 +30,7 @@ font-family: 'Jua', sans-serif;
  justify-content: center;
 }
 .btn {
-  height: 700px;
+  height: 500px;
 	width: 400px;
 }
 </style>
@@ -42,17 +42,23 @@ font-family: 'Jua', sans-serif;
 <body>
 
 <div class="flex-container" >
+<br></br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left:340px;"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;관리자 페이지</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;관리자님, 어떤 일을 하시겠어요?</small>
+<br></br>
+<hr>
+</br></br></br></br></br>
+    <button style="font-size: 50px; margin-left: 340px; background-color: #f8eed2;" class="btn" onclick="userList()">회원 관리</button>
 
 
-    <button style="font-size: 50px; margin-left: 340px;" class="btn btn-warning" onclick="userList()">회원 관리</button>
 
 
+    <button style="font-size: 50px; background-color: #ffcba8;" class="btn" onclick="boardList()">게시글 관리</button>
 
 
-    <button style="font-size: 50px;" class="btn btn-danger" onclick="boardList()">게시글 관리</button>
-
-
-    <button style="font-size: 50px;" class="btn btn-warning" onclick="reportList()">신고 관리</button>
+    <button style="font-size: 50px; background-color: #f8eed2;" class="btn" onclick="reportList()">신고 관리</button>
+</br></br></br></br></br></br></br>
 </div>
 
 <script type="text/javascript">

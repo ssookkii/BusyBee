@@ -45,7 +45,7 @@
 .subMenuBtn{
     display: block;
     padding: 15px 20px;
-    background-color: #FFCE67;
+    background-color: #ffe1b7;
     color: #fff;
     position: relative;
     font-size: 24px;
@@ -53,6 +53,7 @@
     text-decoration: none;
 
 }
+
 .subMenuBtn:before{
     content: '';
     position: absolute;
@@ -72,19 +73,20 @@
     margin-right: 10px;
 }
 .subMenu{
-    background: #ffe6b1;
+    background: #ffecd2;
     overflow: hidden;
     transition: max-height 0.7s;
     max-height: 0;
         text-decoration: none;
     
 }
+
 .subMenu a{
     display: block;
     padding: 15px 20px;
     color: #8c5a0b;
     font-size: 14px;
-    border-bottom: 1px solid #ffe5a7;
+    border-bottom: 1px solid #f3e1c8;
     position: relative;
         text-decoration: none;
     
@@ -109,7 +111,7 @@
     opacity: 1;
     /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-left: 11px solid #ffe5a7;
+    border-left: 11px solid #f3e1c8;
     border-bottom: 24px solid transparent;
         text-decoration: none;
     
@@ -132,18 +134,18 @@
     opacity: 1;
     /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-right: 11px solid #FFCE67;
+    border-right: 11px solid #f3e1c8;
     border-bottom: 24px solid transparent;
         text-decoration: none;
     
     
 }
 .subMenu a:hover{
-    background: #FFCE67;
-    background: -moz-linear-gradient(top, #ebc87f 0%, #ebc87f 50%, #ffdf9c 51%, #ffdf9c 100%);
-    background: -webkit-linear-gradient(top, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
-    background: linear-gradient(to bottom, #ebc87f 0%,#ebc87f 50%,#ffdf9c 51%,#ffdf9c 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebc87f', endColorstr='#ffdf9c',GradientType=0 );
+    background: #f8d6a7;
+    background: -moz-linear-gradient(top, #feeed9 0%, #feeed9 50%, #f8d6a7 51%, #f8d6a7 100%);
+    background: -webkit-linear-gradient(top, #feeed9 0%,#feeed9 50%,#f8d6a7 51%,#f8d6a7 100%);
+    background: linear-gradient(to bottom, #feeed9 0%,#feeed9 50%,#f8d6a7 51%,#f8d6a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feeed9', endColorstr='#f8d6a7',GradientType=0 );
     transition: all 0.3s;
     border-bottom: 1px solid #ffe5a7;
     text-decoration: none;
@@ -171,12 +173,12 @@
     <div class="wrapper">
         <ul class="mainMenu">
             <li class="item" id="account">
-                <a style="color:#8c5a0b;" href="#account" class="subMenuBtn"><img src = "./images/mark2.png" width="40px" height="35px" style="float: left; "/>나의 그룹</a>
+                <a style="color:#b38154; text-decoration: none; " href="#account" class="subMenuBtn" ><img src = "./images/mark2.png" width="40px" height="35px" style="float: left;  "/>나의 그룹</a>
                  <div id="subMenu" class="subMenu" >
                                               
                </div>
             </li>
-                 <li><p id="nogroup" ></p></li>
+                 <li  style="color: #bca880; font-size:14px; text-decoration: none; text-align:center;"><p id="nogroup"></p></li>
         </ul>
     </div>
 
@@ -259,7 +261,7 @@
 				if(group1==false && group2==false) {
 		/* 			alert("group1* =" + group1);
 					alert("group2* =" + group2); */
-					$("#nogroup").text('가입한 그룹이 없습니다.');	
+					$("#nogroup").html(' <a href="goSearchgroup.do" style="color: #bca880; font-size:14px; text-decoration: none;"> 가입한 그룹이 없어요! </br> 그룹을 가입하고 BUSY BEE를 누려보세요! ');
 				}
 			}
 			

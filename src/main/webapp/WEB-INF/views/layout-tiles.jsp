@@ -130,7 +130,7 @@ td {
 
                         <!-- 로그아웃 , 회원정보 수정-->
                         <br /> 
-                        <a style="float: right; margin-right: 5px;" href="#" onclick="logout()">로그아웃</a>
+                        <a style="float: right; margin-right: 5px; color: #bca880; font-size:12px; text-decoration: none;" href="#" onclick="logout() " >로그아웃</a>
 
 										<script>
 										function logout() {
@@ -139,7 +139,7 @@ td {
 										  }
 										}
 										</script>
-                        <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
+                        <a style="float: right; margin-right: 5px; color: #bca880; font-size:12px; text-decoration: none;" href="goUserinfo.do">정보 수정</a>
                     </div>
                          <!-- user image -->
                     <div style="float: right; margin: 5px; margin-right: 30px;">
@@ -153,7 +153,7 @@ td {
 		<!-- 메뉴 이동 네비게이션 -->
 		<tr>
 		<td colspan="2">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 0px;">
+			<nav class="navbar navbar-expand-lg navbar" style="margin-bottom: 0px; background-color:#fff7e1; ">
 		<div class="container-fluid">
 		<div class="collapse navbar-collapse" id="navbarColor03">
 				<ul class="navbar-nav me-auto" style="font-size: 14px">

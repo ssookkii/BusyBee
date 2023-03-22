@@ -161,12 +161,12 @@ if(list == null || list.size() == 0){
 			<td>
 			<%if(dto.getAuth()==1){
 				%>
-			<button style="font-size: 20px;" type="button" class="btn btn-warning"
+			<button style="font-size: 14px;" type="button" class="btn btn-warning"
 			onclick="userBan('<%=dto.getId()%>')">이용정지</button>				
 				<% 
 			}else if(dto.getAuth()==2){
 				%>
-			<button style="font-size: 20px;" type="button" class="btn btn-warning"
+			<button style="font-size: 14px;" type="button" class="btn btn-warning"
 			onclick="userIn('<%=dto.getId()%>')">정지해제</button>		
 				<% 	
 			}

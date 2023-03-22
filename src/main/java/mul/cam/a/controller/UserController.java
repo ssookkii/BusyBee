@@ -38,20 +38,22 @@ public class UserController {
 	@ResponseBody
 	@GetMapping(value = "mailCheck.do")
 	public String mailCheck(String email, String purpose) {
-
-		String host = "smtp.naver.com";
-		String user = "mulcamsemi2023@naver.com";
-		String password = "semibusybee!";
-
-		String to_email = email;
-
-		Properties props = new Properties();
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.port", 465);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.ssl.enable", "true");
-		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
-
+	
+		/* 정보 유출로 인해 시연 이후 이메일 인증 기능 비활성화했습니다. */
+		/* 인증번호는 콘솔을 통해 확인해주세요 */
+		/*
+		  String host = "smtp.naver.com";
+		  String user = "mulcamsemi2023@naver.com";
+		  String password = "busybeepro1!";
+		  String to_email = email;
+		  
+		  Properties props = new Properties(); props.put("mail.smtp.host", host);
+		  props.put("mail.smtp.port", 465); props.put("mail.smtp.auth", "true");
+		  props.put("mail.smtp.ssl.enable", "true");
+		  props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		*/
+		
+		
 		StringBuffer temp =new StringBuffer();
 		Random rnd = new Random();
 		for(int i=0;i<6;i++) {
@@ -61,55 +63,51 @@ public class UserController {
 		String AuthenticationKey = temp.toString();
 		System.out.println(AuthenticationKey);
 
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
-			}
-		});
-
-		try {
-			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(user, "Busy Bee"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
-
-			msg.setSubject("안녕하세요? BUSY BEE 가입 인증 번호입니다..");
-			
-			String content = "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:20px;' >"
-			  + "🐝  부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE  🐝"
-			  + "</p><br>";
-			
-			content += "<p>안녕하세요?<p><br>"
-					+ "꿀벌처럼 열심히 일하는 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
-			
-			if(purpose.equals("regi") ) {
-				content += "<p>BUSY BEE 회원 가입을 위해서 보내드리는 인증 번호입니다.</p><br>";
-			} else {
-				content += "<p>BUSY BEE 비밀번호 재설정을 위해서 보내드리는 인증 번호입니다.</p><br>";
-			}
-			
-			content += "<p>인증번호는 아래와 같습니다.</p>"
-					+ "<p style='font-size:30px; font-weight:bold'>" + AuthenticationKey + "</p><br>";
-			
-			content += "<p>인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요.</p>"
-					+ "<p>만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요.</p>"
-					+ "<p>감사합니다.</p><br>"
-					+ "<p>🐝 BUSY BEE 서비스팀 드림 🐝</p>";	
-			
-			content += "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:10px;'>"
-					+ "Copyright ⓒ BUSY BEE, 2023. All Rights Reserved."
-					+ "</p>";
-			
-			msg.setContent(content, "text/html;charset=utf-8");
-
-			Transport.send(msg);
-			System.out.println("이메일 전송");
-			
-			service.addCert(new EmailCertiDto(0, to_email, AuthenticationKey, null));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		  Session session = Session.getDefaultInstance(props, new
+		  javax.mail.Authenticator() { protected PasswordAuthentication
+		  getPasswordAuthentication() { return new PasswordAuthentication(user,
+		  password); } });
+		  
+		  try { MimeMessage msg = new MimeMessage(session); msg.setFrom(new
+		  InternetAddress(user, "Busy Bee"));
+		  msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
+		  
+		  msg.setSubject("안녕하세요? BUSY BEE 가입 인증 번호입니다..");
+		  
+		  String content =
+		  "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:20px;' >"
+		  + "🐝  부지런히 일하는 '나'를 위한 협업 Tool, BUSY BEE  🐝" + "</p><br>";
+		  
+		  content += "<p>안녕하세요?<p><br>" + "꿀벌처럼 열심히 일하는 🐝 BUSY BEE 서비스팀 🐝 입니다.<br>";
+		  
+		  if(purpose.equals("regi") ) { content +=
+		  "<p>BUSY BEE 회원 가입을 위해서 보내드리는 인증 번호입니다.</p><br>"; } else { content +=
+		  "<p>BUSY BEE 비밀번호 재설정을 위해서 보내드리는 인증 번호입니다.</p><br>"; }
+		  
+		  content += "<p>인증번호는 아래와 같습니다.</p>" +
+		  "<p style='font-size:30px; font-weight:bold'>" + AuthenticationKey +
+		  "</p><br>";
+		  
+		  content += "<p>인증번호 확인란에 위 번호를 입력하시고, 인증 확인 버튼을 눌러주세요.</p>" +
+		  "<p>만약 본인이 요청한 인증이 아닐 경우, 메일을 삭제해주세요.</p>" + "<p>감사합니다.</p><br>" +
+		  "<p>🐝 BUSY BEE 서비스팀 드림 🐝</p>";
+		  
+		  content +=
+		  "<p style='background-color: rgb(255,197,0); color: rgb(70,15,11); font-weight: bold; font-size:10px;'>"
+		  + "Copyright ⓒ BUSY BEE, 2023. All Rights Reserved." + "</p>";
+		  
+		  msg.setContent(content, "text/html;charset=utf-8");
+		  
+		  Transport.send(msg); System.out.println("이메일 전송");
+		  
+		  service.addCert(new EmailCertiDto(0, to_email, AuthenticationKey, null));
+		  
+		  } catch (Exception e) { e.printStackTrace(); }
+		 */
 		
+		service.addCert(new EmailCertiDto(0, email, AuthenticationKey, null));
+		System.out.println(AuthenticationKey);
 		return AuthenticationKey;
 	}
 	

@@ -16,6 +16,11 @@ String org = (String)session.getAttribute("org");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+      th{
+      font-size: 13px; 
+       } 
+      </style>
 <body>
 
 <br>
@@ -36,7 +41,7 @@ String org = (String)session.getAttribute("org");
 <table class="table table-sm">
 <col width="100px"><col width="500px">
 <tr>
-	<th>모임명</th>
+	<th >모임명</th>
 	<td>
 		<input type="text" id="org" name="org" class="form-control form-control-lg" value="<%=org%>" readonly="readonly">
 	</td>
@@ -50,7 +55,7 @@ String org = (String)session.getAttribute("org");
 <tr>
 	<th class="align-middle">제목</th>
 	<td>
-		<input type="text" id="title" name="title" size="50px" class="form-control form-control-lg" placeholder="제목기입">
+		<input type="text" id="title" name="title" size="50px" class="form-control form-control-lg" placeholder="제목을 입력하세요">
 	</td>
 </tr>
 <tr>
@@ -70,7 +75,7 @@ String org = (String)session.getAttribute("org");
 	<th>카테고리</th>
 	<td>
 		<select id="category" name="category" class="form-control form-control-lg" >
-			<option>아래에서 선택</option>
+			<option>여기를 눌러 선택하세요</option>
 			<option value="공지사항">공지사항</option>
 			<option value="일반게시글">일반게시글</option>
 			<option value="자료게시글">자료게시글</option>
@@ -80,14 +85,14 @@ String org = (String)session.getAttribute("org");
 </tr>
 <tr>	
 	<td colspan="2">
-		<textarea id="content" rows="18" name="content" class="form-control" placeholder="내용기입"></textarea>
+		<textarea id="content" rows="18" name="content" class="form-control" placeholder="그룹원들과 공유하고 싶은 내용을 작성해주세요" style="font-size:14px;"></textarea>
 	</td>
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 20px">
 		<!-- <input class="btn btn-warning" type="submit" value="글작성완료"> -->
-		<button class="btn btn-warning" onclick="bbslist()" type="button">게시판으로</button>
-		<button class="btn btn-warning" onclick="bbswrite()" type="button">글쓰기</button>
+		<button class="btn btn-warning" onclick="bbslist()" type="button" style="font-size:13px;">게시판으로</button>
+		<button class="btn btn-warning" onclick="bbswrite()" type="button" style="font-size:13px;" >글쓰기</button>
 	</td>
 </tr>
 

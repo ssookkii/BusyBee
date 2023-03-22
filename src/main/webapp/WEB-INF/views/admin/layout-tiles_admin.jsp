@@ -84,7 +84,7 @@
 	float: right;
 	margin-right: 3px;
 }
-.body {
+body {
 	margin: 0px;
 }
 .tilestable {
@@ -130,8 +130,16 @@
 
                         <!-- 로그아웃 , 회원정보 수정-->
                         <br /> 
-                        <a style="float: right; margin-right: 5px;"    href="loginMain.do">로그아웃</a> 
-                        <a style="float: right; margin-right: 5px;" href="goUserinfo.do">정보 수정</a>
+                        <a style="float: right; margin-right: 5px; color: #bca880;font-size:12px; text-decoration: none;" href="#" onclick="logout() " >로그아웃</a>
+
+										<script>
+										function logout() {
+										  if(confirm("로그아웃 하시겠습니까?")) {
+										    location.href = "loginMain.do";
+										  }
+										}
+										</script>
+                        <a style="float: right; margin-right: 5px; color: #bca880; font-size:12px;text-decoration: none;" href="goUserinfo.do">정보 수정</a>
                     </div>
                          <!-- user image -->
                     <div style="float: right; margin: 5px; margin-right: 30px;">

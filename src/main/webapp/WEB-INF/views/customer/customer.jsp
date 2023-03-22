@@ -147,7 +147,7 @@ if(list == null || list.size() == 0){
 	if(dto.getId().equals(login.getId()) || login.getAuth()==3){		// 비밀글일때 본인, 관리자인지 여부
 		%>
 						<%=Utility.arrow(dto.getDepth()) %>
-					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>		
 					<%=Utility.lock(dto.isSecret()) %>
@@ -156,7 +156,7 @@ if(list == null || list.size() == 0){
 	}else{
 		%>
 						<%=Utility.arrow(dto.getDepth()) %>
-					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>		
 					<%=Utility.lock(dto.isSecret()) %>	
@@ -170,7 +170,7 @@ if(list == null || list.size() == 0){
 } else{
 	%>
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>">
+					<a href="customerDetail.do?seq=<%=dto.getSeq() %>&ref=<%=dto.getRef()%>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>		
 	
@@ -200,7 +200,7 @@ if(list == null || list.size() == 0){
 </div>
 
 <br>
-<button class="btn btn-warning" onclick="customerWrite()">문의하기</button>
+<button class="btn btn-warning" onclick="customerWrite()" style="font-size:13px">문의하기</button>
 
 <br><br>
 

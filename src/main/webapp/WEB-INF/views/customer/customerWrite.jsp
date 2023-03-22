@@ -30,11 +30,7 @@ UserDto login = (UserDto)session.getAttribute("login");
 
 <style>
 
-body{
-font-family: 'Black Han Sans', sans-serif;
-font-family: 'Dongle', sans-serif;
-font-family: 'Jua', sans-serif;
-}
+th{ font-size: 13px; }
 
 .flex-container {
   display: flex;
@@ -80,7 +76,10 @@ font-size: 15px;
 </head>
 <body>
 
-<h3>문의하기</h3>
+<br>
+<img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
+<h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;문의하기</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;문의 하실 내용을 전달해주세요.</small>
 
 <hr>
 
@@ -99,12 +98,12 @@ font-size: 15px;
 <tr>
 	<th class="align-middle">제목</th>
 	<td>
-		<input type="text" id="title" name="title" size="50px" class="form-control form-control-lg" placeholder="제목기입">
+		<input type="text" id="title" name="title" size="50px" class="form-control form-control-lg" placeholder="제목을 입력하세요">
 	</td>
 </tr>
 <tr>	
 	<td colspan="2">
-		<textarea rows="18" id="content" name="content" class="form-control" placeholder="내용기입"></textarea>
+		<textarea rows="18" id="content" name="content" class="form-control" placeholder="BUSY BEE에 문의하실 내용을 입력하세요" style="font-size: 13px;"></textarea>
 	</td>
 </tr>
 <tr>
@@ -128,7 +127,7 @@ font-size: 15px;
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 20px">
-		<button type="button" class="btn btn-primary">문의하기</button>
+		<button type="button" class="btn btn-warning" style="font-size:13px">문의하기</button>
 	</td>
 </tr>
 

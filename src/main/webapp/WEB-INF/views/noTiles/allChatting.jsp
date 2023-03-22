@@ -2,7 +2,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+    <title>BUSY BEE</title>
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 <% 
 String User = (String)request.getAttribute("User");
 %>

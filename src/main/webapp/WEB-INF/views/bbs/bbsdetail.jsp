@@ -125,6 +125,8 @@
         cursor: pointer;
         
       }
+      th{
+      font-size: 13px; }
 </style>
 
 
@@ -137,6 +139,7 @@
 
 <img src = "./images/mark.png" width="70px" height="60px" style="float: left; margin-left: 30px"/>
 <h1 style="font-weight: bold">&nbsp;&nbsp;&nbsp;상세글 보기</h1>
+<small class="text-muted" style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;우리 그룹에 무슨 글이 올라왔을까요?</small>
 <br><br>
 
 <hr>
@@ -149,31 +152,31 @@
 <tr>
 	<th>모임명</th>
 	<td>
-		<input value="<%=dto.getOrg() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getOrg() %>" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 	</td>
 </tr>
 <tr>
 	<th>아이디</th>
 	<td>
-		<input value="<%=dto.getId() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getId() %>" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 	</td>
 </tr>
 <tr>
 	<th class="align-middle">제목</th>
 	<td>
-		<input value="<%=dto.getTitle() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getTitle() %>" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 	</td>
 </tr>
 <tr>
 	<th>파일</th>
 	<td>
-		<% 	if(dto.getFilename() != null){ %>
-				<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
+				<input value="<%=dto.getFilename() %>" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 		<%	}else{ %>
-				<input value="" type="text" class="form-control form-control-lg" readonly="readonly">
+				<input value="" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 		<%	} %>
 		<br>
-		<% 	if(dto.getFilename() != null){ %>
+		<% 	if(dto.getFilename() != null && !dto.getFilename().equals("")){ %>
 				<input type="button" value="파일 다운로드" class="btn btn-warning"
 				onclick="filedown(<%=dto.getSeq() %>, '<%=dto.getNewfilename() %>', '<%=dto.getFilename() %>')">
 		<%	}else{ %>
@@ -185,12 +188,12 @@
 <tr>
 	<th>카테고리</th>
 	<td>
-		<input value="<%=dto.getCategory() %>" type="text" class="form-control form-control-lg" readonly="readonly">
+		<input value="<%=dto.getCategory() %>" type="text" class="form-control form-control-lg" readonly="readonly" style="background-color:rgb(255,250,234)">
 	</td>
 </tr>
 <tr>	
 	<td colspan="2">
-		<textarea rows="18" class="form-control" readonly="readonly"><%=dto.getContent() %></textarea>
+		<textarea rows="18" class="form-control" readonly="readonly" style="font-size: 14px; background-color:rgb(255,250,234);"><%=dto.getContent() %></textarea>
 	</td>
 </tr>
 
@@ -205,23 +208,24 @@
 <input type="hidden" id="group_code" value="<%=dto.getGroup_code() %>">
 <input type="hidden" id="category" value="<%=dto.getCategory() %>">
 
-	<button type="button" class="btn btn-outline-warning" onclick="bbslist()">글목록</button>
-	<button type="button" id="reportBtn" class="btn btn-danger">신고</button>
-<%
-UserDto login = (UserDto)session.getAttribute("login");
-if(dto.getId().equals(login.getId())){
-	%>
 	<div>
-	<button type="button" class="btn btn-warning" onclick="updateBbs(<%=dto.getSeq() %>)">수정</button>
-	<button type="button" class="btn btn-danger" onclick="deleteBbs(<%=dto.getSeq() %>)">삭제</button>
+	<button type="button" class="btn btn-outline-warning" onclick="bbslist()" style="font-size: 13px">글목록</button>
+	<%
+	UserDto login = (UserDto)session.getAttribute("login");
+	if(dto.getId().equals(login.getId())){
+	%>
+	<button type="button" class="btn btn-warning" onclick="updateBbs(<%=dto.getSeq() %>)" style="font-size:13px;">수정</button>
+	<button type="button" class="btn btn-danger" onclick="deleteBbs(<%=dto.getSeq() %>)" style="font-size:13px;" >삭제</button>
+		<%
+}
+%> &nbsp<button type="button" id="reportBtn" class="btn btn-danger" style="font-size: 13px" >신고</button>
 	</div>
 	
 	<br>
 	
-	<%
-}
-%>
-
+	<div>
+	
+	</div>
 
 
 </div>
@@ -270,8 +274,8 @@ if(dto.getId().equals(login.getId())){
 	<textarea style="font-size: 16px;" maxlength="200" rows="7" id="report_content" class="form-control" placeholder="내용기입"></textarea>
     </div>
     <div class="m_footer">
-      <div class="modal_btn cancle" id="close_btn">취소</div>
-      <div class="modal_btn save" id="saveBtn">신고</div>
+      <div class="modal_btn cancle" id="close_btn" style="font-size:13px;">취소</div>
+      <div class="modal_btn save" id="saveBtn" style="font-size:13px;">신고</div>
     </div>
     </form>
   </div>
@@ -330,14 +334,13 @@ function filedown(seq, newfilename, filename){
 <col width="1500"><col width="150">
 <tr>
 	<td>comment</td>
-	<td style="paddng-left: 30px">올리기<td>
 </tr>
 <tr>
 	<td>
 		<textarea rows="3" class="form-control" name="content"></textarea>
 	</td>
 	<td style="paddng-left: 30px">
-		<button type="submit" class="btn btn-warning btn-block p-4">완료</button>
+		<button type="submit" class="btn btn-warning btn-block p-4" style="font-size:13px;">작성</button>
 	</td>
 </tr>
 </table>

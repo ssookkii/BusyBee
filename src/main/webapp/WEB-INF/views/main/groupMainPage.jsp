@@ -141,7 +141,7 @@ $.ajax({
                 	
                if(data[i].title.length > 10){
                	
-               tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title.substr(0, 10)+'...' + '</a></td>';
+               tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+' style="text-decoration: none; color: black;">' + data[i].title.substr(0, 10)+'...' + '</a></td>';
                }else{
                	tableTd += '<td style="font-size: 15px; font-weight: 300; color:black;"><a href=bbsdetail.do?seq='+ data[i].seq+'>' + data[i].title + '</td>';
                }

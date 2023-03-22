@@ -41,7 +41,7 @@ font-size: 14px;
 <body>
 
 
-
+<br></br><br></br>
 	<div id="app" class="container">
 
 		<table class="table table-hover">
@@ -57,20 +57,20 @@ font-size: 14px;
 				%>
 
 			<tr class="table-light">
-				<th scope="col">작성자</th>
-				<td><%=dto.getId()%></td>
+				<th scope="col"  >작성자</th>
+				<td > <%=dto.getId()%></td>
 			</tr>
 
-			<tr class="table-light">
-				<th scope="col">작성일</th>
-				<td><%=dto.getWdate()%></td>
+			<tr class="table-light" >
+				<th scope="col" >작성일</th>
+				<td ><%=dto.getWdate()%></td>
 			</tr>
 			<tr class="table-light">
 				<th scope="col">첨부파일</th>
 				<%
 				if (!dto.getFilename().equals("") && dto.getFilename() != null) {
 				%>
-				<td><input class="btn btn-warning" type="button" value="다운로드"
+				<td ><input class="btn btn-warning" type="button" value="다운로드" style="font-size:12px;"
 					onclick="filedown(<%=dto.getSeq()%>, '<%=dto.getNewfilename()%>', '<%=dto.getFilename()%>')">
 				</td>
 
@@ -79,12 +79,12 @@ font-size: 14px;
 				%>
 			</tr>
 
-			<tr class="table-light">
-				<td colspan="2" style="font-size: 22px; font-weight: bold;"><%=dto.getTitle()%></td>
+			<tr class="table-light"  >
+				<td  colspan="2" style="font-size: 22px; font-weight: bold; "><%=dto.getTitle()%></td>
 			</tr>
 			<tr class="table-light">
-				<td colspan="2" style="background-color: white;"><pre
-						style="font-size: 20px; font-family: 고딕, arial; background-color: white"><%=dto.getContent()%></pre>
+				<td colspan="2" style="background-color: white; height: 300px;"><pre
+						style="font-size: 15px; background-color: rgb(255,250,234); height: 300px;"><%=dto.getContent()%></pre>
 				</td>
 			</tr>
 		</table>
@@ -93,17 +93,17 @@ font-size: 14px;
 		<br>
 
 		<button type="button" class="btn btn-warning"
-			onclick="location.href='customer.do'">글목록</button>
+			onclick="location.href='customer.do'" style="font-size: 13px;">글목록</button>
 
 
 		<%if(dto.getId().equals(login.getId()) || login.getAuth() == 3 ){
 			
 			%>		
 		<button type="button" class="btn btn-warning"
-		onclick="customerUpdate(<%=dto.getSeq()%>)">수정</button>
+		onclick="customerUpdate(<%=dto.getSeq()%>)"  style="font-size: 13px;">수정</button>
 
 		<button type="button" class="btn btn-warning"
-			onclick="customerDelete(<%=dto.getRef()%>)">삭제</button>
+			onclick="customerDelete(<%=dto.getRef()%>)"  style="font-size: 13px;" >삭제</button>
 			<%
 		}
 		
@@ -113,7 +113,7 @@ font-size: 14px;
 			
 		%>
 		<button type="button" class="btn btn-warning"
-			onclick="customerAnswer(<%=dto.getSeq()%>)">답변</button>
+			onclick="customerAnswer(<%=dto.getSeq()%>)"  style="font-size: 13px;" >답변</button>
 		<%
 		}
 		%>

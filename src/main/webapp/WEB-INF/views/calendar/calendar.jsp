@@ -223,7 +223,7 @@ function initTimepicker() {
 
 		 setTimeout(function() {
 		      if (myGroupName !== undefined) {
-		    	  var groupNameElem = $('<div style="text-align: center; font-size: 25px; font-weight: bold; margin-top: 0px;"> <img src = "./images/mark.png" width="35px" height="27px" /><h1 style="font-weight: bold; color:#aa9a89; font-size:18px; margin-left: 10px; display: inline;">현재 나의 그룹: ' + myGroupName + '</h1></div>');
+		    	  var groupNameElem = $('<div style="text-align: center; font-size: 25px; font-weight: bold; margin-top: 0px;"> <img src = "./images/mark.png" width="35px" height="27px" /><h1 style="font-weight: bold; color:#aa9a89; font-size:18px; margin-left: 10px; display: inline;">현재 나의 그룹은 < ' + myGroupName + ' > 입니다!</h1></div>');
 
 
 
@@ -378,7 +378,7 @@ function initTimepicker() {
 				        
 				        $('#calendar').fullCalendar('removeEvents', selectedEventIds);
 				       	 setTimeout(function() {	
-						        $('body').fadeOut(1000, function() {
+						        $('body').fadeOut(800, function() {
 												  location.reload();
 												});}, 500);	
 						    
@@ -881,7 +881,7 @@ $(document).ready(function() {
 			        $('#calendar').fullCalendar('refetchEvents');
 			        // 일정 리스트로 변경합니다.
 			       	 setTimeout(function() {				     
-			        $('body').fadeOut(1000, function() {
+			        $('body').fadeOut(800, function() {
 									  location.reload();
 									});}, 300);
 				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
@@ -1041,7 +1041,7 @@ $(document).ready(function() {
 					    	  success: function(response) {
 					    		  
 							       	 setTimeout(function() {				     
-									        $('body').fadeOut(1000, function() {
+									        $('body').fadeOut(800, function() {
 															  location.reload();
 															});}, 300);
 	    				    $('#delete-alert-message').html('<div class="alert alert-dismissible alert-danger" style="text-align:center;">' +
@@ -1072,7 +1072,7 @@ $(document).ready(function() {
 					        // 일정 리스트 업데이트
 								
 					       	 setTimeout(function() {				     
-							        $('body').fadeOut(1000, function() {
+							        $('body').fadeOut(800, function() {
 													  location.reload();
 													});}, 300);
 					    	

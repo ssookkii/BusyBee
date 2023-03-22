@@ -83,7 +83,7 @@
 	<thead>
 	<tr class="table-warning">
 		<th>번호</th>
-		<th>그룹 리더(ID)</th>
+		<th>요청자 이름(ID)</th>
 		<th>가입 예정 그룹</th>
 		<th>가입/요청 메세지</th>
 		<th>요청일자</th>

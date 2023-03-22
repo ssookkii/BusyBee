@@ -159,7 +159,7 @@ if(list == null || list.size() == 0){
 	
 				<td style="text-align: left;">
 					<%=Utility.arrow(dto.getDepth()) %>
-					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>">
+					<a href="bbsdetail.do?&seq=<%=dto.getSeq() %>" style="text-decoration: none; color:#978c88;">
 						<%=dto.getTitle() %>
 					</a>
 				</td>
